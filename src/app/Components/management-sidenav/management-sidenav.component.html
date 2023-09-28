@@ -8,27 +8,27 @@
         </div>
         <div class="menus">
           <div class="menu1">
-            <div class="m1 profile" [class.active]="activePage === 'profile'">
-              <img src="../../../assets/Union (1).png" alt="" />
-              <span  (click)="setActivePage('profile')">Profile</span>
+            <div class="m1 profile" (click)="Profile()" [class.active]="activeMenuItem === 'profile'">
+              <img class="icon-img" src="../../../assets/Union (1).png" alt="" />
+              <span>Profile</span>
             </div>
           </div>
           <div class="menu1">
-            <div class="m1" [class.active]="activePage === 'employees'" (click)="setActivePage('employees')">
-              <span class="material-symbols-outlined"> badge </span>
+            <div class="m1" (click)="Employees()" [class.active]="activeMenuItem === 'employees'">
+              <span class="icon-img" class="material-symbols-outlined"> badge </span>
               <span>Employees</span>
             </div>
           </div>
           <div class="menu1">
-            <div class="m1" [class.active]="activePage === 'customers'" (click)="setActivePage('customers')">
-              <img src="../../../assets/Group 1224.png" alt="" />
+            <div class="m1" (click)="Customers()" [class.active]="activeMenuItem === 'customers'">
+              <img class="icon-img" src="../../../assets/Group 1224.png" alt="" />
               <span>Customers</span>
             </div>
           </div>
           <mat-divider class="horizontal"></mat-divider>
           <div class="menu1">
-            <div class="m1" [class.active]="activePage === 'invoices'" (click)="setActivePage('invoices')">
-              <img src="../../../assets/Invoice.png" alt="" />
+            <div class="m1" (click)="Invoices()" [class.active]="activeMenuItem === 'invoices'">
+              <img class="icon-img" src="../../../assets/Invoice.png" alt="" />
               <span>All Invoices</span>
             </div>
           </div>
@@ -43,7 +43,7 @@
       </div>
     </mat-drawer>
     <mat-drawer-content class="main-content">
-      <app-profile-management></app-profile-management>
+     <router-outlet></router-outlet>
     </mat-drawer-content>
   </mat-drawer-container>
 </div>

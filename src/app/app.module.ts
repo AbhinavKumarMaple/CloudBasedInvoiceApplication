@@ -12,6 +12,8 @@ import { ManagementSidenavComponent } from './Components/management-sidenav/mana
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CustomersComponent } from './Components/customers/customers.component';
+import { EmployeeComponent } from './Components/employee/employee.component';
+import { InvoicesComponent } from './Components/invoices/invoices.component';
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import { CustomersComponent } from './Components/customers/customers.component';
     LoginComponent,
     ProfileManagementComponent,
     ManagementSidenavComponent,
-    CustomersComponent
+    CustomersComponent,
+    EmployeeComponent,
+    InvoicesComponent
   ],
   imports: [
     BrowserModule,

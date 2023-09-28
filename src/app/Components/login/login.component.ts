@@ -61,6 +61,6 @@ export class LoginComponent {
     }
   }
   onSubmit(){
-    this.route.navigateByUrl('/management-sidenav')
+    this.route.navigateByUrl('/home/profile')
   }
 }
