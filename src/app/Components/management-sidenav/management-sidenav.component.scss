@@ -118,10 +118,8 @@
   background-color: #F4F7FC;
   width: 85%;
   display: flex;
-  margin: 10px;
-  height: 97%;
-  border-radius: 20px;
-  padding: 20px;
+  justify-content: center;
+  padding-top: 10px;
 }
 
 .m1.active {
@@ -133,5 +131,19 @@
 }
 
 .icon-img.active {
-  color: #5800A0;
+  color: #5800a0;
+}
+
+@media screen and (max-width: 500px) {
+  .sidenav-content {
+    display: none;
+  }
+
+  .main-content {
+    background-color: #EBF0FA;
+    border: 2px solid red;
+    padding-top: 0;
+    width: 100%;
+    flex: none;
+  }
 }
