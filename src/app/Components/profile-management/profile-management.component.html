@@ -15,56 +15,36 @@
           <div class="business-sec">
             <div class="business-title">
               <p class="business1">Business Details</p>
-              <img
-                src="../../../assets/Vector.png"
-                alt=""
-                (click)="editForBusiness()"
-              />
+              <img src="../../../assets/Vector.png" alt="" (click)="editForBusiness()" />
             </div>
             <div class="fields">
               <div class="f-1">
                 <p class="f-1-outline">Business Name</p>
-                <input
-                  type="text"
-                  *ngIf="isEditingbusiness"
-                  [(ngModel)]="BusinessDetails[0].businessName"
-                />
+                <input type="text" *ngIf="isEditingbusiness" [(ngModel)]="BusinessDetails[0].businessName" />
                 <span class="f-1-title" *ngIf="!isEditingbusiness">{{
                   BusinessDetails[0].businessName
-                }}</span>
+                  }}</span>
               </div>
               <div class="f-1">
                 <p class="f-1-outline">Contact Number</p>
-                <input
-                  type="text"
-                  *ngIf="isEditingbusiness"
-                  [(ngModel)]="BusinessDetails[0].contactNumber"
-                />
+                <input type="text" *ngIf="isEditingbusiness" [(ngModel)]="BusinessDetails[0].contactNumber" />
                 <span class="f-1-title" *ngIf="!isEditingbusiness">{{
                   BusinessDetails[0].contactNumber
-                }}</span>
+                  }}</span>
               </div>
               <div class="f-1">
                 <p class="f-1-outline">VAT Number</p>
-                <input
-                  type="text"
-                  *ngIf="isEditingbusiness"
-                  [(ngModel)]="BusinessDetails[0].vatNumber"
-                />
+                <input type="text" *ngIf="isEditingbusiness" [(ngModel)]="BusinessDetails[0].vatNumber" />
                 <span class="f-1-title" *ngIf="!isEditingbusiness">{{
                   BusinessDetails[0].vatNumber
-                }}</span>
+                  }}</span>
               </div>
               <div class="f-1">
                 <p class="f-1-outline">CRN Number</p>
-                <input
-                  type="text"
-                  *ngIf="isEditingbusiness"
-                  [(ngModel)]="BusinessDetails[0].CRNnumber"
-                />
+                <input type="text" *ngIf="isEditingbusiness" [(ngModel)]="BusinessDetails[0].CRNnumber" />
                 <span class="f-1-title" *ngIf="!isEditingbusiness">{{
                   BusinessDetails[0].CRNnumber
-                }}</span>
+                  }}</span>
               </div>
             </div>
           </div>
@@ -72,56 +52,36 @@
           <div class="address-sec">
             <div class="business-title">
               <p class="ad">Address</p>
-              <img
-                src="../../../assets/Vector.png"
-                alt=""
-                (click)="editForAddredd()"
-              />
+              <img src="../../../assets/Vector.png" alt="" (click)="editForAddredd()" />
             </div>
             <div class="fields">
               <div class="f-1">
                 <p class="f-1-outline">Building Name/Number</p>
-                <input
-                  type="text"
-                  *ngIf="isEditingaddress"
-                  [(ngModel)]="AddressDetails[0].buildingName"
-                />
+                <input type="text" *ngIf="isEditingaddress" [(ngModel)]="AddressDetails[0].buildingName" />
                 <span class="f-1-title" *ngIf="!isEditingaddress">{{
                   AddressDetails[0].buildingName
-                }}</span>
+                  }}</span>
               </div>
               <div class="f-1">
                 <p class="f-1-outline">Street/Lane</p>
-                <input
-                  type="text"
-                  *ngIf="isEditingaddress"
-                  [(ngModel)]="AddressDetails[0].street"
-                />
+                <input type="text" *ngIf="isEditingaddress" [(ngModel)]="AddressDetails[0].street" />
                 <span class="f-1-title" *ngIf="!isEditingaddress">{{
                   AddressDetails[0].street
-                }}</span>
+                  }}</span>
               </div>
               <div class="f-1">
                 <p class="f-1-outline">Landmark(optional)</p>
-                <input
-                  type="text"
-                  *ngIf="isEditingaddress"
-                  [(ngModel)]="AddressDetails[0].landMark"
-                />
+                <input type="text" *ngIf="isEditingaddress" [(ngModel)]="AddressDetails[0].landMark" />
                 <span class="f-1-title" *ngIf="!isEditingaddress">{{
                   AddressDetails[0].landMark
-                }}</span>
+                  }}</span>
               </div>
               <div class="f-1">
                 <p class="f-1-outline">Postal Code</p>
-                <input
-                  type="text"
-                  *ngIf="isEditingaddress"
-                  [(ngModel)]="AddressDetails[0].postalCode"
-                />
+                <input type="text" *ngIf="isEditingaddress" [(ngModel)]="AddressDetails[0].postalCode" />
                 <span class="f-1-title" *ngIf="!isEditingaddress">{{
                   AddressDetails[0].postalCode
-                }}</span>
+                  }}</span>
               </div>
             </div>
           </div>
@@ -134,11 +94,7 @@
           <div class="bank-fields">
             <p>ABCD Saving A/C</p>
             <div class="icons">
-              <img
-                class="delete-icon"
-                src="../../../assets/vector (1).png"
-                alt=""
-              />
+              <img class="delete-icon" src="../../../assets/vector (1).png" alt="" />
               <img class="edit-icon" src="../../../assets/Vector.png" alt="" />
             </div>
           </div>
@@ -165,11 +121,7 @@
           <div class="bank-fields">
             <p>ABCD Saving A/C</p>
             <div class="icons">
-              <img
-                class="delete-icon"
-                src="../../../assets/vector (1).png"
-                alt=""
-              />
+              <img class="delete-icon" src="../../../assets/vector (1).png" alt="" />
               <img class="edit-icon" src="../../../assets/Vector.png" alt="" />
             </div>
           </div>
