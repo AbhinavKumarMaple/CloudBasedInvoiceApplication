@@ -1,6 +1,8 @@
 * {
   box-sizing: border-box;
   width: auto;
+
+  @media screen and (max-width: 500px) {}
 }
 
 .outer-page {
@@ -18,6 +20,10 @@
   border: none;
   width: 15%;
   background-color: white;
+
+  @media screen and (max-width: 500px) {
+    display: none;
+  }
 }
 
 .inner-sidenav {
@@ -122,6 +128,13 @@
   height: 97%;
   border-radius: 20px;
   padding: 20px;
+
+  @media screen and (max-width: 500px) {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+  }
 }
 
 .m1.active {
