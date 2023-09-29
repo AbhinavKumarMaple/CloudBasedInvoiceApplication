@@ -211,9 +211,92 @@
     </div>
   </div>
   <div class="bank-section">
-    
+    <div class="inner-sec">
+      <span class="heading">Account Information</span>
+      <div class="f-1">
+        <p class="f-1-outline">User Name</p>
+        <input type="text"  [(ngModel)]="AccountInfo[0].username"/>
+      </div>
+      <div class="f-1">
+        <p class="f-1-outline">Email ID</p>
+        <input type="text"  [(ngModel)]="AccountInfo[0].email" />
+      </div>
+      <div class="f-1">
+        <p class="f-1-outline">Password</p>
+        <input type="password"  [(ngModel)]="AccountInfo[0].password" />
+      </div>
+    </div>
   </div>
-  <div class="account"></div>
-  <div class="business-section"></div>
-  <div class="address-section"></div>
+  <div class="business-section">
+    <div class="inner-sec">
+      <span class="heading">Address Details</span>
+      <div class="f-1">
+        <p class="f-1-outline">Building Name/Number</p>
+        <input type="text" [(ngModel)]="AddressDetails[0].buildingName"/>
+      </div>
+      <div class="f-1">
+        <p class="f-1-outline">Street/Lane</p>
+        <input type="text" [(ngModel)]="AddressDetails[0].street"/>
+      </div>
+      <div class="f-1">
+        <p class="f-1-outline">Landmark(optional)</p>
+        <input type="text" [(ngModel)]="AddressDetails[0].landMark"/>
+      </div>
+      <div class="f-1">
+        <p class="f-1-outline">Postal Code</p>
+        <input type="text" [(ngModel)]="AddressDetails[0].postalCode"/>
+      </div>
+    </div>
+  </div>
+  <div class="account-section">
+    <div class="inner-sec">
+      <span class="heading">Bank Details</span>
+      <div class="savings">
+        <span class="s-acnt">ABCD Savings A/C</span>
+        <img src="../../../assets/vector (1).png" alt="">
+      </div>
+      <div class="f-1">
+        <p class="f-1-outline">Bank Name</p>
+        <input type="text" [(ngModel)]="BankDetails[0].BankName" />
+      </div>
+      <div class="f-1">
+        <p class="f-1-outline">Account Name</p>
+        <input type="text" [(ngModel)]="BankDetails[0].accountName" />
+      </div>
+      <div class="f-1">
+        <p class="f-1-outline">Account Number</p>
+        <input type="text" [(ngModel)]="BankDetails[0].accountNumber"/>
+      </div>
+      <div class="f-1">
+        <p class="f-1-outline">Sort Code</p>
+        <input type="text"[(ngModel)]="BankDetails[0].sortcode" />
+      </div>
+      <div class="add-button">
+        <img src="../../../assets/vector (2).png" alt="" />
+        <span>Add Bank Account</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="address-section">
+    <div class="inner-sec">
+      <span class="heading">Business Details</span>
+      <div class="f-1">
+        <p class="f-1-outline">Business Name</p>
+        <input type="text" [(ngModel)]="BusinessDetails[0].businessName" />
+      </div>
+      <div class="f-1">
+        <p class="f-1-outline">Contact Number</p>
+        <input type="text" [(ngModel)]="BusinessDetails[0].contactNumber" />
+      </div>
+      <div class="f-1">
+        <p class="f-1-outline">VAT Number</p>
+        <input type="text" [(ngModel)]="BusinessDetails[0].vatNumber"/>
+      </div>
+      <div class="f-1">
+        <p class="f-1-outline">CRN Number</p>
+        <input type="text" [(ngModel)]="BusinessDetails[0].CRNnumber"/>
+      </div>
+    </div>
+  </div>
 </div>
