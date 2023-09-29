@@ -14,6 +14,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CustomersComponent } from './Components/customers/customers.component';
 import { EmployeeComponent } from './Components/employee/employee.component';
 import { InvoicesComponent } from './Components/invoices/invoices.component';
+import { TableComponent } from './Components/table/table.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { InvoicesComponent } from './Components/invoices/invoices.component';
     ManagementSidenavComponent,
     CustomersComponent,
     EmployeeComponent,
-    InvoicesComponent
+    InvoicesComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,

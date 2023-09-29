@@ -7,8 +7,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  constructor(private route : Router) {}
-  password:any;
+  constructor(private route: Router) { }
+  password: any;
   show = false;
   // customer
   customerBackgroundColor: string = ''; // Initialize as empty
@@ -22,6 +22,7 @@ export class LoginComponent {
   businessBorderRadius: number = 0; // Initialize border-radius to 0
   businessPadding: number = 10; // Initialize padding to 0
   businessShadow: string = '';
+  borderColor: string = '';
 
   setCustomerBackground() {
     this.customerBackgroundColor = '#0078F1'; // Change background color to blue
@@ -33,6 +34,7 @@ export class LoginComponent {
     this.businessBorderRadius = 20; // Apply border radius of 20px
     this.customerShadow = 'rgba(0, 0, 0, 0.5) 0px 2px 8px';
     this.businessShadow = '';
+    this.borderColor = '#0078F1'
   }
 
   setBusinessBackground() {
@@ -45,6 +47,7 @@ export class LoginComponent {
     this.customerBorderRadius = 0; // Reset border radius
     this.businessShadow = 'rgba(0, 0, 0, 0.5) 0px 2px 8px';
     this.customerShadow = '';
+    this.borderColor = '#5800A0';
   }
 
   ngOnInit() {
@@ -60,7 +63,7 @@ export class LoginComponent {
       this.show = false;
     }
   }
-  onSubmit(){
+  onSubmit() {
     this.route.navigateByUrl('/home/profile')
   }
 }
