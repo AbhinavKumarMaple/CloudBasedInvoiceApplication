@@ -1,0 +1,132 @@
+.outer-update {
+  height: 700px;
+  width: 719px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f9fafc;
+}
+.inner-update {
+  height: 650px;
+  width: 660px;
+  display: flex;
+  flex-direction: column;
+}
+.left-sec {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.right-sec {
+    border: 1px solid red;
+  width: 50%;
+}
+.bank-details {
+  height: 10%;
+  display: flex;
+  align-items: center;
+  padding-left: 30px;
+}
+.bank-credentials {
+  width: 300px;
+  font-family: "Inter", sans-serif;
+  font-size: 20px;
+  height: 19px;
+  color: #5800a0;
+}
+.bank-details div {
+  border: 1px solid #a6a6a6;
+  width: 690px;
+}
+.invoice-details {
+  height: 90%;
+  display: flex;
+}
+.f-1 {
+  border: 1px solid #cccccc;
+  width: 270px;
+  height: 34px;
+  border-radius: 24px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffff;
+}
+
+.f-1-outline {
+  position: absolute;
+  height: 15px;
+  top: -13px;
+  left: 12px;
+  background-color: #f4f7fc;
+  padding: 3px 10px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.f-1 input {
+  height: 15px;
+  width: 260px;
+  font-size: 16px;
+  outline: none;
+  border: none;
+  background-color: #ffff;
+  color: black;
+  margin-top: 5px;
+}
+
+.f-1-title {
+  position: absolute;
+  color: #8a8a8a;
+  left: 17px;
+  top: 16px;
+  font-size: 16px;
+}
+.buttons {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 20px;
+  
+}
+.ad-btn {
+  cursor: pointer;
+  //   font-family: "Inter", sans-serif;
+  font-size: 14px;
+  height: 22px;
+  width: 130px;
+  border-radius: 20px;
+  background-color: #5800a0;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  gap: 9px;
+}
+.add-btn img {
+  height: 10.28px;
+  width: 8.86px;
+}
+
+.cancel {
+  background-color: transparent;
+  width: 80px;
+  border: 1px solid red;
+  color: red;
+}
+.cancel img {
+  height: 12px;
+  width: 12px;
+}
+.header{
+    padding-left: 90px;
+     font-family: "Inter", sans-serif;
+    font-size: 16px;
+    width: 100%;
+}

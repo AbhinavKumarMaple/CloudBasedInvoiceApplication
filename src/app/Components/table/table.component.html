@@ -1,0 +1,17 @@
+<table>
+    <thead>
+        <tr>
+            <td><input type="checkbox"></td>
+            <th *ngFor="let header of tableHeaders">{{ header }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let row of tableData; let i = index" [class.odd]="i % 2 === 0" [class.even]="i % 2 !== 0"
+            [class.selected]="row.selected">
+            <td><input type="checkbox"></td>
+            <td>{{ row.column1 }}</td>
+            <td>{{ row.column2 }}</td>
+            <td>{{ row.column3 }}</td>
+        </tr>
+    </tbody>
+</table>
