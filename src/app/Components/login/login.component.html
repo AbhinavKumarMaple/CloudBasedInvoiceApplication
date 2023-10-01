@@ -30,15 +30,15 @@
           </div>
           <div class="fields">
             <div class="input-box">
-              <div class="f-1">
+              <div class="f-1" [style.border-color]="borderColor">
                 <p class="f-1-outline">Username</p>
                 <input type="text" />
               </div>
-              <div class="f-1">
+              <div class="f-1" [style.border-color]="borderColor">
                 <p class="f-1-outline">Email ID</p>
                 <input type="text" />
               </div>
-              <div class="f-1 pass">
+              <div class="f-1 pass" [style.border-color]="borderColor">
                 <p class="f-1-outline">Password</p>
                 <input [type]="password" />
                 <button class="pass-btn" (click)="onClick()">
@@ -49,7 +49,7 @@
               <div class="hint">
                 <p>Forgot Password?</p>
               </div>
-              <div class="f-1 submit-btn" (click)="onSubmit()">
+              <div class="f-1 submit-btn" type="submit" (click)="onSubmit()">
                 <span>SUBMIT</span>
               </div>
             </div>

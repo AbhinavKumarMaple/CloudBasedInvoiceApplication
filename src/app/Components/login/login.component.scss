@@ -339,6 +339,12 @@
     .submit-btn {
       border-radius: 50px;
       width: 50%;
+
+      .btn-submit {
+        border: none;
+        background-color: transparent;
+        color: white;
+      }
     }
   }
 }

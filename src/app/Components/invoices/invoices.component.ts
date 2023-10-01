@@ -12,4 +12,9 @@ export class InvoicesComponent {
     { Name: 'Bob Johnson', Age: 35, City: 'Chicago' },
     { Name: 'Alice Brown', Age: 28, City: 'San Francisco' },
   ];
+  isMenuVisible: boolean = false;
+
+  handleSidenav() {
+    this.isMenuVisible = true
+  }
 }
