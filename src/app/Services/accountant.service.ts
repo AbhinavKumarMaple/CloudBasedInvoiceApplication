@@ -1,28 +1,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountantService {
 
-  private baseUrl = 'invoice-backend-nodejs-production.up.railway.app/api';
+  private baseUrl = 'https://invoice-backend-nodejs-production.up.railway.app/api';
 
   constructor(private http: HttpClient) { }
 
-  async login(data: any) {
+  login(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/accountant/login`, data);
   }
 
-  async generateEmpInviteLink(data: any) {
+  generateEmpInviteLink(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/accountant/invite`, data);
   }
 
-  async update(data: any) {
+  update(data: any): Observable<any> {
     return this.http.put(`${this.baseUrl}/accountant/update`, data);
   }
 
-  async addBank(data: any) {
+  addBank(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/accountant/addbank`, data);
   }
 

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AccountantService } from 'src/app/Services/accountant.service';
+import { EmployeeService } from 'src/app/Services/employee.service';
 
 @Component({
   selector: 'app-login',
@@ -25,6 +27,7 @@ export class LoginComponent {
   businessPadding: number = 10; // Initialize padding to 0
   businessShadow: string = '';
   borderColor: string = '';
+  loggedInAs: any;
 
   setCustomerBackground() {
     this.customerBackgroundColor = '#0078F1'; // Change background color to blue
@@ -37,6 +40,7 @@ export class LoginComponent {
     this.customerShadow = 'rgba(0, 0, 0, 0.5) 0px 2px 8px';
     this.businessShadow = '';
     this.borderColor = '#0078F1';
+    this.loggedInAs = 0;
   }
 
   setBusinessBackground() {
@@ -50,10 +54,16 @@ export class LoginComponent {
     this.businessShadow = 'rgba(0, 0, 0, 0.5) 0px 2px 8px';
     this.customerShadow = '';
     this.borderColor = '#5800A0';
+    this.loggedInAs = 1;
   }
-  constructor(private route: Router, private formbuilder: FormBuilder) { }
+
+  constructor(private route: Router,
+    private formbuilder: FormBuilder,
+    private employeeService: EmployeeService,
+    private accountantService: AccountantService) { }
 
   ngOnInit() {
+
     this.loginForm = this.formbuilder.group({
       username: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
@@ -62,14 +72,37 @@ export class LoginComponent {
     this.password = 'password';
     this.setCustomerBackground();
   }
+
   onSubmit() {
-    console.log('hey');
-    this.submitted = true;
-    if (this.loginForm.invalid) {
-      return
+    const data = {
+      username: this.loginForm.value.username,
+      password: this.loginForm.value.password
     }
-    console.log(this.loginForm.value)
+
+    this.submitted = true;
+    if (this.loginForm.valid) {
+      if (this.loggedInAs == 0) {
+        this.employeeService.login(data).subscribe(response => {
+          if (response) {
+            localStorage.setItem('loggedInAs', 'employee');
+            this.route.navigate(['/home/invoices'])
+          }
+        });
+      }
+      else if (this.loggedInAs == 1) {
+        this.accountantService.login(data).subscribe(response => {
+          if (response) {
+            localStorage.setItem('loggedInAs', 'customer');
+            this.route.navigate(['/home/profile'])
+          }
+        });;
+      }
+    }
+    else {
+      alert('Invalid login details.')
+    }
   }
+
   onClick() {
     if (this.password === 'password') {
       this.password = 'text';

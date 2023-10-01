@@ -21,6 +21,12 @@ import { TableComponent } from './Components/table/table.component';
 import { SidenavComponent } from './Components/sidenav/sidenav.component';
 import { UpdateDataComponent } from './Components/update-data/update-data.component';
 import { InvoiceUpdateComponent } from './Components/invoice-update/invoice-update.component';
+import { HttpClientModule } from '@angular/common/http';
+import { AccountantService } from './Services/accountant.service';
+import { EmployeeService } from './Services/employee.service';
+import { CustomerService } from './Services/customer.service';
+import { InvoiceService } from './Services/invoice.service';
+import { TokenRefreshService } from './Services/token-refresh.service';
 
 @NgModule({
   declarations: [
@@ -47,8 +53,15 @@ import { InvoiceUpdateComponent } from './Components/invoice-update/invoice-upda
     ReactiveFormsModule,
     FormsModule,
     MatDialogModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    AccountantService,
+    EmployeeService,
+    CustomerService,
+    InvoiceService,
+    TokenRefreshService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
