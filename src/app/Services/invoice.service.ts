@@ -1,40 +1,41 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InvoiceService {
 
-  private baseUrl = 'invoice-backend-nodejs-production.up.railway.app/api';
+  private baseUrl = 'https://invoice-backend-nodejs-production.up.railway.app/api';
 
   constructor(private http: HttpClient) { }
 
-  async create(data: any) {
+  create(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/invoice/create`, data);
   }
 
-  async getAllByEmp() {
+  getAllByEmp(): Observable<any> {
     return this.http.get(`${this.baseUrl}/invoice/allemployeeinvoice`);
   }
 
-  async getAllByAccountant(page: any, limit: any) {
+  getAllByAccountant(page: any, limit: any): Observable<any> {
     return this.http.get(`${this.baseUrl}/invoice/allInvoice?page=${page}&limit=${limit}`);
   }
 
-  async getEmpInvoiceById(id: any, page: any, limit: any) {
+  getEmpInvoiceById(id: any, page: any, limit: any): Observable<any> {
     return this.http.get(`${this.baseUrl}/invoice/employee/${id}?page=${page}&limit=${limit}`);
   }
 
-  async getInvoiceById(id: any) {
+  getInvoiceById(id: any): Observable<any> {
     return this.http.get(`${this.baseUrl}/invoice/${id}`);
   }
 
-  async updateById(id: any, data: any) {
+  updateById(id: any, data: any): Observable<any> {
     return this.http.put(`${this.baseUrl}/invoice/update/${id}`, data);
   }
 
-  async delete(id: any) {
+  delete(id: any): Observable<any> {
     return this.http.delete(`${this.baseUrl}invoice/${id}`);
   }
 }

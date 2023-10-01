@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,21 +6,24 @@ import { Router } from '@angular/router';
   templateUrl: './management-sidenav.component.html',
   styleUrls: ['./management-sidenav.component.scss'],
 })
-export class ManagementSidenavComponent {
+export class ManagementSidenavComponent implements OnInit {
   activeMenuItem: string = 'profile';
-  constructor(private router: Router) {}
-  ngOnInit() {
-    // Retrieve the active menu item from browser storage (localStorage)
-  const storedActiveMenuItem = localStorage.getItem('activeMenuItem');
+  loggedInAs: any = localStorage.getItem('loggedInAs');
 
-  if (storedActiveMenuItem) {
-    // If it's already set in localStorage, use it
-    this.activeMenuItem = storedActiveMenuItem;
-  } else {
-    // If it's not set, initialize it to the default menu item ('profile' in this case)
-    this.activeMenuItem = 'profile';
-    localStorage.setItem('activeMenuItem', 'profile'); // Initialize localStorage
-  }
+  constructor(private router: Router) { }
+
+  ngOnInit(): void {
+    // Retrieve the active menu item from browser storage (localStorage)
+    const storedActiveMenuItem = localStorage.getItem('activeMenuItem');
+
+    if (storedActiveMenuItem) {
+      // If it's already set in localStorage, use it
+      this.activeMenuItem = storedActiveMenuItem;
+    } else {
+      // If it's not set, initialize it to the default menu item ('profile' in this case)
+      this.activeMenuItem = 'profile';
+      localStorage.setItem('activeMenuItem', 'profile'); // Initialize localStorage
+    }
   }
   Profile() {
     this.activeMenuItem = 'profile';

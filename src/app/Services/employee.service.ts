@@ -1,28 +1,29 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
 
-  private baseUrl = 'invoice-backend-nodejs-production.up.railway.app/api';
+  private baseUrl = 'https://invoice-backend-nodejs-production.up.railway.app/api';
 
   constructor(private http: HttpClient) { }
 
-  async login(data: any) {
+  login(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/employee/login`, data);
   }
 
-  async employeeInfo(data: any) {
+  employeeInfo(data: any): Observable<any> {
     return this.http.get(`${this.baseUrl}/employee/myinfo`, data);
   }
 
-  async update(data: any) {
+  update(data: any): Observable<any> {
     return this.http.put(`${this.baseUrl}/employee/update`, data);
   }
 
-  async delete(data: any) {
+  delete(data: any): Observable<any> {
     return this.http.delete(`${this.baseUrl}/employee/delete`, data);
   }
 }

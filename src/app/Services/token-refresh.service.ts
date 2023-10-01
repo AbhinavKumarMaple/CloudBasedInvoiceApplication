@@ -28,7 +28,7 @@ export class TokenRefreshService {
   }
 
   private refreshAccessToken() {
-    this.http.get(`invoice-backend-nodejs-production.up.railway.app/api/accountant/refresh-token`).subscribe();
+    this.http.get(`https://invoice-backend-nodejs-production.up.railway.app/api/accountant/refresh-token`).subscribe();
   }
 
   resetRefreshStatus() {
