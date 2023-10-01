@@ -37,7 +37,6 @@
 
 .forms {
   // border: 2px solid black;
-  height: 80%;
   display: flex;
 }
 
@@ -293,13 +292,13 @@
     }
   }
 
-  .image-logo {
+  .image-logo-prof {
     width: 100%;
   }
 
-  .image-logo img {
-    position: absolute;
-    width: 100%;
+  .image-logo-prof img {
+    width: 100vw;
+    height: 278px;
   }
 
   .logo {

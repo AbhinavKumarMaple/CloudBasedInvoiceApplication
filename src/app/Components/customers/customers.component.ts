@@ -8,20 +8,31 @@ import { MatDialog } from '@angular/material/dialog';
   encapsulation: ViewEncapsulation.None,
 })
 export class CustomersComponent {
+  isMenuVisible: boolean = false;
+  isFilterOpen: boolean = false;
+
   sampleData = [
     { Name: 'John Doe', Age: 30, City: 'New York' },
     { Name: 'Jane Smith', Age: 25, City: 'Los Angeles' },
     { Name: 'Bob Johnson', Age: 35, City: 'Chicago' },
     { Name: 'Alice Brown', Age: 28, City: 'San Francisco' },
   ];
-  constructor(public dialog: MatDialog){
+  constructor(public dialog: MatDialog) {
 
   }
   openDialog(): void {
     const dialogRef = this.dialog.open(UpdateDataComponent, {});
 
     dialogRef.afterClosed().subscribe((result) => {
-     
+
     });
+  }
+
+  handleSidenav() {
+    this.isMenuVisible = true
+  }
+
+  openFilter() {
+    this.isFilterOpen = true;
   }
 }

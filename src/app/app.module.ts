@@ -18,6 +18,7 @@ import { CustomersComponent } from './Components/customers/customers.component';
 import { EmployeeComponent } from './Components/employee/employee.component';
 import { InvoicesComponent } from './Components/invoices/invoices.component';
 import { TableComponent } from './Components/table/table.component';
+import { SidenavComponent } from './Components/sidenav/sidenav.component';
 import { UpdateDataComponent } from './Components/update-data/update-data.component';
 import { InvoiceUpdateComponent } from './Components/invoice-update/invoice-update.component';
 
@@ -33,6 +34,7 @@ import { InvoiceUpdateComponent } from './Components/invoice-update/invoice-upda
     TableComponent,
     UpdateDataComponent,
     InvoiceUpdateComponent,
+    SidenavComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,4 +51,4 @@ import { InvoiceUpdateComponent } from './Components/invoice-update/invoice-upda
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

@@ -14,10 +14,15 @@ export class InvoicesComponent {
     { Name: 'Bob Johnson', Age: 35, City: 'Chicago' },
     { Name: 'Alice Brown', Age: 28, City: 'San Francisco' },
   ];
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog) { }
   openDialog(): void {
     const dialogRef = this.dialog.open(InvoiceUpdateComponent, {});
 
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => { });
+  }
+  isMenuVisible: boolean = false;
+
+  handleSidenav() {
+    this.isMenuVisible = true
   }
 }

@@ -51,7 +51,7 @@ export class LoginComponent {
     this.customerShadow = '';
     this.borderColor = '#5800A0';
   }
-  constructor(private route: Router, private formbuilder: FormBuilder) {}
+  constructor(private route: Router, private formbuilder: FormBuilder) { }
 
   ngOnInit() {
     this.loginForm = this.formbuilder.group({
@@ -60,12 +60,13 @@ export class LoginComponent {
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
     this.password = 'password';
+    this.setCustomerBackground();
   }
   onSubmit() {
     console.log('hey');
     this.submitted = true;
     if (this.loginForm.invalid) {
-      return 
+      return
     }
     console.log(this.loginForm.value)
   }

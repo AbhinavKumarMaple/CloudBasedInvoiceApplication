@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./employee.component.scss']
 })
 export class EmployeeComponent {
+  isMenuVisible: boolean = false;
+  handleSidenav() {
+    this.isMenuVisible = true
+  }
 
 }

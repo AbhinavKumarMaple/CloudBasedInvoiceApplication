@@ -156,15 +156,13 @@
 <!-- mobile view -->
 
 <div class="mobile-view">
-  <div class="image-logo">
+  <div class="image-logo-prof">
     <img src="../../../assets/Gradient_BG.png" alt="" />
   </div>
   <div class="mobile-form-div">
     <div class="heading-mobile">
-      <i class="fa-solid fa-bars fa-2xl" style="color: white"></i>
-      <h4 style="font-weight: bold; margin: 0; color: white">
-        Business Profile Management
-      </h4>
+      <i class="sidenav-toggle fa-solid fa-bars fa-2xl" style="color: white;" (click)="handleSidenav()"></i>
+      <h4 style="font-weight: bold; margin: 0; color: white;">Business Profile Management</h4>
     </div>
     <div class="logo">
       <div class="logo-square">
@@ -262,4 +260,7 @@
       </div>
     </div>
   </div>
+</div>
+<div *ngIf="isMenuVisible">
+  <app-sidenav></app-sidenav>
 </div>

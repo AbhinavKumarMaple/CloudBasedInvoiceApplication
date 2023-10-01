@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
 export class ProfileManagementComponent {
   isEditingbusiness: boolean = false;
   isEditingaddress: boolean = false;
+  isMenuVisible: boolean = false;
   AccountInfo: any = [
     {
       username: 'Roshan Dsouza',
@@ -33,10 +34,10 @@ export class ProfileManagementComponent {
   ];
   BankDetails: any = [
     {
-      BankName:'HDFC Bank',
+      BankName: 'HDFC Bank',
       accountName: 'ABC Savings A/C',
-      accountNumber : 'ABC Savings A/C',
-      sortcode:'1234 5678 9101'
+      accountNumber: 'ABC Savings A/C',
+      sortcode: '1234 5678 9101'
     },
   ];
   editForBusiness() {
@@ -44,5 +45,9 @@ export class ProfileManagementComponent {
   }
   editForAddredd() {
     this.isEditingaddress = true;
+  }
+
+  handleSidenav() {
+    this.isMenuVisible = true
   }
 }
