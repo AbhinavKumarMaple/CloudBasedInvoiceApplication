@@ -29,36 +29,36 @@
             </div>
           </div>
           <div class="fields">
-            <div class="input-box">
+            <form class="input-box" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
               <div class="f-1" [style.border-color]="borderColor">
                 <p class="f-1-outline">Username</p>
-                <input type="text" />
+                <input type="text" formControlName="username" />
               </div>
               <div class="f-1" [style.border-color]="borderColor">
                 <p class="f-1-outline">Email ID</p>
-                <input type="text" />
+                <input type="email" formControlName="email" />
               </div>
               <div class="f-1 pass" [style.border-color]="borderColor">
                 <p class="f-1-outline">Password</p>
-                <input [type]="password" />
+                <input [type]="password" formControlName="password" />
                 <button class="pass-btn" (click)="onClick()">
                   <i class="fa fa-eye" aria-hidden="true" *ngIf="!show"></i>
                   <i class="fa fa-eye-slash" aria-hidden="true" *ngIf="show"></i>
                 </button>
               </div>
-              <div class="hint">
-                <p>Forgot Password?</p>
-              </div>
-              <div class="f-1 submit-btn" type="submit" (click)="onSubmit()">
+              <div class="f-1 submit-btn" (click)="onSubmit()">
                 <span>SUBMIT</span>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- mobile view -->
+
 <div class="mobile-div">
   <div class="mobile-outer-div">
     <div class="round-div"></div>
@@ -66,12 +66,14 @@
   </div>
   <div class="form-div">
     <div class="form-header">
-      <h1 style="margin: 0; font-weight: bold;">Hello,</h1>
-      <h2 style="font-weight: bold;">Welcome Back!</h2>
-      <h5 style="color: rgb(172, 172, 172); font-weight: bold;">To Your Favorite Cloud-Based Invoicing Platform</h5>
+      <h1 style="margin: 0; font-weight: bold">Hello,</h1>
+      <h2 style="font-weight: bold">Welcome Back!</h2>
+      <h5 style="color: rgb(172, 172, 172); font-weight: bold">
+        To Your Favorite Cloud-Based Invoicing Platform
+      </h5>
     </div>
     <div class="loginas-div">
-      <h5 style="font-weight: bolder; margin: 0;">Login As</h5>
+      <h5 style="font-weight: bolder; margin: 0">Login As</h5>
       <div class="btn-group">
         <p class="customer" [style.background-color]="customerBackgroundColor" [style.color]="customerColor"
           [style.box-shadow]="customerShadow" (click)="setCustomerBackground()">
@@ -87,17 +89,23 @@
       </div>
     </div>
     <div class="fields">
-      <div class="input-box">
+      <form class="input-box">
         <div class="f-1" [style.border-color]="borderColor">
-          <p class="f-1-outline" style=" margin: 0; background-color: white;">Username</p>
+          <p class="f-1-outline" style="margin: 0; background-color: white">
+            Username
+          </p>
           <input type="text" />
         </div>
         <div class="f-1" [style.border-color]="borderColor">
-          <p class="f-1-outline" style=" margin: 0; background-color: white;">Email ID</p>
+          <p class="f-1-outline" style="margin: 0; background-color: white">
+            Email ID
+          </p>
           <input type="text" />
         </div>
         <div class="f-1 pass" [style.border-color]="borderColor">
-          <p class="f-1-outline" style=" margin: 0; background-color: white;">Password</p>
+          <p class="f-1-outline" style="margin: 0; background-color: white">
+            Password
+          </p>
           <input [type]="password" />
           <button class="pass-btn" (click)="onClick()">
             <i class="fa fa-eye" aria-hidden="true" *ngIf="!show"></i>
@@ -105,12 +113,12 @@
           </button>
         </div>
         <div class="hint">
-          <p>Forgot Password?</p>
+
         </div>
-        <div class="submit-btn" (click)="onSubmit()">
+        <div class="submit-btn">
           <span>SUBMIT</span>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </div>

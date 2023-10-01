@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,8 +7,9 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
-  constructor(private route: Router) { }
+export class LoginComponent {
+  loginForm!: FormGroup;
+  submitted = false;
   password: any;
   show = false;
   // customer
@@ -34,7 +36,7 @@ export class LoginComponent implements OnInit {
     this.businessBorderRadius = 20; // Apply border radius of 20px
     this.customerShadow = 'rgba(0, 0, 0, 0.5) 0px 2px 8px';
     this.businessShadow = '';
-    this.borderColor = '#0078F1'
+    this.borderColor = '#0078F1';
   }
 
   setBusinessBackground() {
@@ -49,12 +51,25 @@ export class LoginComponent implements OnInit {
     this.customerShadow = '';
     this.borderColor = '#5800A0';
   }
+  constructor(private route: Router, private formbuilder: FormBuilder) { }
 
   ngOnInit() {
+    this.loginForm = this.formbuilder.group({
+      username: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
     this.password = 'password';
     this.setCustomerBackground();
   }
-
+  onSubmit() {
+    console.log('hey');
+    this.submitted = true;
+    if (this.loginForm.invalid) {
+      return
+    }
+    console.log(this.loginForm.value)
+  }
   onClick() {
     if (this.password === 'password') {
       this.password = 'text';
@@ -63,8 +78,5 @@ export class LoginComponent implements OnInit {
       this.password = 'password';
       this.show = false;
     }
-  }
-  onSubmit() {
-    this.route.navigateByUrl('/home/profile')
   }
 }

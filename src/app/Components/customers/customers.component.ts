@@ -1,5 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-
+import { UpdateDataComponent } from '../update-data/update-data.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
@@ -16,6 +17,16 @@ export class CustomersComponent {
     { Name: 'Bob Johnson', Age: 35, City: 'Chicago' },
     { Name: 'Alice Brown', Age: 28, City: 'San Francisco' },
   ];
+  constructor(public dialog: MatDialog) {
+
+  }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(UpdateDataComponent, {});
+
+    dialogRef.afterClosed().subscribe((result) => {
+
+    });
+  }
 
   handleSidenav() {
     this.isMenuVisible = true

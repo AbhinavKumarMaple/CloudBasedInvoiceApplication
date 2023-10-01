@@ -152,6 +152,9 @@
     </div>
   </div>
 </div>
+
+<!-- mobile view -->
+
 <div class="mobile-view">
   <div class="image-logo-prof">
     <img src="../../../assets/Gradient_BG.png" alt="" />
@@ -207,10 +210,32 @@
     </div>
     <div class="account-section">
       <div class="inner-sec">
+        <span class="heading">Business Details</span>
+        <div class="f-1">
+          <p class="f-1-outline">Business Name</p>
+          <input type="text" [(ngModel)]="BusinessDetails[0].businessName" />
+        </div>
+        <div class="f-1">
+          <p class="f-1-outline">Contact Number</p>
+          <input type="text" [(ngModel)]="BusinessDetails[0].contactNumber" />
+        </div>
+        <div class="f-1">
+          <p class="f-1-outline">VAT Number</p>
+          <input type="text" [(ngModel)]="BusinessDetails[0].vatNumber" />
+        </div>
+        <div class="f-1">
+          <p class="f-1-outline">CRN Number</p>
+          <input type="text" [(ngModel)]="BusinessDetails[0].CRNnumber" />
+        </div>
+      </div>
+    </div>
+
+    <div class="address-section">
+      <div class="inner-sec">
         <span class="heading">Bank Details</span>
         <div class="savings">
           <span class="s-acnt">ABCD Savings A/C</span>
-          <img src="../../../assets/vector (1).png" alt="">
+          <img src="../../../assets/vector (1).png" alt="" />
         </div>
         <div class="f-1">
           <p class="f-1-outline">Bank Name</p>
@@ -231,28 +256,6 @@
         <div class="add-button">
           <img src="../../../assets/vector (2).png" alt="" />
           <span>Add Bank Account</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="address-section">
-      <div class="inner-sec">
-        <span class="heading">Business Details</span>
-        <div class="f-1">
-          <p class="f-1-outline">Business Name</p>
-          <input type="text" [(ngModel)]="BusinessDetails[0].businessName" />
-        </div>
-        <div class="f-1">
-          <p class="f-1-outline">Contact Number</p>
-          <input type="text" [(ngModel)]="BusinessDetails[0].contactNumber" />
-        </div>
-        <div class="f-1">
-          <p class="f-1-outline">VAT Number</p>
-          <input type="text" [(ngModel)]="BusinessDetails[0].vatNumber" />
-        </div>
-        <div class="f-1">
-          <p class="f-1-outline">CRN Number</p>
-          <input type="text" [(ngModel)]="BusinessDetails[0].CRNnumber" />
         </div>
       </div>
     </div>
