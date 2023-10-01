@@ -9,6 +9,7 @@ import { LoginComponent } from './Components/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+
 import { ProfileManagementComponent } from './Components/profile-management/profile-management.component';
 import { ManagementSidenavComponent } from './Components/management-sidenav/management-sidenav.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
