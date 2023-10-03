@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountantService } from 'src/app/Services/accountant.service';
 import { EmployeeService } from 'src/app/Services/employee.service';
+import { TokenRefreshService } from 'src/app/Services/token-refresh.service';
 
 @Component({
   selector: 'app-login',
@@ -60,13 +61,13 @@ export class LoginComponent {
   constructor(private route: Router,
     private formbuilder: FormBuilder,
     private employeeService: EmployeeService,
-    private accountantService: AccountantService) { }
+    private accountantService: AccountantService,
+    private tokenRefreshService: TokenRefreshService) { }
 
   ngOnInit() {
 
     this.loginForm = this.formbuilder.group({
       username: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
     this.password = 'password';
@@ -82,9 +83,10 @@ export class LoginComponent {
     this.submitted = true;
     if (this.loginForm.valid) {
       if (this.loggedInAs == 0) {
-        this.employeeService.login(data).subscribe(response => {
+        this.employeeService.login(data).subscribe((response) => {
           if (response) {
             localStorage.setItem('loggedInAs', 'employee');
+            this.tokenRefreshService.startTokenRefreshForEmployee();
             this.route.navigate(['/home/invoices'])
           }
         });
@@ -93,6 +95,7 @@ export class LoginComponent {
         this.accountantService.login(data).subscribe(response => {
           if (response) {
             localStorage.setItem('loggedInAs', 'customer');
+            this.tokenRefreshService.startTokenRefreshForCustomer();
             this.route.navigate(['/home/profile'])
           }
         });;

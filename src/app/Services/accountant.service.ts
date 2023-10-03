@@ -12,11 +12,11 @@ export class AccountantService {
   constructor(private http: HttpClient) { }
 
   login(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/accountant/login`, data);
+    return this.http.post(`${this.baseUrl}/accountant/login`, data, { observe: 'response', withCredentials: true });
   }
 
   generateEmpInviteLink(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/accountant/invite`, data);
+    return this.http.post(`${this.baseUrl}/accountant/invite`, data, { observe: 'response', withCredentials: true });
   }
 
   update(data: any): Observable<any> {

@@ -79,7 +79,8 @@
   align-items: center;
 }
 
-.m1 {
+.m1,
+.m2 {
   cursor: pointer;
   margin-left: 20px;
   padding: 5px;
@@ -97,7 +98,8 @@
   padding-right: 30px;
 }
 
-.m1 span {
+.m1,
+.m2 span {
   font-size: 16px;
 }
 
@@ -147,9 +149,13 @@
 }
 
 .m1.active {
-  background-color: #5800A0;
   background-image: linear-gradient(to right, #e7d5f8 14.46%, white);
-  color: #5800A0;
+  /* Change to your desired text color */
+  font-family: "Inter", sans-serif;
+}
+
+.m2.active {
+  background-image: linear-gradient(to right, #93b6fc 14.46%, white);
   /* Change to your desired text color */
   font-family: "Inter", sans-serif;
 }

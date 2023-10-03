@@ -6,7 +6,6 @@ table {
 }
 
 thead {
-    color: #5800A0;
     font-weight: bold;
 }
 
@@ -27,16 +26,16 @@ tbody tr.even {
 }
 
 tbody tr.selected {
-    background-color: lightpurple;
-    font-weight: bold;
+    background-color: #EBF0FA;
 }
 
 table th,
 table td {
     border: none;
-    padding: 8px;
-    width: 30px;
+    padding: 20px 30px;
+    width: fit-content;
     text-align: center;
+    text-wrap: nowrap;
 }
 
 thead {
@@ -49,4 +48,12 @@ tbody tr td:first-child {
 
 tbody tr.selected td:first-child input[type="checkbox"] {
     border: 2px solid purple;
+}
+
+.invite-btn {
+    padding: 5px 20px;
+    border-radius: 50px;
+    border: 1px solid #5800A0;
+    background-color: #5800A0;
+    color: white;
 }

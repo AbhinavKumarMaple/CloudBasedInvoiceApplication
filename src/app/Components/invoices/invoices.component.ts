@@ -11,30 +11,35 @@ import { InvoiceService } from 'src/app/Services/invoice.service';
 export class InvoicesComponent implements OnInit {
   loggedInAs: any = localStorage.getItem('loggedInAs');
   invoiceList: any;
-
+  color: any;
+  page: number = 1;
+  limit: number = 10;
+  selectedInvoice: any;
+  tableHeaders: any = ['invoiceNumber', 'date', 'serviceDescription', 'netAmount', 'vatRate', 'vatAmount', 'totalGross', 'paymentMethod', 'bankAccount', 'paymentStatus', 'note'];
+  tableHeaderForCustomer: any = ['invoiceNumber', 'date', 'customerName', 'serviceDescription', 'netAmount', 'vatRate', 'vatAmount', 'totalGross', 'paymentMethod', 'bankAccount', 'paymentStatus', 'note'];
   constructor(public dialog: MatDialog, private invoiceService: InvoiceService) { }
 
   ngOnInit(): void {
     this.getInvoiceList();
-    console.log(this.invoiceList);
+    this.color = localStorage.getItem('loggedInAs');
   }
 
   getInvoiceList() {
     if (this.loggedInAs == 'employee') {
       this.invoiceService.getAllByEmp().subscribe(response => {
-        this.invoiceList = response;
-        console.log(this.invoiceList)
+        this.invoiceList = response.body;
       })
     }
     else if (this.loggedInAs == 'customer') {
-      this.invoiceService.getAllByAccountant(2, 2).subscribe(response => {
-        this.invoiceList = response;
+      this.invoiceService.getAllByAccountant(this.page, this.limit).subscribe(response => {
+        this.invoiceList = response.body;
+        console.log(this.invoiceList)
       })
     }
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(InvoiceUpdateComponent, {});
+  openDialog(data?: any): void {
+    const dialogRef = this.dialog.open(InvoiceUpdateComponent, { data: data });
 
     dialogRef.afterClosed().subscribe((result) => { });
   }
@@ -43,5 +48,10 @@ export class InvoicesComponent implements OnInit {
 
   handleSidenav() {
     this.isMenuVisible = true
+  }
+
+  rowSelected(event: any) {
+    console.log(event)
+    this.selectedInvoice = event;
   }
 }
