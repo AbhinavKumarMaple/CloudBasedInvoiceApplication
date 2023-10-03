@@ -41,9 +41,11 @@
   .fields2 {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    // justify-content: space-around;
     height: 100px;
     gap: 30px;
+    padding-left: 40px;
+
   }
   
   .f-1 {

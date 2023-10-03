@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EmployeeService {
+  private baseUrl =
+    'https://invoice-backend-nodejs-production.up.railway.app/api';
 
-  private baseUrl = 'https://invoice-backend-nodejs-production.up.railway.app/api';
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   login(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/employee/login`, data, {
@@ -17,7 +17,12 @@ export class EmployeeService {
       withCredentials: true,
     });
   }
-
+  addEmployee(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/employee/register`, data, {
+      observe: 'response',
+      withCredentials: true,
+    });
+  }
   employeeInfo(data: any): Observable<any> {
     return this.http.get(`${this.baseUrl}/employee/myinfo`, data);
   }

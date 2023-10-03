@@ -47,6 +47,22 @@ export class ProfileManagementComponent {
     this.showbankdetails = !this.showbankdetails;
     this.isEditingbankDetails = true;
   }
+  cancelBusinessEdit() {
+    this.isEditingbusiness = false;
+    this.showSecondIcon2 = false;
+  }
+  cancelAddressEdit() {
+    this.isEditingaddress = false;
+    this.showSecondIcon = false;
+  }
+  cancelAccountEdit() {
+    this.isEditingmanagementDetails = false;
+    this.showManageIcon = false;
+  }
+  cancelBankEdit() {
+    this.isEditingbankDetails = false;
+    this.showbankdetails=false
+  }
   handleSidenav() {
     this.isMenuVisible = true;
   }
@@ -76,13 +92,28 @@ export class ProfileManagementComponent {
         landmark: this.AddressDetails.landmark,
         postalCode: this.AddressDetails.postalCode,
       },
+      username: this.AccountInfo.username,
+      email: this.AccountInfo.email,
+      password: this.AccountInfo.password,
+      banks: this.BankDetails.map((bank: any) => {
+        // Map each bank object to include _id and other properties
+        return {
+          _id: bank._id,
+          accountName: bank.accountName,
+          accountNumber: bank.accountNumber,
+          bankName: bank.bankName,
+          sortCode: bank.sortCode,
+          // Add any other properties you want to update
+        };
+      }),
     };
+    console.log(payload);
     this.accountantService.update(payload).subscribe((response: any) => {
       console.log(response);
-      location.reload();
+      // location.reload();
     });
   }
-  removeBank(bank:any) {
+  removeBank(bank: any) {
     let payload = {
       _id: [bank._id],
     };
@@ -91,15 +122,14 @@ export class ProfileManagementComponent {
       console.log(response);
     });
   }
-  OpenBankAccountForm(){
-  this.addbankaccount = true;
-
+  OpenBankAccountForm() {
+    this.addbankaccount = true;
   }
-  cancelAddingForm(){
+  cancelAddingForm() {
     this.addbankaccount = false;
   }
   addBankAccount() {
-    console.log('hey')
+    console.log('hey');
     let payload = {
       bankName: this.bankName,
       accountName: this.accountName,

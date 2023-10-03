@@ -14,19 +14,29 @@
         <div class="inner-details">
           <div class="business-sec">
             <div class="business-title">
-              <p class="business1">Business Details</p>
+              <span class="business1">Business Details</span>
               <img
+                class="edit-icon"
                 *ngIf="!showSecondIcon2"
                 src="../../../assets/Vector.png"
                 alt=""
                 (click)="editForBusiness()"
               />
-              <img
+              <div *ngIf="showSecondIcon2" class="cancel-done">
+                <div class="btns cancel-btn" (click)="updateAccountInfo()" >
+                  <span>Done</span>
+                </div>
+                <div class="btns done-btn" (click)="cancelBusinessEdit()">
+                  <span>cancel</span>
+                </div>
+              </div>
+              <!-- <img
+                class="check-icon1"
                 *ngIf="showSecondIcon2"
                 (click)="updateAccountInfo()"
-                src="../../../assets/Vector (12).png"
+                src="../../../assets/Group 1228.png"
                 alt=""
-              />
+              /> -->
             </div>
             <div class="fields">
               <div class="f-1">
@@ -78,19 +88,29 @@
 
           <div class="address-sec">
             <div class="business-title">
-              <p class="ad">Address</p>
+              <span class="ad">Address</span>
               <img
+                class="edit-icon"
                 *ngIf="!showSecondIcon"
                 src="../../../assets/Vector.png"
                 alt=""
                 (click)="editForAddress()"
               />
-              <img
+              <!-- <img
+                class="check-icon1"
                 *ngIf="showSecondIcon"
                 (click)="updateAccountInfo()"
-                src="../../../assets/Vector (12).png"
+                src="../../../assets/Group 1228.png"
                 alt=""
-              />
+              /> -->
+              <div *ngIf="showSecondIcon" class="cancel-done">
+                <div class="btns cancel-btn" (click)="updateAccountInfo()">
+                  <span>Done</span>
+                </div>
+                <div class="btns done-btn" (click)="cancelAddressEdit()">
+                  <span>cancel</span>
+                </div>
+              </div>
             </div>
             <div class="fields">
               <div class="f-1">
@@ -146,23 +166,29 @@
             <div></div>
           </div>
           <div class="bank-fields b-field">
-            <p>Account Information</p>
-           
-              <img
-                *ngIf="!showManageIcon"
-                (click)="editForCredentials()"
-                class="edit-icon"
-                src="../../../assets/Vector.png"
-                alt=""
-              />
-              <img
-                class="check-icon"
-                *ngIf="showManageIcon"
-                (click)="updateAccountInfo()"
-                src="../../../assets/Vector (12).png"
-                alt=""
-              />
-          
+            <span>Account Information</span>
+            <img
+              *ngIf="!showManageIcon"
+              (click)="editForCredentials()"
+              class="edit-icon"
+              src="../../../assets/Vector.png"
+              alt=""
+            />
+            <div *ngIf="showManageIcon" class="cancel-done">
+              <div class="btns cancel-btn" (click)="updateAccountInfo()">
+                <span>Done</span>
+              </div>
+              <div class="btns done-btn" (click)="cancelAccountEdit()">
+                <span>cancel</span>
+              </div>
+            </div>
+            <!-- <img
+              class="check-icon1"
+              *ngIf="showManageIcon"
+              (click)="updateAccountInfo()"
+              src="../../../assets/Group 1228.png"
+              alt=""
+            /> -->
           </div>
           <div class="bank-details-fields">
             <div class="f-1">
@@ -192,10 +218,10 @@
               <input
                 type="text"
                 *ngIf="isEditingmanagementDetails"
-                [(ngModel)]="AccountInfo.email"
+                [(ngModel)]="AccountInfo.password"
               />
               <span class="f-1-title" *ngIf="!isEditingmanagementDetails">{{
-                AccountInfo.email
+                AccountInfo.password
               }}</span>
             </div>
           </div>
@@ -207,9 +233,9 @@
           </div>
           <div class="inner-credentials" *ngFor="let bank of BankDetails">
             <div class="bank-fields">
-              <p>ABCD Saving A/C</p>
+              <span>ABCD Saving A/C</span>
               <div class="icons">
-                <img
+                <img *ngIf="!showbankdetails"
                   (click)="removeBank(bank)"
                   class="delete-icon"
                   src="../../../assets/vector (1).png"
@@ -218,17 +244,26 @@
                 <img
                   *ngIf="!showbankdetails"
                   class="edit-icon"
+                  style="margin-top: 1.5px"
                   src="../../../assets/Vector.png"
                   alt=""
                   (click)="editBankDetails()"
                 />
-                <img
-                  class="check-icon"
+                <div *ngIf="showbankdetails" class="cancel-done">
+                  <div class="btns cancel-btn" (click)="updateAccountInfo()">
+                    <span>Done</span>
+                  </div>
+                  <div class="btns done-btn" (click)="cancelBankEdit()">
+                    <span>cancel</span>
+                  </div>
+                </div>
+                <!-- <img
+                  class="check-icon1"
                   *ngIf="showbankdetails"
                   (click)="updateAccountInfo()"
-                  src="../../../assets/Vector (12).png"
+                  src="../../../assets/Group 1228.png"
                   alt=""
-                />
+                /> -->
               </div>
             </div>
             <div class="bank-details-fields">
@@ -283,50 +318,39 @@
               <p>ABCD Saving A/C</p>
               <div class="icons">
                 <img
-                  class="check-icon"
-                  (click)=" addBankAccount()"
-                  src="../../../assets/Vector (12).png"
+                  class="check-icon1"
+                  (click)="addBankAccount()"
+                  src="../../../assets/Group 1228.png"
                   alt=""
                 />
-                <img (click)="cancelAddingForm()"
-                class="cancel-icon"
-                src="../../../assets/vector (7).png"
-                alt=""
-              />
+                <img
+                  (click)="cancelAddingForm()"
+                  class="cancel-icon"
+                  src="../../../assets/vector (7).png"
+                  alt=""
+                />
               </div>
             </div>
             <div class="bank-details-fields">
               <div class="f-1">
                 <p class="f-1-outline">Bank Name</p>
-                <input
-                  type="text"
-                  [(ngModel)]="bankName"
-                />
+                <input type="text" [(ngModel)]="bankName" />
               </div>
               <div class="f-1">
                 <p class="f-1-outline">Account Name</p>
-                <input
-                  type="text"
-                  [(ngModel)]="accountName"
-                />
+                <input type="text" [(ngModel)]="accountName" />
               </div>
               <div class="f-1">
                 <p class="f-1-outline">Account Number</p>
-                <input
-                  type="text"
-                  [(ngModel)]="accountNumber"
-                />
+                <input type="text" [(ngModel)]="accountNumber" />
               </div>
               <div class="f-1">
                 <p class="f-1-outline">Sort Code</p>
-                <input
-                  type="text"
-                  [(ngModel)]="sortCode"
-                />
+                <input type="text" [(ngModel)]="sortCode" />
               </div>
             </div>
           </div>
-          <div class="add-button" (click)=" OpenBankAccountForm()">
+          <div class="add-button" (click)="OpenBankAccountForm()">
             <img src="../../../assets/vector (2).png" alt="" />
             <span>Add Bank Account</span>
           </div>
@@ -368,17 +392,16 @@
         </div>
         <div class="f-1">
           <p class="f-1-outline">Email ID</p>
-          <input type="text"  [(ngModel)]="AccountInfo.email"/>
+          <input type="text" [(ngModel)]="AccountInfo.email" />
         </div>
         <div class="f-1">
           <p class="f-1-outline">Password</p>
-          <input type="password" [(ngModel)]="AccountInfo.password"/>
+          <input type="password" [(ngModel)]="AccountInfo.password" />
         </div>
-        <div class="f-1 update" (click)=" updateAccountInfo()">
-         <span>Update</span>
+        <div class="f-1 update" (click)="updateAccountInfo()">
+          <span>Update</span>
         </div>
       </div>
-      
     </div>
     <div class="business-section">
       <div class="inner-sec">
@@ -399,9 +422,9 @@
           <p class="f-1-outline">Postal Code</p>
           <input type="text" [(ngModel)]="AddressDetails.postalCode" />
         </div>
-        <div class="f-1 update" (click)=" updateAccountInfo()">
+        <div class="f-1 update" (click)="updateAccountInfo()">
           <span>Update</span>
-         </div>
+        </div>
       </div>
     </div>
     <div class="account-section">
@@ -423,9 +446,9 @@
           <p class="f-1-outline">CRN Number</p>
           <input type="text" [(ngModel)]="BusinessDetails.crnNumber" />
         </div>
-        <div class="f-1 update" (click)=" updateAccountInfo()">
+        <div class="f-1 update" (click)="updateAccountInfo()">
           <span>Update</span>
-         </div>
+        </div>
       </div>
     </div>
 
@@ -434,7 +457,11 @@
         <span class="heading">Bank Details</span>
         <div class="savings">
           <span class="s-acnt">ABCD Savings A/C</span>
-          <img src="../../../assets/vector (1).png" alt="" (click)="removeBank(bank)" />
+          <img
+            src="../../../assets/vector (1).png"
+            alt=""
+            (click)="removeBank(bank)"
+          />
         </div>
         <div class="f-1">
           <p class="f-1-outline">Bank Name</p>
@@ -457,13 +484,11 @@
             <img src="../../../assets/vector (2).png" alt="" />
             <span>Add Bank Account</span>
           </div>
-          <div class="f-1 update" (click)=" updateAccountInfo()">
+          <div class="f-1 update" (click)="updateAccountInfo()">
             <span>Update</span>
-           </div>
+          </div>
         </div>
-        
       </div>
-      
     </div>
     <div class="address-section addData" *ngIf="addbankaccount">
       <div class="inner-sec">
@@ -489,9 +514,9 @@
           <input type="text" [(ngModel)]="sortCode" />
         </div>
         <div class="buttons-sec">
-          <div class="f-1 update" (click)=addBankAccount()>
+          <div class="f-1 update" (click)="addBankAccount()">
             <span>Submit</span>
-           </div>
+          </div>
         </div>
       </div>
     </div>
