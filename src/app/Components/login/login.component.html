@@ -34,10 +34,6 @@
                 <p class="f-1-outline">Username</p>
                 <input type="text" formControlName="username" />
               </div>
-              <div class="f-1" [style.border-color]="borderColor">
-                <p class="f-1-outline">Email ID</p>
-                <input type="email" formControlName="email" />
-              </div>
               <div class="f-1 pass" [style.border-color]="borderColor">
                 <p class="f-1-outline">Password</p>
                 <input [type]="password" formControlName="password" />
@@ -89,24 +85,18 @@
       </div>
     </div>
     <div class="fields">
-      <form class="input-box">
+      <form class="input-box" [formGroup]="loginForm">
         <div class="f-1" [style.border-color]="borderColor">
           <p class="f-1-outline" style="margin: 0; background-color: white">
             Username
           </p>
-          <input type="text" />
-        </div>
-        <div class="f-1" [style.border-color]="borderColor">
-          <p class="f-1-outline" style="margin: 0; background-color: white">
-            Email ID
-          </p>
-          <input type="text" />
+          <input type="text" formControlName="username" />
         </div>
         <div class="f-1 pass" [style.border-color]="borderColor">
           <p class="f-1-outline" style="margin: 0; background-color: white">
             Password
           </p>
-          <input [type]="password" />
+          <input [type]="password" formControlName="password" />
           <button class="pass-btn" (click)="onClick()">
             <i class="fa fa-eye" aria-hidden="true" *ngIf="!show"></i>
             <i class="fa fa-eye-slash" aria-hidden="true" *ngIf="show"></i>
@@ -115,7 +105,7 @@
         <div class="hint">
 
         </div>
-        <div class="submit-btn">
+        <div class="submit-btn" (click)="onSubmit()">
           <span>SUBMIT</span>
         </div>
       </form>

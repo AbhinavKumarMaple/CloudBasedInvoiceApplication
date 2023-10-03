@@ -18,10 +18,7 @@ export class AccountantService {
   }
 
   login(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/accountant/login`, data, {
-      observe: 'response',
-      withCredentials: true,
-    });
+    return this.http.post(`${this.baseUrl}/accountant/login`, data, { observe: 'response', withCredentials: true });
   }
   getAccountantInfo(): Observable<any> {
     console.log('token', this.cookieValue);
@@ -31,7 +28,7 @@ export class AccountantService {
     });
   }
   generateEmpInviteLink(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/accountant/invite`, data);
+    return this.http.post(`${this.baseUrl}/accountant/invite`, data, { observe: 'response', withCredentials: true });
   }
 
   update(data: any): Observable<any> {
@@ -41,13 +38,13 @@ export class AccountantService {
     });
   }
   removeBank(data: any): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/accountant/removebank/${data._id}`,{
+    return this.http.delete(`${this.baseUrl}/accountant/removebank/${data._id}`, {
       observe: 'response',
       withCredentials: true,
     });
   }
   addBank(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/accountant/addbank`, data,{
+    return this.http.post(`${this.baseUrl}/accountant/addbank`, data, {
       observe: 'response',
       withCredentials: true,
     });

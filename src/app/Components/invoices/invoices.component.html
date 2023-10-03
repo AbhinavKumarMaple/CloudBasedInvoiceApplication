@@ -1,5 +1,6 @@
 <div class="invoice-outer-div">
-    <h1 style="color: #5800A0; font-size: 24px; font-weight: bold; margin: 0;">All Invoice Details</h1>
+    <h1 style="font-size: 24px; font-weight: bold; margin: 0;"
+        [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">All Invoice Details</h1>
     <hr style="width: 100%; opacity: 0.5;">
     <div class="image-logo">
         <div class="heading-mobile-cust">
@@ -72,22 +73,31 @@
             </div>
         </div>
         <div class="btn-group">
-            <div class="cust-btn" (click)="openDialog()">
+            <div class="cust-btn" (click)="openDialog()"
+                [style.background-color]="color == 'employee' ? '#1354D4' : '#5800a0'">
                 <i class="fa-solid fa-plus" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
                     Add Invoice
                 </p>
             </div>
-            <div class="edit-btn" (click)="openDialog()">
+            <div class="edit-btn" (click)="openDialog(selectedInvoice)">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
                     Edit Invoice Details
                 </p>
             </div>
+            <div class="export-btn" [style.color]="color == 'employee' ? '#1354D4' : '#5800a0'"
+                [style.border]="color == 'employee' ? '1px solid #1354D4' : '1px solid #5800a0'">
+                <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
+                <p class="customer" style="margin: 0;">
+                    Export Data
+                </p>
+            </div>
         </div>
     </div>
     <div class="table-div">
-        <app-table [tableHeaders]="['Name', 'Age', 'City']"></app-table>
+        <app-table [tableHeaders]="color == 'employee' ? tableHeaders : tableHeaderForCustomer"
+            [tableData]="invoiceList" (rowSelected)="rowSelected($event)"></app-table>
     </div>
 </div>
 <div *ngIf="isMenuVisible">

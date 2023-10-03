@@ -70,7 +70,7 @@
                     Add Customer
                 </p>
             </div>
-            <div class="edit-btn" (click)="openDialog()">
+            <div class="edit-btn" (click)="openDialog(selectedCustomer)">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
                     Edit Customer Details
@@ -85,7 +85,8 @@
         </div>
     </div>
     <div class="table-div">
-        <app-table [tableHeaders]="['Name', 'Age', 'City', 'Name', 'Age', 'City']" [tableData]="sampleData"></app-table>
+        <app-table [tableHeaders]="tableHeaders" [tableData]="customerList"
+            (rowSelected)="rowSelected($event)"></app-table>
     </div>
 </div>
 <div *ngIf="isMenuVisible">

@@ -7,31 +7,32 @@ import { Subscription, interval } from 'rxjs';
 })
 export class TokenRefreshService {
 
-  private isRefreshStarted = false;
   private refreshSubscription: Subscription | undefined;
 
   constructor(private http: HttpClient) { }
 
-  startTokenRefresh() {
-    if (!this.isRefreshStarted) {
-      const refreshIntervalMillis = 40 * 60 * 1000;
-      this.refreshSubscription = interval(refreshIntervalMillis).subscribe(() => this.refreshAccessToken());
-      this.isRefreshStarted = true;
-    }
+  startTokenRefreshForCustomer() {
+    const refreshIntervalMillis = 2100000;
+    this.refreshSubscription = interval(refreshIntervalMillis).subscribe(() => this.refreshAccessTokenCustomer());
+  }
+
+  startTokenRefreshForEmployee() {
+    const refreshIntervalMillis = 2100000;
+    this.refreshSubscription = interval(refreshIntervalMillis).subscribe(() => this.refreshAccessTokenEmployee());
   }
 
   stopTokenRefresh() {
     if (this.refreshSubscription) {
       this.refreshSubscription.unsubscribe();
     }
-    this.isRefreshStarted = false;
   }
 
-  private refreshAccessToken() {
-    this.http.get(`https://invoice-backend-nodejs-production.up.railway.app/api/accountant/refresh-token`).subscribe();
+  refreshAccessTokenCustomer() {
+    this.http.get(`https://invoice-backend-nodejs-production.up.railway.app/api/accountant/refresh-token`, { observe: 'response', withCredentials: true }).subscribe();
   }
 
-  resetRefreshStatus() {
-    this.isRefreshStarted = false;
+  refreshAccessTokenEmployee() {
+    this.http.get(`https://invoice-backend-nodejs-production.up.railway.app/api/employee/refresh-token`, { observe: 'response', withCredentials: true }).subscribe();
   }
+
 }

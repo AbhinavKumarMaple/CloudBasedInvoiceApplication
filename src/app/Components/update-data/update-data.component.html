@@ -1,5 +1,5 @@
 <div class="outer-update">
-  <div class="inner-update">
+  <form class="inner-update" [formGroup]="customerForm">
     <div class="bank-details">
       <span class="bank-credentials">Add New Customer</span>
       <div></div>
@@ -10,32 +10,32 @@
         <div class="fields">
           <div class="f-1">
             <p class="f-1-outline">Customer Name</p>
-            <input type="text" />
+            <input type="text" formControlName="customerName" />
           </div>
           <div class="f-1">
             <p class="f-1-outline">Contact Number</p>
-            <input type="password" />
+            <input type="text" formControlName="contactNumber" />
           </div>
         </div>
       </div>
       <div class="details">
-        <span class="address-t">Building Name/Number</span>
+        <span class="address-t">Address</span>
         <div class="fields2">
           <div class="f-1">
+            <p class="f-1-outline">Building Name/Number</p>
+            <input type="text" formControlName="buildingName" />
+          </div>
+          <div class="f-1">
             <p class="f-1-outline">Landmark(optional)</p>
-            <input type="text" />
+            <input type="text" formControlName="landmark" />
           </div>
           <div class="f-1">
             <p class="f-1-outline">Street/Lane</p>
-            <input type="password" />
+            <input type="text" formControlName="street" />
           </div>
           <div class="f-1">
             <p class="f-1-outline">Postal Code</p>
-            <input type="password" />
-          </div>
-          <div class="f-1">
-            <p class="f-1-outline">Password</p>
-            <input type="password" />
+            <input type="text" formControlName="postalCode" />
           </div>
         </div>
       </div>
@@ -60,32 +60,32 @@
         <div class="fields2">
           <div class="f-1">
             <p class="f-1-outline">Bank Name</p>
-            <input type="text" />
+            <input type="text" formControlName="bankName" />
           </div>
           <div class="f-1">
             <p class="f-1-outline">Account Name</p>
-            <input type="password" />
+            <input type="text" formControlName="accountName" />
           </div>
           <div class="f-1">
             <p class="f-1-outline">Account Number</p>
-            <input type="password" />
+            <input type="text" formControlName="accountNumber" />
           </div>
           <div class="f-1">
             <p class="f-1-outline">Sort Codec</p>
-            <input type="password" />
+            <input type="text" formControlName="sortCode" />
           </div>
         </div>
       </div>
       <div class="buttons">
-        <div class="ad-btn">
+        <div class="ad-btn" (click)="saveCustomer()">
           <img src="../../../assets/vector (2).png" alt="" />
           <span>Save Customer</span>
         </div>
-        <div class="ad-btn cancel">
+        <div class="ad-btn cancel" (click)="cancelDialog()">
           <img src="../../../assets/vector (7).png" alt="" />
           <span>Cancel</span>
         </div>
       </div>
     </div>
-  </div>
+  </form>
 </div>
