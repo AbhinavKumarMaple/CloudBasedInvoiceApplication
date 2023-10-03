@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { InvoiceUpdateComponent } from '../invoice-update/invoice-update.component';
 import { InvoiceService } from 'src/app/Services/invoice.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-invoices',
@@ -12,11 +13,13 @@ export class InvoicesComponent implements OnInit {
   loggedInAs: any = localStorage.getItem('loggedInAs');
   invoiceList: any;
 
-  constructor(public dialog: MatDialog, private invoiceService: InvoiceService) { }
+  constructor(public dialog: MatDialog, private invoiceService: InvoiceService, private cookie : CookieService) { }
 
   ngOnInit(): void {
     this.getInvoiceList();
     console.log(this.invoiceList);
+    const token = document.cookie;
+    console.log(token)
   }
 
   getInvoiceList() {

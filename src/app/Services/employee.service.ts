@@ -12,7 +12,10 @@ export class EmployeeService {
   constructor(private http: HttpClient) { }
 
   login(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/employee/login`, data);
+    return this.http.post(`${this.baseUrl}/employee/login`, data, {
+      observe: 'response',
+      withCredentials: true,
+    });
   }
 
   employeeInfo(data: any): Observable<any> {

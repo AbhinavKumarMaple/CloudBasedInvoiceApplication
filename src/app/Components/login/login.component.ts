@@ -91,6 +91,7 @@ export class LoginComponent {
       }
       else if (this.loggedInAs == 1) {
         this.accountantService.login(data).subscribe(response => {
+          console.log('heyyyy',response)
           if (response) {
             localStorage.setItem('loggedInAs', 'customer');
             this.route.navigate(['/home/profile'])

@@ -15,36 +15,63 @@
           <div class="business-sec">
             <div class="business-title">
               <p class="business1">Business Details</p>
-              <img src="../../../assets/Vector.png" alt="" (click)="editForBusiness()" />
+              <img
+                *ngIf="!showSecondIcon2"
+                src="../../../assets/Vector.png"
+                alt=""
+                (click)="editForBusiness()"
+              />
+              <img
+                *ngIf="showSecondIcon2"
+                (click)="updateAccountInfo()"
+                src="../../../assets/Vector (12).png"
+                alt=""
+              />
             </div>
             <div class="fields">
               <div class="f-1">
                 <p class="f-1-outline">Business Name</p>
-                <input type="text" *ngIf="isEditingbusiness" [(ngModel)]="BusinessDetails[0].businessName" />
+                <input
+                  type="text"
+                  *ngIf="isEditingbusiness"
+                  [(ngModel)]="BusinessDetails.businessName"
+                />
                 <span class="f-1-title" *ngIf="!isEditingbusiness">{{
-                  BusinessDetails[0].businessName
-                  }}</span>
+                  BusinessDetails.businessName
+                }}</span>
               </div>
               <div class="f-1">
                 <p class="f-1-outline">Contact Number</p>
-                <input type="text" *ngIf="isEditingbusiness" [(ngModel)]="BusinessDetails[0].contactNumber" />
+                <input
+                  type="text"
+                  *ngIf="isEditingbusiness"
+                  [(ngModel)]="BusinessDetails.contactNumber"
+                />
                 <span class="f-1-title" *ngIf="!isEditingbusiness">{{
-                  BusinessDetails[0].contactNumber
-                  }}</span>
+                  BusinessDetails.contactNumber
+                }}</span>
               </div>
               <div class="f-1">
                 <p class="f-1-outline">VAT Number</p>
-                <input type="text" *ngIf="isEditingbusiness" [(ngModel)]="BusinessDetails[0].vatNumber" />
+                <input
+                  type="text"
+                  *ngIf="isEditingbusiness"
+                  [(ngModel)]="BusinessDetails.vatNumber"
+                />
                 <span class="f-1-title" *ngIf="!isEditingbusiness">{{
-                  BusinessDetails[0].vatNumber
-                  }}</span>
+                  BusinessDetails.vatNumber
+                }}</span>
               </div>
               <div class="f-1">
                 <p class="f-1-outline">CRN Number</p>
-                <input type="text" *ngIf="isEditingbusiness" [(ngModel)]="BusinessDetails[0].CRNnumber" />
+                <input
+                  type="text"
+                  *ngIf="isEditingbusiness"
+                  [(ngModel)]="BusinessDetails.crnNumber"
+                />
                 <span class="f-1-title" *ngIf="!isEditingbusiness">{{
-                  BusinessDetails[0].CRNnumber
-                  }}</span>
+                  BusinessDetails.crnNumber
+                }}</span>
               </div>
             </div>
           </div>
@@ -52,64 +79,124 @@
           <div class="address-sec">
             <div class="business-title">
               <p class="ad">Address</p>
-              <img src="../../../assets/Vector.png" alt="" (click)="editForAddredd()" />
+              <img
+                *ngIf="!showSecondIcon"
+                src="../../../assets/Vector.png"
+                alt=""
+                (click)="editForAddress()"
+              />
+              <img
+                *ngIf="showSecondIcon"
+                (click)="updateAccountInfo()"
+                src="../../../assets/Vector (12).png"
+                alt=""
+              />
             </div>
             <div class="fields">
               <div class="f-1">
                 <p class="f-1-outline">Building Name/Number</p>
-                <input type="text" *ngIf="isEditingaddress" [(ngModel)]="AddressDetails[0].buildingName" />
+                <input
+                  type="text"
+                  *ngIf="isEditingaddress"
+                  [(ngModel)]="AddressDetails.buildingNameNumber"
+                />
                 <span class="f-1-title" *ngIf="!isEditingaddress">{{
-                  AddressDetails[0].buildingName
-                  }}</span>
+                  AddressDetails.buildingNameNumber
+                }}</span>
               </div>
               <div class="f-1">
                 <p class="f-1-outline">Street/Lane</p>
-                <input type="text" *ngIf="isEditingaddress" [(ngModel)]="AddressDetails[0].street" />
+                <input
+                  type="text"
+                  *ngIf="isEditingaddress"
+                  [(ngModel)]="AddressDetails.streetName"
+                />
                 <span class="f-1-title" *ngIf="!isEditingaddress">{{
-                  AddressDetails[0].street
-                  }}</span>
+                  AddressDetails.streetName
+                }}</span>
               </div>
               <div class="f-1">
                 <p class="f-1-outline">Landmark(optional)</p>
-                <input type="text" *ngIf="isEditingaddress" [(ngModel)]="AddressDetails[0].landMark" />
+                <input
+                  type="text"
+                  *ngIf="isEditingaddress"
+                  [(ngModel)]="AddressDetails.landmark"
+                />
                 <span class="f-1-title" *ngIf="!isEditingaddress">{{
-                  AddressDetails[0].landMark
-                  }}</span>
+                  AddressDetails.landmark
+                }}</span>
               </div>
               <div class="f-1">
                 <p class="f-1-outline">Postal Code</p>
-                <input type="text" *ngIf="isEditingaddress" [(ngModel)]="AddressDetails[0].postalCode" />
+                <input
+                  type="text"
+                  *ngIf="isEditingaddress"
+                  [(ngModel)]="AddressDetails.postalCode"
+                />
                 <span class="f-1-title" *ngIf="!isEditingaddress">{{
-                  AddressDetails[0].postalCode
-                  }}</span>
+                  AddressDetails.postalCode
+                }}</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="savings-sec">
+        <div class="management-sec">
           <div class="bank-details">
             <span class="manage-credentials">Manage Credentials</span>
             <div></div>
           </div>
-          <div class="bank-fields">
-            <p>ABCD Saving A/C</p>
-            <div class="icons">
-              <img class="delete-icon" src="../../../assets/vector (1).png" alt="" />
-              <img class="edit-icon" src="../../../assets/Vector.png" alt="" />
-            </div>
+          <div class="bank-fields b-field">
+            <p>Account Information</p>
+           
+              <img
+                *ngIf="!showManageIcon"
+                (click)="editForCredentials()"
+                class="edit-icon"
+                src="../../../assets/Vector.png"
+                alt=""
+              />
+              <img
+                class="check-icon"
+                *ngIf="showManageIcon"
+                (click)="updateAccountInfo()"
+                src="../../../assets/Vector (12).png"
+                alt=""
+              />
+          
           </div>
           <div class="bank-details-fields">
             <div class="f-1">
               <p class="f-1-outline">User Name</p>
-              <input type="text" />
+              <input
+                type="text"
+                *ngIf="isEditingmanagementDetails"
+                [(ngModel)]="AccountInfo.username"
+              />
+              <span class="f-1-title" *ngIf="!isEditingmanagementDetails">{{
+                AccountInfo.username
+              }}</span>
             </div>
             <div class="f-1">
-              <p class="f-1-outline">Email ID</p>
-              <input type="text" />
+              <p class="f-1-outline">Email</p>
+              <input
+                type="text"
+                *ngIf="isEditingmanagementDetails"
+                [(ngModel)]="AccountInfo.email"
+              />
+              <span class="f-1-title" *ngIf="!isEditingmanagementDetails">{{
+                AccountInfo.email
+              }}</span>
             </div>
             <div class="f-1">
-              <p class="f-1-outline">Account Number</p>
-              <input type="text" />
+              <p class="f-1-outline">Password</p>
+              <input
+                type="text"
+                *ngIf="isEditingmanagementDetails"
+                [(ngModel)]="AccountInfo.email"
+              />
+              <span class="f-1-title" *ngIf="!isEditingmanagementDetails">{{
+                AccountInfo.email
+              }}</span>
             </div>
           </div>
         </div>
@@ -118,32 +205,128 @@
             <span class="bank-credentials">Bank Details</span>
             <div></div>
           </div>
-          <div class="bank-fields">
-            <p>ABCD Saving A/C</p>
-            <div class="icons">
-              <img class="delete-icon" src="../../../assets/vector (1).png" alt="" />
-              <img class="edit-icon" src="../../../assets/Vector.png" alt="" />
+          <div class="inner-credentials" *ngFor="let bank of BankDetails">
+            <div class="bank-fields">
+              <p>ABCD Saving A/C</p>
+              <div class="icons">
+                <img
+                  (click)="removeBank(bank)"
+                  class="delete-icon"
+                  src="../../../assets/vector (1).png"
+                  alt=""
+                />
+                <img
+                  *ngIf="!showbankdetails"
+                  class="edit-icon"
+                  src="../../../assets/Vector.png"
+                  alt=""
+                  (click)="editBankDetails()"
+                />
+                <img
+                  class="check-icon"
+                  *ngIf="showbankdetails"
+                  (click)="updateAccountInfo()"
+                  src="../../../assets/Vector (12).png"
+                  alt=""
+                />
+              </div>
+            </div>
+            <div class="bank-details-fields">
+              <div class="f-1">
+                <p class="f-1-outline">Bank Name</p>
+                <input
+                  type="text"
+                  *ngIf="isEditingbankDetails"
+                  [(ngModel)]="bank.bankName"
+                />
+                <span class="f-1-title" *ngIf="!isEditingbankDetails">{{
+                  bank.bankName
+                }}</span>
+              </div>
+              <div class="f-1">
+                <p class="f-1-outline">Account Name</p>
+                <input
+                  type="text"
+                  *ngIf="isEditingbankDetails"
+                  [(ngModel)]="bank.accountName"
+                />
+                <span class="f-1-title" *ngIf="!isEditingbankDetails">{{
+                  bank.accountName
+                }}</span>
+              </div>
+              <div class="f-1">
+                <p class="f-1-outline">Account Number</p>
+                <input
+                  type="text"
+                  *ngIf="isEditingbankDetails"
+                  [(ngModel)]="bank.accountNumber"
+                />
+                <span class="f-1-title" *ngIf="!isEditingbankDetails">{{
+                  bank.accountNumber
+                }}</span>
+              </div>
+              <div class="f-1">
+                <p class="f-1-outline">Sort Code</p>
+                <input
+                  type="text"
+                  *ngIf="isEditingbankDetails"
+                  [(ngModel)]="bank.sortCode"
+                />
+                <span class="f-1-title" *ngIf="!isEditingbankDetails">{{
+                  bank.sortCode
+                }}</span>
+              </div>
             </div>
           </div>
-          <div class="bank-details-fields">
-            <div class="f-1">
-              <p class="f-1-outline">Bank Name</p>
-              <input type="text" />
+          <div class="inner-credentials" *ngIf="addbankaccount">
+            <div class="bank-fields">
+              <p>ABCD Saving A/C</p>
+              <div class="icons">
+                <img
+                  class="check-icon"
+                  (click)=" addBankAccount()"
+                  src="../../../assets/Vector (12).png"
+                  alt=""
+                />
+                <img (click)="cancelAddingForm()"
+                class="cancel-icon"
+                src="../../../assets/vector (7).png"
+                alt=""
+              />
+              </div>
             </div>
-            <div class="f-1">
-              <p class="f-1-outline">Account Name</p>
-              <input type="text" />
-            </div>
-            <div class="f-1">
-              <p class="f-1-outline">Account Number</p>
-              <input type="text" />
-            </div>
-            <div class="f-1">
-              <p class="f-1-outline">Sort Code</p>
-              <input type="text" />
+            <div class="bank-details-fields">
+              <div class="f-1">
+                <p class="f-1-outline">Bank Name</p>
+                <input
+                  type="text"
+                  [(ngModel)]="bankName"
+                />
+              </div>
+              <div class="f-1">
+                <p class="f-1-outline">Account Name</p>
+                <input
+                  type="text"
+                  [(ngModel)]="accountName"
+                />
+              </div>
+              <div class="f-1">
+                <p class="f-1-outline">Account Number</p>
+                <input
+                  type="text"
+                  [(ngModel)]="accountNumber"
+                />
+              </div>
+              <div class="f-1">
+                <p class="f-1-outline">Sort Code</p>
+                <input
+                  type="text"
+                  [(ngModel)]="sortCode"
+                />
+              </div>
             </div>
           </div>
-          <div class="add-button">
+          <div class="add-button" (click)=" OpenBankAccountForm()">
             <img src="../../../assets/vector (2).png" alt="" />
             <span>Add Bank Account</span>
           </div>
@@ -161,8 +344,14 @@
   </div>
   <div class="mobile-form-div">
     <div class="heading-mobile">
-      <i class="sidenav-toggle fa-solid fa-bars fa-2xl" style="color: white;" (click)="handleSidenav()"></i>
-      <h4 style="font-weight: bold; margin: 0; color: white;">Business Profile Management</h4>
+      <i
+        class="sidenav-toggle fa-solid fa-bars fa-2xl"
+        style="color: white"
+        (click)="handleSidenav()"
+      ></i>
+      <h4 style="font-weight: bold; margin: 0; color: white">
+        Business Profile Management
+      </h4>
     </div>
     <div class="logo">
       <div class="logo-square">
@@ -175,37 +364,44 @@
         <span class="heading">Account Information</span>
         <div class="f-1">
           <p class="f-1-outline">User Name</p>
-          <input type="text" [(ngModel)]="AccountInfo[0].username" />
+          <input type="text" [(ngModel)]="AccountInfo.username" />
         </div>
         <div class="f-1">
           <p class="f-1-outline">Email ID</p>
-          <input type="text" [(ngModel)]="AccountInfo[0].email" />
+          <input type="text"  [(ngModel)]="AccountInfo.email"/>
         </div>
         <div class="f-1">
           <p class="f-1-outline">Password</p>
-          <input type="password" [(ngModel)]="AccountInfo[0].password" />
+          <input type="password" [(ngModel)]="AccountInfo.password"/>
+        </div>
+        <div class="f-1 update" (click)=" updateAccountInfo()">
+         <span>Update</span>
         </div>
       </div>
+      
     </div>
     <div class="business-section">
       <div class="inner-sec">
         <span class="heading">Address Details</span>
         <div class="f-1">
           <p class="f-1-outline">Building Name/Number</p>
-          <input type="text" [(ngModel)]="AddressDetails[0].buildingName" />
+          <input type="text" [(ngModel)]="AddressDetails.buildingNameNumber" />
         </div>
         <div class="f-1">
           <p class="f-1-outline">Street/Lane</p>
-          <input type="text" [(ngModel)]="AddressDetails[0].street" />
+          <input type="text" [(ngModel)]="AddressDetails.streetName" />
         </div>
         <div class="f-1">
           <p class="f-1-outline">Landmark(optional)</p>
-          <input type="text" [(ngModel)]="AddressDetails[0].landMark" />
+          <input type="text" [(ngModel)]="AddressDetails.landmark" />
         </div>
         <div class="f-1">
           <p class="f-1-outline">Postal Code</p>
-          <input type="text" [(ngModel)]="AddressDetails[0].postalCode" />
+          <input type="text" [(ngModel)]="AddressDetails.postalCode" />
         </div>
+        <div class="f-1 update" (click)=" updateAccountInfo()">
+          <span>Update</span>
+         </div>
       </div>
     </div>
     <div class="account-section">
@@ -213,24 +409,63 @@
         <span class="heading">Business Details</span>
         <div class="f-1">
           <p class="f-1-outline">Business Name</p>
-          <input type="text" [(ngModel)]="BusinessDetails[0].businessName" />
+          <input type="text" [(ngModel)]="BusinessDetails.businessName" />
         </div>
         <div class="f-1">
           <p class="f-1-outline">Contact Number</p>
-          <input type="text" [(ngModel)]="BusinessDetails[0].contactNumber" />
+          <input type="text" [(ngModel)]="BusinessDetails.contactNumber" />
         </div>
         <div class="f-1">
           <p class="f-1-outline">VAT Number</p>
-          <input type="text" [(ngModel)]="BusinessDetails[0].vatNumber" />
+          <input type="text" [(ngModel)]="BusinessDetails.vatNumber" />
         </div>
         <div class="f-1">
           <p class="f-1-outline">CRN Number</p>
-          <input type="text" [(ngModel)]="BusinessDetails[0].CRNnumber" />
+          <input type="text" [(ngModel)]="BusinessDetails.crnNumber" />
         </div>
+        <div class="f-1 update" (click)=" updateAccountInfo()">
+          <span>Update</span>
+         </div>
       </div>
     </div>
 
-    <div class="address-section">
+    <div class="address-section" *ngFor="let bank of BankDetails">
+      <div class="inner-sec">
+        <span class="heading">Bank Details</span>
+        <div class="savings">
+          <span class="s-acnt">ABCD Savings A/C</span>
+          <img src="../../../assets/vector (1).png" alt="" (click)="removeBank(bank)" />
+        </div>
+        <div class="f-1">
+          <p class="f-1-outline">Bank Name</p>
+          <input type="text" [(ngModel)]="bank.bankName" />
+        </div>
+        <div class="f-1">
+          <p class="f-1-outline">Account Name</p>
+          <input type="text" [(ngModel)]="bank.accountName" />
+        </div>
+        <div class="f-1">
+          <p class="f-1-outline">Account Number</p>
+          <input type="text" [(ngModel)]="bank.accountNumber" />
+        </div>
+        <div class="f-1">
+          <p class="f-1-outline">Sort Code</p>
+          <input type="text" [(ngModel)]="bank.sortCode" />
+        </div>
+        <div class="buttons-sec">
+          <div class="add-button" (click)="OpenBankAccountForm()">
+            <img src="../../../assets/vector (2).png" alt="" />
+            <span>Add Bank Account</span>
+          </div>
+          <div class="f-1 update" (click)=" updateAccountInfo()">
+            <span>Update</span>
+           </div>
+        </div>
+        
+      </div>
+      
+    </div>
+    <div class="address-section addData" *ngIf="addbankaccount">
       <div class="inner-sec">
         <span class="heading">Bank Details</span>
         <div class="savings">
@@ -239,23 +474,24 @@
         </div>
         <div class="f-1">
           <p class="f-1-outline">Bank Name</p>
-          <input type="text" [(ngModel)]="BankDetails[0].BankName" />
+          <input type="text" [(ngModel)]="bankName" />
         </div>
         <div class="f-1">
           <p class="f-1-outline">Account Name</p>
-          <input type="text" [(ngModel)]="BankDetails[0].accountName" />
+          <input type="text" [(ngModel)]="accountName" />
         </div>
         <div class="f-1">
           <p class="f-1-outline">Account Number</p>
-          <input type="text" [(ngModel)]="BankDetails[0].accountNumber" />
+          <input type="text" [(ngModel)]="accountNumber" />
         </div>
         <div class="f-1">
           <p class="f-1-outline">Sort Code</p>
-          <input type="text" [(ngModel)]="BankDetails[0].sortcode" />
+          <input type="text" [(ngModel)]="sortCode" />
         </div>
-        <div class="add-button">
-          <img src="../../../assets/vector (2).png" alt="" />
-          <span>Add Bank Account</span>
+        <div class="buttons-sec">
+          <div class="f-1 update" (click)=addBankAccount()>
+            <span>Submit</span>
+           </div>
         </div>
       </div>
     </div>
