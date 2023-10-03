@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AccountantService } from 'src/app/Services/accountant.service';
 
 @Component({
   selector: 'app-profile-management',
@@ -6,48 +7,137 @@ import { Component } from '@angular/core';
   styleUrls: ['./profile-management.component.scss'],
 })
 export class ProfileManagementComponent {
+  addbankaccount = false;
+  showSecondIcon = false;
+  showSecondIcon2 = false;
+  showManageIcon = false;
+  showbankdetails = false;
   isEditingbusiness: boolean = false;
   isEditingaddress: boolean = false;
+  isEditingmanagementDetails: boolean = false;
+  isEditingbankDetails: boolean = false;
   isMenuVisible: boolean = false;
-  AccountInfo: any = [
-    {
-      username: 'Roshan Dsouza',
-      email: 'roshan123@gmail.com',
-      password: 'Roshan@123',
-    },
-  ];
-  BusinessDetails: any = [
-    {
-      businessName: 'ABCD PVT. LTD.',
-      contactNumber: '1234567890',
-      vatNumber: '1234 5678 9101',
-      CRNnumber: '1234 5678 9101',
-    },
-  ];
-  AddressDetails: any = [
-    {
-      buildingName: 'G-64, ALPS TOWER, 2ND FLOOR',
-      street: 'SIMPSONS STREET',
-      landMark: 'ABCD PARK',
-      postalCode: '400 056',
-    },
-  ];
-  BankDetails: any = [
-    {
-      BankName: 'HDFC Bank',
-      accountName: 'ABC Savings A/C',
-      accountNumber: 'ABC Savings A/C',
-      sortcode: '1234 5678 9101'
-    },
-  ];
+
+  bankName: any;
+  accountName: any;
+  accountNumber: any;
+  sortCode: any;
+  constructor(private accountantService: AccountantService) {}
+
+  AccountInfo: any = [];
+  BusinessDetails: any = [];
+  AddressDetails: any = [];
+  BankDetails: any = [];
+  ngOnInit() {
+    this.accountantInfo();
+  }
   editForBusiness() {
+    this.showSecondIcon2 = !this.showSecondIcon2;
     this.isEditingbusiness = true;
   }
-  editForAddredd() {
+  editForAddress() {
+    this.showSecondIcon = !this.showSecondIcon;
     this.isEditingaddress = true;
   }
-
+  editForCredentials() {
+    this.showManageIcon = !this.showManageIcon;
+    this.isEditingmanagementDetails = true;
+  }
+  editBankDetails() {
+    this.showbankdetails = !this.showbankdetails;
+    this.isEditingbankDetails = true;
+  }
+  cancelBusinessEdit() {
+    this.isEditingbusiness = false;
+    this.showSecondIcon2 = false;
+  }
+  cancelAddressEdit() {
+    this.isEditingaddress = false;
+    this.showSecondIcon = false;
+  }
+  cancelAccountEdit() {
+    this.isEditingmanagementDetails = false;
+    this.showManageIcon = false;
+  }
+  cancelBankEdit() {
+    this.isEditingbankDetails = false;
+    this.showbankdetails=false
+  }
   handleSidenav() {
-    this.isMenuVisible = true
+    this.isMenuVisible = true;
+  }
+  accountantInfo() {
+    this.accountantService.getAccountantInfo().subscribe((response) => {
+      console.log(response);
+      this.AddressDetails = response.body.address;
+      console.log(this.AddressDetails);
+      this.BusinessDetails = response.body;
+      console.log(this.BusinessDetails);
+      this.AccountInfo = response.body;
+      console.log(this.AccountInfo);
+      this.BankDetails = response.body.banks;
+      console.log(this.BankDetails);
+    });
+  }
+  updateAccountInfo() {
+    let payload = {
+      name: 'John',
+      businessName: this.BusinessDetails.businessName,
+      contactNumber: this.BusinessDetails.contactNumber,
+      vatNumber: this.BusinessDetails.vatNumber,
+      crnNumber: this.BusinessDetails.crnNumber,
+      address: {
+        buildingNameNumber: this.AddressDetails.buildingNameNumber,
+        streetName: this.AddressDetails.streetName,
+        landmark: this.AddressDetails.landmark,
+        postalCode: this.AddressDetails.postalCode,
+      },
+      username: this.AccountInfo.username,
+      email: this.AccountInfo.email,
+      password: this.AccountInfo.password,
+      banks: this.BankDetails.map((bank: any) => {
+        // Map each bank object to include _id and other properties
+        return {
+          _id: bank._id,
+          accountName: bank.accountName,
+          accountNumber: bank.accountNumber,
+          bankName: bank.bankName,
+          sortCode: bank.sortCode,
+          // Add any other properties you want to update
+        };
+      }),
+    };
+    console.log(payload);
+    this.accountantService.update(payload).subscribe((response: any) => {
+      console.log(response);
+      // location.reload();
+    });
+  }
+  removeBank(bank: any) {
+    let payload = {
+      _id: [bank._id],
+    };
+    console.log(payload);
+    this.accountantService.removeBank(payload).subscribe((response: any) => {
+      console.log(response);
+    });
+  }
+  OpenBankAccountForm() {
+    this.addbankaccount = true;
+  }
+  cancelAddingForm() {
+    this.addbankaccount = false;
+  }
+  addBankAccount() {
+    console.log('hey');
+    let payload = {
+      bankName: this.bankName,
+      accountName: this.accountName,
+      accountNumber: this.accountNumber,
+      sortCode: this.sortCode,
+    };
+    this.accountantService.addBank(payload).subscribe((response) => {
+      console.log(response);
+    });
   }
 }

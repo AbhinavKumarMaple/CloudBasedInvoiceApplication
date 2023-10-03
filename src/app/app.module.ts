@@ -21,12 +21,15 @@ import { TableComponent } from './Components/table/table.component';
 import { SidenavComponent } from './Components/sidenav/sidenav.component';
 import { UpdateDataComponent } from './Components/update-data/update-data.component';
 import { InvoiceUpdateComponent } from './Components/invoice-update/invoice-update.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AccountantService } from './Services/accountant.service';
 import { EmployeeService } from './Services/employee.service';
 import { CustomerService } from './Services/customer.service';
 import { InvoiceService } from './Services/invoice.service';
 import { TokenRefreshService } from './Services/token-refresh.service';
+import { AuthInterceptor } from './Interpreters/auth.interceptor';
+import { CookieService } from 'ngx-cookie-service';
+import { UpdateEmployeeComponent } from './Components/update-employee/update-employee.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +44,7 @@ import { TokenRefreshService } from './Services/token-refresh.service';
     UpdateDataComponent,
     InvoiceUpdateComponent,
     SidenavComponent,
+    UpdateEmployeeComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,6 +65,12 @@ import { TokenRefreshService } from './Services/token-refresh.service';
     CustomerService,
     InvoiceService,
     TokenRefreshService,
+    CookieService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })

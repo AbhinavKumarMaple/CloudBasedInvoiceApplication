@@ -75,12 +75,14 @@ export class UpdateDataComponent implements OnInit {
 
     if (this.isEdit) {
       this.customerService.update(this.editableData._id, data).subscribe(response => {
+        alert('Customer Updated Successfully...');
         this.cancelDialog();
         window.location.reload();
       });
     }
     else {
       this.customerService.create(data).subscribe(response => {
+        alert('Customer Added Successfully...')
         this.cancelDialog();
         window.location.reload();
       })

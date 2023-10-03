@@ -3,11 +3,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class InvoiceService {
-
-  private baseUrl = 'https://invoice-backend-nodejs-production.up.railway.app/api';
+  private baseUrl =
+    'https://invoice-backend-nodejs-production.up.railway.app/api';
 
   constructor(private http: HttpClient) { }
 

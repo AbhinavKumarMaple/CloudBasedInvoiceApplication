@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UpdateEmployeeComponent } from '../update-employee/update-employee.component';
+import { MatDialog } from '@angular/material/dialog';
 import { EmployeeService } from 'src/app/Services/employee.service';
 
 @Component({
@@ -8,14 +10,22 @@ import { EmployeeService } from 'src/app/Services/employee.service';
 })
 export class EmployeeComponent implements OnInit {
   isMenuVisible: boolean = false;
+  constructor(public dialog: MatDialog, private employeeService: EmployeeService) { }
   tableHeader: string[] = ['username', 'email', 'password', 'inviteLink'];
   employeeList: any;
 
   handleSidenav() {
     this.isMenuVisible = true
   }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(UpdateEmployeeComponent, {});
 
-  constructor(private employeeService: EmployeeService) { }
+    dialogRef.afterClosed().subscribe((result) => {
+
+    });
+
+  }
+
 
   ngOnInit(): void {
     this.getEmployeeUnderAccountant();

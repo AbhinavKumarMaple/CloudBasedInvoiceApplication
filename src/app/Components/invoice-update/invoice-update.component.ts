@@ -75,8 +75,8 @@ export class InvoiceUpdateComponent implements OnInit {
       this.invoiceService.create(this.invoiceForm.value).subscribe(response => {
         if (response) {
           alert('Invoice created successfully.')
+          this.cancelDialog();
           this.vatRateService.generate(vatRateData).subscribe(response => {
-            this.cancelDialog();
             window.location.reload();
           })
         }
