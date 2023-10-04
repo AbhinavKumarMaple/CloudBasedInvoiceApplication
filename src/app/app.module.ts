@@ -30,6 +30,7 @@ import { TokenRefreshService } from './Services/token-refresh.service';
 import { AuthInterceptor } from './Interpreters/auth.interceptor';
 import { CookieService } from 'ngx-cookie-service';
 import { UpdateEmployeeComponent } from './Components/update-employee/update-employee.component';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { UpdateEmployeeComponent } from './Components/update-employee/update-emp
     FormsModule,
     MatDialogModule,
     HttpClientModule,
+    ClipboardModule,
   ],
   providers: [
     AccountantService,

@@ -70,7 +70,8 @@
 
 .cust-btn,
 .edit-btn,
-.export-btn {
+.export-btn,
+.inv-btn {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -81,6 +82,13 @@
   border-radius: 50px;
   color: white;
   width: 7rem;
+  padding: 5px;
+}
+
+.inv-btn {
+  border-radius: 50px;
+  color: white;
+  width: 9rem;
   padding: 5px;
 }
 

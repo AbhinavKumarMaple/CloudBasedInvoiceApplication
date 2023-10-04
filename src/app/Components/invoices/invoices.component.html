@@ -9,7 +9,7 @@
         </div>
 
         <div class="search">
-            <input placeholder="Search Here..." />
+            <input placeholder="Search Here..." (ngModelChange)="onTextChange($event)" [(ngModel)]="searchTerm" />
             <i class="fa-solid fa-magnifying-glass fa-lg" style="color: grey; width: auto;"></i>
         </div>
         <div class="mobile-filter-div">
@@ -32,7 +32,7 @@
                     <li><a class="dropdown-item">Sort by Payment Status</a></li>
                 </ul>
             </div>
-            <div class="edit-btn">
+            <div class="edit-btn" (click)="openDialog(selectedInvoice)">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
                     Edit Details
@@ -68,11 +68,18 @@
                 </ul>
             </div>
             <div class="search">
-                <input placeholder="Search" />
+                <input placeholder="Search" (ngModelChange)="onTextChange($event)" [(ngModel)]="searchTerm" />
                 <i class="fa-solid fa-magnifying-glass fa-lg" style="color: #b8b4b4; width: auto;"></i>
             </div>
         </div>
         <div class="btn-group">
+            <div class="inv-btn" (click)="generateInvoice()" *ngIf="viewGenerateInvoice"
+                [style.background-color]="color == 'employee' ? '#1354D4' : '#5800a0'">
+                <i class="fa-solid fa-plus" style="width: auto;"></i>
+                <p class="customer" style="margin: 0;">
+                    Generate Invoice
+                </p>
+            </div>
             <div class="cust-btn" (click)="openDialog()"
                 [style.background-color]="color == 'employee' ? '#1354D4' : '#5800a0'">
                 <i class="fa-solid fa-plus" style="width: auto;"></i>
@@ -87,7 +94,8 @@
                 </p>
             </div>
             <div class="export-btn" [style.color]="color == 'employee' ? '#1354D4' : '#5800a0'"
-                [style.border]="color == 'employee' ? '1px solid #1354D4' : '1px solid #5800a0'">
+                [style.border]="color == 'employee' ? '1px solid #1354D4' : '1px solid #5800a0'"
+                (click)="convertToCSV()">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
                     Export Data
@@ -97,7 +105,7 @@
     </div>
     <div class="table-div">
         <app-table [tableHeaders]="color == 'employee' ? tableHeaders : tableHeaderForCustomer"
-            [tableData]="invoiceList" (rowSelected)="rowSelected($event)"></app-table>
+            [tableData]="filteredCustomerList" (rowSelected)="rowSelected($event)"></app-table>
     </div>
 </div>
 <div *ngIf="isMenuVisible">

@@ -8,7 +8,7 @@
         </div>
 
         <div class="search">
-            <input placeholder="Search Here..." />
+            <input placeholder="Search Here..." (ngModelChange)="onTextChange($event)" [(ngModel)]="searchTerm" />
             <i class="fa-solid fa-magnifying-glass fa-lg" style="color: grey; width: auto;"></i>
         </div>
         <div class="mobile-filter-div">
@@ -59,7 +59,7 @@
                 </ul>
             </div>
             <div class="search">
-                <input [(ngModel)]="searchTerm" />
+                <input [(ngModel)]="searchTerm" (ngModelChange)="onTextChange($event)" />
                 <i class="fa-solid fa-magnifying-glass fa-lg" style="color: #b8b4b4; width: auto;"></i>
             </div>
         </div>
@@ -76,7 +76,7 @@
                     Edit Customer Details
                 </p>
             </div>
-            <div class="export-btn">
+            <div class="export-btn" (click)="convertToCSV()">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
                     Export
@@ -85,7 +85,7 @@
         </div>
     </div>
     <div class="table-div">
-        <app-table [tableHeaders]="tableHeaders" [tableData]="customerList"
+        <app-table [tableHeaders]="tableHeaders" [tableData]="filteredCustomerList"
             (rowSelected)="rowSelected($event)"></app-table>
     </div>
 </div>
