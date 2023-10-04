@@ -28,7 +28,8 @@ export class CustomersComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private customerService: CustomerService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.getCustomerList();
@@ -73,7 +74,6 @@ export class CustomersComponent implements OnInit {
         };
       });
       if (this.searchTerm) {
-        // Filter the customerList based on the searchTerm
         this.customerList = this.customerList.filter((customer: any) =>
           customer.name.toLowerCase().includes(this.searchTerm.toLowerCase())
         );
