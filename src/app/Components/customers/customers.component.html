@@ -8,7 +8,7 @@
         </div>
 
         <div class="search">
-            <input placeholder="Search Here..." />
+            <input placeholder="Search Here..." (ngModelChange)="onTextChange($event)" [(ngModel)]="searchTerm" />
             <i class="fa-solid fa-magnifying-glass fa-lg" style="color: grey; width: auto;"></i>
         </div>
         <div class="mobile-filter-div">

@@ -9,7 +9,7 @@
         </div>
 
         <div class="search">
-            <input placeholder="Search Here..." />
+            <input placeholder="Search Here..." (ngModelChange)="onTextChange($event)" [(ngModel)]="searchTerm" />
             <i class="fa-solid fa-magnifying-glass fa-lg" style="color: grey; width: auto;"></i>
         </div>
         <div class="mobile-filter-div">
@@ -32,7 +32,7 @@
                     <li><a class="dropdown-item">Sort by Payment Status</a></li>
                 </ul>
             </div>
-            <div class="edit-btn">
+            <div class="edit-btn" (click)="openDialog(selectedInvoice)">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
                     Edit Details
