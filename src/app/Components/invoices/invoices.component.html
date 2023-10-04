@@ -68,7 +68,7 @@
                 </ul>
             </div>
             <div class="search">
-                <input placeholder="Search" />
+                <input placeholder="Search" (ngModelChange)="onTextChange($event)" [(ngModel)]="searchTerm" />
                 <i class="fa-solid fa-magnifying-glass fa-lg" style="color: #b8b4b4; width: auto;"></i>
             </div>
         </div>
@@ -105,7 +105,7 @@
     </div>
     <div class="table-div">
         <app-table [tableHeaders]="color == 'employee' ? tableHeaders : tableHeaderForCustomer"
-            [tableData]="invoiceList" (rowSelected)="rowSelected($event)"></app-table>
+            [tableData]="filteredCustomerList" (rowSelected)="rowSelected($event)"></app-table>
     </div>
 </div>
 <div *ngIf="isMenuVisible">

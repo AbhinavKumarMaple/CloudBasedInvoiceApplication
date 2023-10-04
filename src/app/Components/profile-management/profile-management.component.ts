@@ -50,6 +50,7 @@ export class ProfileManagementComponent {
   cancelBusinessEdit() {
     this.isEditingbusiness = false;
     this.showSecondIcon2 = false;
+    window.location.reload();
   }
   cancelAddressEdit() {
     this.isEditingaddress = false;
@@ -79,38 +80,46 @@ export class ProfileManagementComponent {
       console.log(this.BankDetails);
     });
   }
-  updateAccountInfo() {
+
+  updateBusinessDetails() {
     let payload = {
-      name: 'John',
       businessName: this.BusinessDetails.businessName,
       contactNumber: this.BusinessDetails.contactNumber,
       vatNumber: this.BusinessDetails.vatNumber,
       crnNumber: this.BusinessDetails.crnNumber,
+    };
+    console.log(payload);
+    this.accountantService.update(payload).subscribe((response: any) => {
+      console.log(response);
+      // location.reload();
+    });
+  }
+  updateAddress() {
+    let payload = {
       address: {
         buildingNameNumber: this.AddressDetails.buildingNameNumber,
         streetName: this.AddressDetails.streetName,
         landmark: this.AddressDetails.landmark,
         postalCode: this.AddressDetails.postalCode,
       },
-      username: this.AccountInfo.username,
-      email: this.AccountInfo.email,
-      password: this.AccountInfo.password,
-      banks: this.BankDetails.map((bank: any) => {
-        // Map each bank object to include _id and other properties
-        return {
-          _id: bank._id,
-          accountName: bank.accountName,
-          accountNumber: bank.accountNumber,
-          bankName: bank.bankName,
-          sortCode: bank.sortCode,
-          // Add any other properties you want to update
-        };
-      }),
     };
     console.log(payload);
     this.accountantService.update(payload).subscribe((response: any) => {
       console.log(response);
       // location.reload();
+    });
+  }
+  UpdateBankDetails(bank: any) {
+    let payload = {
+      bankName: bank.bankName,
+      accountName: bank.bankName,
+      accountNumber: bank.bankName,
+      sortCode: bank.bankName,
+      _id: bank._id,
+    };
+    console.log(payload)
+    this.accountantService.updateBank(payload).subscribe((response: any) => {
+      console.log(response);
     });
   }
   removeBank(bank: any) {

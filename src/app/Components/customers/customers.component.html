@@ -27,7 +27,7 @@
                     <li><a class="dropdown-item">Sort by Account Number</a></li>
                 </ul>
             </div>
-            <div class="edit-btn">
+            <div class="edit-btn" (click)="openDialog(selectedCustomer)">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
                     Edit Details
@@ -59,7 +59,7 @@
                 </ul>
             </div>
             <div class="search">
-                <input placeholder="Search" />
+                <input [(ngModel)]="searchTerm" (ngModelChange)="onTextChange($event)" />
                 <i class="fa-solid fa-magnifying-glass fa-lg" style="color: #b8b4b4; width: auto;"></i>
             </div>
         </div>
@@ -85,7 +85,7 @@
         </div>
     </div>
     <div class="table-div">
-        <app-table [tableHeaders]="tableHeaders" [tableData]="customerList"
+        <app-table [tableHeaders]="tableHeaders" [tableData]="filteredCustomerList"
             (rowSelected)="rowSelected($event)"></app-table>
     </div>
 </div>
