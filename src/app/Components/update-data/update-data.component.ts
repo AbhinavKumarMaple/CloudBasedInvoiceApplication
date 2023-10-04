@@ -84,7 +84,6 @@ export class UpdateDataComponent implements OnInit {
       this.customerService.create(data).subscribe(response => {
         alert('Customer Added Successfully...')
         this.cancelDialog();
-        window.location.reload();
       })
     }
   }

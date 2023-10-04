@@ -13,12 +13,13 @@ export class EmployeeComponent implements OnInit {
   constructor(public dialog: MatDialog, private employeeService: EmployeeService) { }
   tableHeader: string[] = ['username', 'email', 'password', 'inviteLink'];
   employeeList: any;
+  selectedEmployee: any;
 
   handleSidenav() {
     this.isMenuVisible = true
   }
-  openDialog(): void {
-    const dialogRef = this.dialog.open(UpdateEmployeeComponent, {});
+  openDialog(data?: any): void {
+    const dialogRef = this.dialog.open(UpdateEmployeeComponent, { data: data });
 
     dialogRef.afterClosed().subscribe((result) => {
 
@@ -34,8 +35,11 @@ export class EmployeeComponent implements OnInit {
   getEmployeeUnderAccountant() {
     this.employeeService.employeeUnderAccountant().subscribe(response => {
       this.employeeList = response.body;
-      console.log(this.employeeList)
     })
+  }
+
+  rowSelected(event: any) {
+    this.selectedEmployee = event;
   }
 
 }

@@ -73,6 +73,13 @@
             </div>
         </div>
         <div class="btn-group">
+            <div class="inv-btn" (click)="generateInvoice()" *ngIf="viewGenerateInvoice"
+                [style.background-color]="color == 'employee' ? '#1354D4' : '#5800a0'">
+                <i class="fa-solid fa-plus" style="width: auto;"></i>
+                <p class="customer" style="margin: 0;">
+                    Generate Invoice
+                </p>
+            </div>
             <div class="cust-btn" (click)="openDialog()"
                 [style.background-color]="color == 'employee' ? '#1354D4' : '#5800a0'">
                 <i class="fa-solid fa-plus" style="width: auto;"></i>
@@ -87,7 +94,8 @@
                 </p>
             </div>
             <div class="export-btn" [style.color]="color == 'employee' ? '#1354D4' : '#5800a0'"
-                [style.border]="color == 'employee' ? '1px solid #1354D4' : '1px solid #5800a0'">
+                [style.border]="color == 'employee' ? '1px solid #1354D4' : '1px solid #5800a0'"
+                (click)="convertToCSV()">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
                     Export Data

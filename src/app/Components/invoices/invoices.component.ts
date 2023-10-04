@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { InvoiceUpdateComponent } from '../invoice-update/invoice-update.component';
 import { InvoiceService } from 'src/app/Services/invoice.service';
-import { CookieService } from 'ngx-cookie-service';
+import { CsvServiceService } from 'src/app/Services/csv-service.service';
+import { saveAs } from 'file-saver';
+import { PdfService } from 'src/app/Services/pdf.service';
 
 @Component({
   selector: 'app-invoices',
@@ -18,7 +20,9 @@ export class InvoicesComponent implements OnInit {
   selectedInvoice: any;
   tableHeaders: any = ['invoiceNumber', 'date', 'serviceDescription', 'netAmount', 'vatRate', 'vatAmount', 'totalGross', 'paymentMethod', 'bankAccount', 'paymentStatus', 'note'];
   tableHeaderForCustomer: any = ['invoiceNumber', 'date', 'customerName', 'serviceDescription', 'netAmount', 'vatRate', 'vatAmount', 'totalGross', 'paymentMethod', 'bankAccount', 'paymentStatus', 'note'];
-  constructor(public dialog: MatDialog, private invoiceService: InvoiceService) { }
+  viewGenerateInvoice: boolean = false;
+
+  constructor(public dialog: MatDialog, private invoiceService: InvoiceService, private csvService: CsvServiceService, private pdfService: PdfService) { }
 
   ngOnInit(): void {
     this.getInvoiceList();
@@ -52,7 +56,17 @@ export class InvoicesComponent implements OnInit {
   }
 
   rowSelected(event: any) {
-    console.log(event)
     this.selectedInvoice = event;
+    this.viewGenerateInvoice = true;
+  }
+
+  convertToCSV() {
+    const columnsToDownload = this.loggedInAs == 'employee' ? this.tableHeaders : this.tableHeaderForCustomer;
+    const csvContent = this.csvService.convertToCSV(this.invoiceList, columnsToDownload);
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    saveAs(blob, 'invoice.csv');
+  }
+  generateInvoice() {
+    this.pdfService.getAccountantData(this.selectedInvoice);
   }
 }
