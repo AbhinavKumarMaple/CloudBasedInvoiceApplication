@@ -30,7 +30,12 @@ export class AccountantService {
   generateEmpInviteLink(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/accountant/invite`, data, { observe: 'response', withCredentials: true });
   }
-
+  updateBank(data: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/accountant/editbank/${data._id}`, data, {
+      observe: 'response',
+      withCredentials: true,
+    });
+  }
   update(data: any): Observable<any> {
     return this.http.put(`${this.baseUrl}/accountant/update`, data, {
       observe: 'response',

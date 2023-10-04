@@ -7,7 +7,7 @@
   background-color: #f9fafc;
 }
 .inner-update {
-  height: 650px;
+  height: 100%;
   width: 660px;
 }
 
@@ -33,6 +33,7 @@
   width: 690px;
 }
 .customer-details {
+  // border: 1px solid red;
   height: 45%;
   display: flex;
   flex-direction: column;
@@ -177,11 +178,10 @@
   display: flex;
   width: 100%;
   gap: 20px;
-    padding-left: 30px;
+  padding-left: 30px;
 }
 .ad-btn {
   cursor: pointer;
-  //   font-family: "Inter", sans-serif;
   font-size: 16px;
   height: 29px;
   width: 150px;
@@ -205,7 +205,113 @@
   border: 1px solid red;
   color: red;
 }
-.cancel img{
+.cancel img {
   height: 12px;
   width: 12px;
+}
+@media screen and (max-width: 500px) {
+  .outer-update {
+
+    width: 390px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9fafc;
+    overflow-y: scroll;
+  }
+  .inner-update {
+    width: 360px;
+   
+  }
+  .fields {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: initial;
+    margin-top: 30px;
+    gap: 20px;
+  }
+  .customer1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 40%;
+    padding: 20px 0px 0px 0px;
+  }
+  .fields2 {
+    display: flex;
+    justify-content: initial;
+    align-items: initial;
+    padding-top: 26px;
+  }
+  .customer1 span {
+    color: #8a8a8a;
+    font-family: "Inter", sans-serif;
+    margin-left: 0px;
+    padding-left: 65px;
+    margin-top: 5px;
+  }
+  .bank-details div {
+    border: none;
+    width: 0;
+  }
+  .bank-credentials {
+    width: 320px;
+    font-family: "Inter", sans-serif;
+    font-size: 20px;
+    height: 19px;
+    color: #5800a0;
+  }
+  .cus-details {
+    height: 0;
+    display: flex;
+    align-items: center;
+    padding-top: 70px;
+    padding-left: 20px;
+  }
+  .cus-details div {
+    border: none;
+    width: 0px;
+  }
+  .address-t {
+    color: #8a8a8a;
+    font-family: "Inter", sans-serif;
+    padding-left: 89px;
+    margin-top: 33px;
+  }
+  .customer-credentials {
+    width: 250px;
+    font-family: "Inter", sans-serif;
+    margin-top: 155px;
+    padding-left: 40px;
+  }
+  .fields3{
+    border: 1px solid red;
+   margin-top: 25px;
+  }
+  .account-details {
+    border: 1px solid red;
+    padding: 0;
+    margin-top: 100px;
+    height: 20%;
+    width: 76%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    font-family: "Inter", sans-serif;
+    gap: 12px;
+  }
+  .save {
+    width: 168px;
+    display: flex;
+    justify-content: space-between;
+    color: #8a8a8a;
+  }
+  .add-button{
+    margin-left: 0;
+  }
+  .details{
+    height: initial;
+  }
 }
