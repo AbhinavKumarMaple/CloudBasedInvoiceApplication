@@ -2,9 +2,10 @@
     <thead [style.color]="user == 'employee' ? '#1354D4' : '#5800a0'">
         <tr>
             <td><input type="checkbox"></td>
-            <th *ngFor="let header of title">{{ header != '_ID' ? header == 'CUSTOMER NAME' && user == 'customer' ?
-                'CLIENT NAME' : header :
-                '' }}</th>
+            <th *ngFor="let header of title"><span>{{ header != '_ID' ? header == 'CUSTOMER NAME' && user == 'customer'
+                    ?
+                    'CLIENT NAME' : header :
+                    '' }} <i *ngIf="header != '_ID'" class="fa-solid fa-up-down" (click)="sort(header)"></i></span></th>
         </tr>
     </thead>
     <tbody>
@@ -24,7 +25,7 @@
                             [style.border-radius]="'50px'">{{ header ===
                             'password'
                             ?
-                            '*****' : row[header]
+                            '*****' : (header === 'date' ? (row[header] | date:'shortDate') : row[header])
                             }}</span>
                     </ng-container>
                 </ng-container>
@@ -33,6 +34,10 @@
                         <button class=" invite-btn" (click)="onInviteClick(row)">Invite</button>
                     </ng-container>
                 </ng-template>
+            </td>
+            <td>
+                <i class="fa-solid fa-trash fa-lg" style="color: rgb(255, 84, 84); cursor: pointer;"
+                    (click)="delete(row)"></i>
             </td>
         </tr>
     </tbody>

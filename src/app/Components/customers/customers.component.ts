@@ -32,6 +32,8 @@ export class CustomersComponent implements OnInit {
   private _searchTerm$ = new Subject<string>();
   filteredCustomerList: any;
   color: any;
+  customer: string = 'customer';
+  noOfRowsSelected: any;
 
   constructor(public dialog: MatDialog, private customerService: CustomerService, private csvService: CsvServiceService) {
     this._searchTerm$.subscribe((searchTerm) => {
@@ -121,5 +123,9 @@ export class CustomersComponent implements OnInit {
     const csvContent = this.csvService.convertToCSV(this.dataForCSV, columnsToDownload);
     const blob = new Blob([csvContent], { type: 'text/csv' });
     saveAs(blob, 'customers.csv');
+  }
+
+  rowCount(event: any) {
+    this.noOfRowsSelected = event;
   }
 }

@@ -11,7 +11,7 @@ export class PdfService {
 
   constructor(private accountantService: AccountantService, private customerService: CustomerService) { }
 
-  generatePDF(data: any, accountantData: any) {
+  generatePDF(data: any, accountantData: any, bankData: any) {
     const pdf = new jsPDF('p', 'pt', 'A4');
 
     let x = 20;
@@ -50,8 +50,6 @@ export class PdfService {
     y += 20;
     pdf.setFontSize(8);
     pdf.setFont('Helvetica', 'normal');
-    pdf.text('invoice No:   ' + data.invoiceNumber.toString(), x, y);
-    y += 20;
     const formattedDate = moment(data.date).format('D MMMM YYYY');
     pdf.text('Invoice Date:   ' + formattedDate, x, y);
     y += 20;
@@ -119,22 +117,22 @@ export class PdfService {
     y += 20;
     pdf.setFontSize(8);
     pdf.setFont('Helvetica', 'normal');
-    pdf.text('Bank Name:   ' + data.bankAccount.toString(), x, y);
+    pdf.text('Bank Name:   ' + bankData.bankName, x, y);
     x += 150;
-    pdf.text('A/C Name:    Finnac', x, y);
+    pdf.text('A/C Name:    ' + bankData.accountName, x, y);
     y += 20;
     x = 20;
-    pdf.text('Account No.:    00646200', x, y);
+    pdf.text('Account No.:    ' + bankData.accountNumber, x, y);
     x += 150;
-    pdf.text('Sort Code:    30-94-71', x, y);
+    pdf.text('Sort Code:    ' + bankData.sortCode, x, y);
 
     const fileName = 'Invoice.pdf';
     pdf.save(fileName);
   }
 
-  getAccountantData(data: any) {
+  getAccountantData(data: any, bankData: any) {
     this.accountantService.getAccountantInfo().subscribe(response => {
-      this.generatePDF(data, response.body);
+      this.generatePDF(data, response.body, bankData);
     })
   }
 
