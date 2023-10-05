@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CustomerService } from 'src/app/Services/customer.service';
+import { EmployeeService } from 'src/app/Services/employee.service';
 import { InvoiceService } from 'src/app/Services/invoice.service';
 import { ServiceDescriptionService } from 'src/app/Services/service-description.service';
 import { VatRateService } from 'src/app/Services/vat-rate.service';
@@ -23,6 +24,16 @@ export class InvoiceUpdateComponent implements OnInit {
   banksList: any;
   netAmountInput: any;
   selectedVatRate: any;
+  selectedCustomer: any;
+  vatRate: any;
+  loggedInAs: any = localStorage.getItem('loggedInAs');
+  customerID: any = localStorage.getItem('id');
+  openVatList: boolean = false;
+  openCustomerList: boolean = false;
+  openBankList: boolean = false;
+  openServiceList: boolean = false;
+  openPaymentList: boolean = false;
+  openStatusList: boolean = false;
 
   constructor(private dialogRef: MatDialogRef<InvoiceUpdateComponent>,
     private formbuilder: FormBuilder,
@@ -31,12 +42,14 @@ export class InvoiceUpdateComponent implements OnInit {
     private vatRateService: VatRateService,
     private customerService: CustomerService,
     private serviceDescription: ServiceDescriptionService,
+    private employeeService: EmployeeService,
     @Inject(MAT_DIALOG_DATA) public data?: any,
   ) {
     this.editableData = data;
     if (data) {
       console.log(data)
       this.isEdit = true;
+
     }
   }
 
@@ -44,6 +57,7 @@ export class InvoiceUpdateComponent implements OnInit {
     this.getVatRate();
     this.getCustomer();
     this.getServiceDescription();
+
     this.invoiceForm = this.formbuilder.group({
       invoiceNumber: [this.isEdit ? this.editableData.invoiceNumber : '', [Validators.required]],
       customerName: [this.isEdit ? this.editableData.customerName : '', [Validators.required,]],
@@ -65,9 +79,17 @@ export class InvoiceUpdateComponent implements OnInit {
   }
 
   getVatRate() {
-    this.vatService.getVatRate().subscribe(response => {
-      this.vatRateOptions = response.body;
-    })
+    if (this.loggedInAs == 'employee') {
+      this.vatService.getVatRate().subscribe(response => {
+        this.vatRateOptions = response.body;
+      })
+    } else {
+      this.vatService.getVatRateById(this.customerID).subscribe(response => {
+        if (response) {
+          this.vatRateOptions = response.body;
+        }
+      })
+    }
   }
 
   getServiceDescription() {
@@ -77,36 +99,111 @@ export class InvoiceUpdateComponent implements OnInit {
   }
 
   getCustomer() {
-    this.customerService.getAllCustomer().subscribe(response => {
-      this.customerList = response.body.customers;
-    })
+    if (this.loggedInAs == 'employee') {
+      this.customerService.getAllCustomer().subscribe(response => {
+        this.customerList = response.body.customers;
+      })
+    }
+    else if (this.loggedInAs == 'customer') {
+      this.employeeService.employeeUnderAccountant().subscribe(response => {
+        this.customerList = response.body;
+      })
+    }
   }
 
-  selectedCustomer: any; // Change the type to match your customer object type
+  setBank(bank: any) {
+    let bankName = this.invoiceForm.get('bankAccount');
+    bankName?.patchValue(bank);
+    this.openBankList = false;
+  }
+
+  setDesc(data: any) {
+    let description = this.invoiceForm.get('serviceDescription');
+    description?.patchValue(data);
+    this.openServiceList = false;
+  }
+
+  setPayment(data: any) {
+    let method = this.invoiceForm.get('paymentMethod');
+    method?.patchValue(data);
+    this.openPaymentList = false;
+  }
+
+  setStatus(data: any) {
+    let status = this.invoiceForm.get('paymentStatus');
+    status?.patchValue('data');
+    this.openStatusList = false;
+  }
 
   dropdownSelected(selectedOption: any) {
     this.banksList = selectedOption?.banks;
+    let customer = this.invoiceForm.get('customerName');
+    customer?.patchValue(selectedOption.name);
+    this.openCustomerList = false;
   }
+
+  calculateGross(value?: any) {
+    let vat = this.invoiceForm.get('vatAmount');
+    let gross = this.invoiceForm.get('totalGross');
+    let vatRate = this.invoiceForm.get('vatRate');
+
+    this.openVatList = false;
+
+    if (value) {
+      vatRate?.patchValue(value);
+      vat?.patchValue((this.invoiceForm.value.netAmount * value) / 100)
+      gross?.patchValue(Number(this.invoiceForm.value.netAmount) + Number(this.invoiceForm.value.vatAmount))
+    }
+    else {
+      vat?.patchValue((this.invoiceForm.value.netAmount * this.invoiceForm.value.vatRate) / 100)
+      gross?.patchValue(Number(this.invoiceForm.value.netAmount) + Number(this.invoiceForm.value.vatAmount))
+    }
+  }
+
 
   saveInvoice() {
     console.log(this.invoiceForm.value.vatRate)
     const vatRateData = {
       vatRate: this.invoiceForm.value.vatRate
     }
+    const data = {
+      invoiceNumber: this.invoiceForm.value.invoiceNumber,
+      customerName: this.invoiceForm.value.customerName.name,
+      netAmount: this.invoiceForm.value.netAmount,
+      vatRate: this.invoiceForm.value.vatRate.vatRate,
+      vatAmount: this.invoiceForm.value.vatAmount,
+      totalGross: this.invoiceForm.value.totalGross,
+      bankAccount: this.invoiceForm.value.bankAccount,
+      date: this.invoiceForm.value.date,
+      serviceDescription: this.invoiceForm.value.serviceDescription.description,
+      paymentMethod: this.invoiceForm.value.paymentMethod,
+      paymentStatus: this.invoiceForm.value.paymentStatus,
+      note: this.invoiceForm.value.note
+    };
+    const serviceDescData = {
+      description: this.invoiceForm.value.serviceDescription
+    }
     if (this.isEdit) {
-      this.invoiceService.updateById(this.invoiceForm.value).subscribe(response => {
+      this.invoiceService.updateById(data).subscribe(response => {
+        alert('Invoice updated successfully');
+        this.serviceDescription.update(data.serviceDescription._id, data.serviceDescription.description).subscribe();
+        this.vatRateService.update(data.vatRate._id, data.vatRate.vatRate).subscribe();
         this.cancelDialog();
         window.location.reload();
       })
     }
     else {
-      this.invoiceService.create(this.invoiceForm.value).subscribe(response => {
+      this.invoiceService.create(data).subscribe(response => {
         if (response) {
           alert('Invoice created successfully.')
           this.cancelDialog();
+          this.serviceDescription.generate(serviceDescData).subscribe(response => {
+            console.log(response);
+          });
           this.vatRateService.generate(vatRateData).subscribe(response => {
-            window.location.reload();
-          })
+
+          });
+          window.location.reload();
         }
       })
     }

@@ -14,24 +14,20 @@
 }
 
 .inner-container {
-  height: 88%;
-  width: 95%;
   display: flex;
 }
 
 .img-sec {
-  width: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  img {
+    width: 100%;
+  }
 }
 
 .img {
-  position: absolute;
-  left: 195px;
-  height: 650px;
-  margin-top: 7px;
-  width: 612px;
 
   @media screen and (max-width: 500px) {
     position: unset;
@@ -51,8 +47,8 @@
 .inner-form {
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
-  height: 626px;
-  width: 500px;
+  height: 100%;
+  width: 100%;
   background-color: #f4f4f4;
   display: flex;
   justify-content: center;
@@ -61,8 +57,11 @@
 
 .login-form {
   padding-top: 25px;
-  height: 94%;
+  height: 100%;
   width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .title {
@@ -75,7 +74,7 @@
 }
 
 .title .t1 {
-  font-size: 35px;
+  font-size: 200%;
   height: 40px;
   width: 375px;
   font-family: "Inter", sans-serif;
@@ -87,13 +86,12 @@
 .title .t2 {
   font-family: "Inter", sans-serif;
   font-size: 12px;
-  width: 328px;
   height: 15px;
   color: #8a8a8a;
-  letter-spacing: 0.7px;
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
 
 .fields {
@@ -129,8 +127,6 @@
 .inner-buttons p {
   font-family: "Inter", sans-serif;
   font-size: 14px;
-  width: 160px;
-  height: 38px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -163,7 +159,7 @@
 
 .f-1 {
   border: 1px solid #5800a0;
-  width: 370px;
+  width: 100%;
   height: 44px;
   border-radius: 24px;
   position: relative;
@@ -183,7 +179,7 @@
 
 .input-box input {
   height: 30px;
-  width: 340px;
+  width: 90%;
   font-size: 16px;
   outline: none;
   border: none;
@@ -213,7 +209,6 @@
 
 .pass-btn {
   width: 35px;
-  height: 35px;
   border: none;
   border-radius: 20px;
   padding: 7px;

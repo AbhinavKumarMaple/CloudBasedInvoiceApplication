@@ -22,6 +22,8 @@ export class EmployeeComponent implements OnInit {
   private _searchTerm$ = new Subject<string>();
   filteredCustomerList: any;
   searchTerm: any;
+  employee: string = 'employee';
+  noOfRowsSelected: any;
 
   handleSidenav() {
     this.isMenuVisible = true
@@ -64,6 +66,10 @@ export class EmployeeComponent implements OnInit {
 
   rowSelected(event: any) {
     this.selectedEmployee = event;
+  }
+
+  rowCount(event: any) {
+    this.noOfRowsSelected = event;
   }
 
 }
