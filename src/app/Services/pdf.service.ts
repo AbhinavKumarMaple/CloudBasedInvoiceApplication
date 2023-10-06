@@ -24,10 +24,12 @@ export class PdfService {
 
     pdf.setFontSize(12);
     pdf.setFont('Helvetica', 'bold');
-    pdf.text(accountantData.name, x, y, { align: 'right' });
+    pdf.text(accountantData.businessName, x, y, { align: 'right' });
     y += 20;
     pdf.setFontSize(8);
     pdf.setFont('Helvetica', 'bold');
+    pdf.text(accountantData.name, x, y, { align: 'right' });
+    y += 20;
     pdf.text(accountantData.address.buildingNameNumber, x, y, { align: 'right' });
     y += 20;
     pdf.text(accountantData.address.landmark, x, y, { align: 'right' });
@@ -125,6 +127,10 @@ export class PdfService {
     pdf.text('Account No.:    ' + bankData.accountNumber, x, y);
     x += 150;
     pdf.text('Sort Code:    ' + bankData.sortCode, x, y);
+    y += 60;
+    x = 20;
+    pdf.text('Note:    ' + data.note, x, y);
+
 
     const fileName = 'Invoice.pdf';
     pdf.save(fileName);

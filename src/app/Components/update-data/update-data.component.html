@@ -1,7 +1,8 @@
 <div class="outer-update">
   <form class="inner-update" [formGroup]="customerForm">
     <div class="bank-details">
-      <span class="bank-credentials">Add New Customer</span>
+      <span *ngIf="!isEdit" class="bank-credentials">Add New Customer</span>
+      <span *ngIf="isEdit" class="bank-credentials">Edit Customer</span>
       <div></div>
     </div>
     <div class="customer-details">

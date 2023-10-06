@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { AccountantService } from 'src/app/Services/accountant.service';
 import { EmployeeService } from 'src/app/Services/employee.service';
 
 @Component({
@@ -26,11 +27,14 @@ export class UpdateEmployeeComponent implements OnInit {
   password: any;
   editableData: any;
   isEdit: boolean = false;
+  addbankaccount = false;
+  bankList: any[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<UpdateEmployeeComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private employeeService: EmployeeService
+    private employeeService: EmployeeService,
+    private accountantService: AccountantService
   ) {
     if (data) {
       this.isEdit = true;
@@ -56,30 +60,53 @@ export class UpdateEmployeeComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
+  cancelDialog(): void {
+    this.dialogRef.close();
+  }
 
-  addEmployee() {
-    let payload = {
-      name: this.name,
+  addClient() {
+    let data = {
+      businessName: this.businessName,
       contactNumber: this.contactNumber,
+      vatNumber: this.vatNumber,
+      crnNumber: this.crnNumber,
+      buildingNameNumber: this.buildingNameNumber,
+      streetName: this.streetName,
+      landmark: this.landmark,
+      postalCode: this.postalCode,
       username: this.username,
       email: this.email,
       password: this.password,
-    };
-
-    if (this.isEdit) {
-      this.employeeService
-        .update(this.editableData._id, payload)
-        .subscribe((response) => {
-          console.log(response);
-          this.onNoClick();
-          window.location.reload();
-        });
-    } else {
-      this.employeeService.addEmployee(payload).subscribe((response: any) => {
-        alert('Employee added successfully...');
-        this.onNoClick();
-        window.location.reload();
-      });
+      banks: this.bankList,
     }
+    this.employeeService.addEmployee(data).subscribe(response => {
+      alert('Client added successfully...');
+      this.cancelDialog();
+      window.location.reload();
+    })
+  }
+
+  OpenBankAccountForm() {
+    this.addbankaccount = true;
+  }
+  cancelAddingForm() {
+    this.addbankaccount = false;
+  }
+
+  addBank() {
+    this.bankList.push({
+      bankName: this.bankName,
+      accountName: this.accountName,
+      accountNumber: this.accountNumber,
+      sortCode: this.sortCode,
+    })
+    this.bankName = '';
+    this.accountName = '';
+    this.accountName = '';
+    this.accountNumber = '';
+  }
+
+  removeBank(bankData: any) {
+    this.bankList = this.bankList.filter((bank: any) => bank.bankName !== bankData.bankName);
   }
 }

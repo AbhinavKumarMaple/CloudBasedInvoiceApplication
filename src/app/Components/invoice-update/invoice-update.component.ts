@@ -32,6 +32,7 @@ export class InvoiceUpdateComponent implements OnInit {
   openBankList: boolean = false;
   openServiceList: boolean = false;
   openPaymentList: boolean = false;
+  description: any[] = [];
 
   constructor(private dialogRef: MatDialogRef<InvoiceUpdateComponent>,
     private formbuilder: FormBuilder,
@@ -198,6 +199,16 @@ export class InvoiceUpdateComponent implements OnInit {
         }
       })
     }
+  }
+
+  addDescription() {
+    this.description.push({
+      description: this.invoiceForm.value.serviceDescription
+    })
+
+    this.invoiceForm.value.serviceDescription.patchValue('')
+
+    console.log(this.description)
   }
 
 }
