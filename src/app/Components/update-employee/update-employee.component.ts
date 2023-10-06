@@ -8,7 +8,18 @@ import { EmployeeService } from 'src/app/Services/employee.service';
   styleUrls: ['./update-employee.component.scss'],
 })
 export class UpdateEmployeeComponent implements OnInit {
+  businessName: any;
+  vatNumber: any;
   name: any;
+  crnNumber: any;
+  landmark: any;
+  postalCode: any;
+  buildingNameNumber: any;
+  streetName: any;
+  bankName: any;
+  sortCode: any;
+  accountName: any;
+  accountNumber: any;
   contactNumber: any;
   username: any;
   email: any;
@@ -18,7 +29,8 @@ export class UpdateEmployeeComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<UpdateEmployeeComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private employeeService: EmployeeService
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private employeeService: EmployeeService
   ) {
     if (data) {
       this.isEdit = true;
@@ -55,18 +67,19 @@ export class UpdateEmployeeComponent implements OnInit {
     };
 
     if (this.isEdit) {
-      this.employeeService.update(this.editableData._id, payload).subscribe(response => {
-        console.log(response)
-        this.onNoClick();
-        window.location.reload();
-      })
-    }
-    else {
+      this.employeeService
+        .update(this.editableData._id, payload)
+        .subscribe((response) => {
+          console.log(response);
+          this.onNoClick();
+          window.location.reload();
+        });
+    } else {
       this.employeeService.addEmployee(payload).subscribe((response: any) => {
         alert('Employee added successfully...');
         this.onNoClick();
         window.location.reload();
-      })
+      });
     }
   }
 }
