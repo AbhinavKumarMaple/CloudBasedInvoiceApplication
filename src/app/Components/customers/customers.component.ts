@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { UpdateDataComponent } from '../update-data/update-data.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomerService } from 'src/app/Services/customer.service';

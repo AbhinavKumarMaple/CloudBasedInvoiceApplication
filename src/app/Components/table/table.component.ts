@@ -107,5 +107,9 @@ export class TableComponent implements OnInit {
       })
     }
   }
+  getAllInvoices(header: any, row: any) {
+    console.log(header)
+    console.log(row);
+  }
 
 }

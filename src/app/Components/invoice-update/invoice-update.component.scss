@@ -37,6 +37,11 @@
   flex-direction: column;
 }
 
+.desc-div {
+  align-self: baseline;
+  margin-left: 40px;
+}
+
 .left-sec {
   width: 50%;
   display: flex;
@@ -45,13 +50,21 @@
   align-items: center;
 }
 
+
+.addDesc-div {
+  border: 1px solid grey;
+  border-radius: 50px;
+  padding: 5px;
+  cursor: pointer;
+}
+
 .right-sec {
   width: 50%;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   align-items: center;
   height: 89%;
+  gap: 30px;
 }
 
 .bank-details {

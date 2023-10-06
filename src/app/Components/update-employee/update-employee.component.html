@@ -1,4 +1,3 @@
-
 <div class="container">
   <div class="inner-content">
     <div class="details">
@@ -19,19 +18,19 @@
                 </div>
                 <div class="f-1">
                   <p class="f-1-outline">Contact Number</p>
-                  <input type="text" [(ngModel)]="contactNumber" />
+                  <input type="number" [(ngModel)]="contactNumber" />
                 </div>
                 <div class="f-1">
                   <p class="f-1-outline">VAT Number</p>
-                  <input type="text" [(ngModel)]="vatNumber" />
+                  <input type="number" [(ngModel)]="vatNumber" />
                 </div>
                 <div class="f-1">
                   <p class="f-1-outline">CRN Number</p>
-                  <input type="text" [(ngModel)]="crnNumber" />
+                  <input type="number" [(ngModel)]="crnNumber" />
                 </div>
               </div>
             </div>
-  
+
             <div class="address-sec">
               <div class="business-title">
                 <span class="ad">Address</span>
@@ -51,15 +50,12 @@
                 </div>
                 <div class="f-1">
                   <p class="f-1-outline">Postal Code</p>
-                  <input type="text" [(ngModel)]="postalCode" />
+                  <input type="number" [(ngModel)]="postalCode" />
                 </div>
               </div>
             </div>
           </div>
           <div class="management-sec">
-            <div class="bank-details">
-              <span class="manage-credentials">Manage Credentials</span>
-            </div>
             <div class="bank-fields b-field">
               <span>Account Information</span>
             </div>
@@ -70,24 +66,25 @@
               </div>
               <div class="f-1">
                 <p class="f-1-outline">Email</p>
-                <input
-                  type="text"
-                  [(ngModel)]="email"
-                />
+                <input type="text" [(ngModel)]="email" />
               </div>
               <div class="f-1">
                 <p class="f-1-outline">Password</p>
-                <input
-                  type="text"
-                  [(ngModel)]="password"
-                />
+                <input type="password" [(ngModel)]="password" />
               </div>
             </div>
           </div>
           <div class="savings-sec">
             <div class="inner-credentials">
               <div class="bank-fields">
-                <p>ABCD Saving A/C</p>
+                <span class="ad">Bank Details</span>
+              </div>
+              <div class="banklist-div">
+                <div class="addedbank-div" *ngFor="let bank of bankList">
+                  <p>{{bank.bankName}}</p>
+                  <i class="fa-solid fa-trash" style="color: rgb(252, 126, 126); cursor: pointer;"
+                    (click)="removeBank(bank)"></i>
+                </div>
               </div>
               <div class="bank-details-fields">
                 <div class="f-1">
@@ -100,24 +97,33 @@
                 </div>
                 <div class="f-1">
                   <p class="f-1-outline">Account Number</p>
-                  <input type="text" [(ngModel)]="accountNumber" />
+                  <input type="number" [(ngModel)]="accountNumber" />
                 </div>
                 <div class="f-1">
                   <p class="f-1-outline">Sort Code</p>
-                  <input type="text" [(ngModel)]="sortCode" />
+                  <input type="number" [(ngModel)]="sortCode" />
                 </div>
               </div>
             </div>
             <div class="button-div">
-              <div class="add-button">
+              <div class="add-button" (click)="addBank()">
                 <img src="../../../assets/vector (2).png" alt="" />
                 <span>Add Bank Account</span>
               </div>
             </div>
-            
+            <div class="buttons">
+              <div class="add-btn" (click)="addClient()">
+                <img src="../../../assets/vector (2).png" alt="" />
+                <span>Save Customer</span>
+              </div>
+              <div class="add-btn cancel" (click)="cancelDialog()">
+                <img src="../../../assets/vector (7).png" alt="" />
+                <span>Cancel</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div> 
+  </div>
 </div>
