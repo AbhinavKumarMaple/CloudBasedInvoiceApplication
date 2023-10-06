@@ -28,7 +28,6 @@
 }
 
 .img {
-
   @media screen and (max-width: 500px) {
     position: unset;
     left: 0;
@@ -37,13 +36,11 @@
     margin: 0;
   }
 }
-
 .form-sec {
-  width: 50%;
+  width: 60%;
   display: flex;
   align-items: center;
 }
-
 .inner-form {
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
@@ -101,14 +98,14 @@
 }
 
 .hotizontal {
-  width: 342px;
+  width: 340px;
   margin-left: 30px;
   border: 1px solid #e2e2e2;
 }
 
 .login-buttons {
   height: 13%;
-  //   border: 2px solid red;
+  // border: 2px solid red;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -184,7 +181,7 @@
   outline: none;
   border: none;
   background-color: #f4f4f4;
-  color: #8A8A8A;
+  color: #8a8a8a;
 }
 
 .submit-btn {
@@ -198,9 +195,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #0078F1;
+  background-color: #0078f1;
   color: white;
-  background-image: linear-gradient(to right, #0078F1, #AA4EF1);
+  background-image: linear-gradient(to right, #0078f1, #aa4ef1);
 }
 
 .pass {
@@ -212,7 +209,7 @@
   border: none;
   border-radius: 20px;
   padding: 7px;
-  background-color: #D9D9D9;
+  background-color: #d9d9d9;
 }
 
 .mobile-div {
@@ -225,7 +222,7 @@
   }
 
   .mobile-outer-div {
-    background-image: url('../../../assets/Gradient_BG.png');
+    background-image: url("../../../assets/Gradient_BG.png");
     background-size: 100% 100%;
     height: 40vh;
     width: 100vw;
@@ -288,8 +285,6 @@
         padding: 10px 20px;
         border-radius: 50px;
       }
-
-
     }
 
     .input-box {
@@ -307,7 +302,7 @@
       outline: none;
       border: none;
       background-color: white;
-      color: #8A8A8A;
+      color: #8a8a8a;
     }
 
     .f-1 {
