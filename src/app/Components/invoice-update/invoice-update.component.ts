@@ -18,7 +18,6 @@ export class InvoiceUpdateComponent implements OnInit {
   isEdit: boolean = false;
   vatRateOptions: any;
   paymentMethod: string[] = ['Cash', 'Cheque', 'Bank Transfer'];
-  paymentStatus: string[] = ['Unpaid', 'Paid'];
   serviceDescriptionList: any;
   customerList: any;
   banksList: any;
@@ -33,7 +32,6 @@ export class InvoiceUpdateComponent implements OnInit {
   openBankList: boolean = false;
   openServiceList: boolean = false;
   openPaymentList: boolean = false;
-  openStatusList: boolean = false;
 
   constructor(private dialogRef: MatDialogRef<InvoiceUpdateComponent>,
     private formbuilder: FormBuilder,
@@ -69,7 +67,6 @@ export class InvoiceUpdateComponent implements OnInit {
       date: [this.isEdit ? this.editableData.date : '', [Validators.required]],
       serviceDescription: [this.isEdit ? this.editableData.serviceDescription : '', [Validators.required]],
       paymentMethod: [this.isEdit ? this.editableData.paymentMethod : '', [Validators.required]],
-      paymentStatus: [this.isEdit ? this.editableData.paymentStatus : '', [Validators.required]],
       note: [this.isEdit ? this.editableData.note : '', [Validators.required]],
     });
   }
@@ -129,12 +126,6 @@ export class InvoiceUpdateComponent implements OnInit {
     this.openPaymentList = false;
   }
 
-  setStatus(data: any) {
-    let status = this.invoiceForm.get('paymentStatus');
-    status?.patchValue('data');
-    this.openStatusList = false;
-  }
-
   dropdownSelected(selectedOption: any) {
     this.banksList = selectedOption?.banks;
     let customer = this.invoiceForm.get('customerName');
@@ -177,7 +168,7 @@ export class InvoiceUpdateComponent implements OnInit {
       date: this.invoiceForm.value.date,
       serviceDescription: this.invoiceForm.value.serviceDescription.description,
       paymentMethod: this.invoiceForm.value.paymentMethod,
-      paymentStatus: this.invoiceForm.value.paymentStatus,
+      paymentStatus: 'Unpaid',
       note: this.invoiceForm.value.note
     };
     const serviceDescData = {

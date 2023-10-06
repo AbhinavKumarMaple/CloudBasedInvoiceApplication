@@ -83,22 +83,12 @@
             </li>
           </ul>
         </div>
-        <div class="f-1">
+        <div class="f-1" *ngIf="isEdit">
           <p class="f-1-outline">PAYMENT METHOD</p>
           <input type="text" formControlName="paymentMethod" readonly />
           <i class="fa-solid fa-chevron-down" (click)="openPaymentList = !openPaymentList"></i>
           <ul *ngIf="openPaymentList" class="list">
             <li class="options" *ngFor="let option of paymentMethod" (click)="setPayment(option)">
-              {{option}}
-            </li>
-          </ul>
-        </div>
-        <div class="f-1">
-          <p class="f-1-outline">PAYMENT STATUS</p>
-          <input type="text" formControlName="paymentStatus" readonly />
-          <i class="fa-solid fa-chevron-down" (click)="openStatusList = !openStatusList"></i>
-          <ul *ngIf="openStatusList" class="list">
-            <li class="options" *ngFor="let option of paymentStatus" (click)="setStatus(option)">
               {{option}}
             </li>
           </ul>
