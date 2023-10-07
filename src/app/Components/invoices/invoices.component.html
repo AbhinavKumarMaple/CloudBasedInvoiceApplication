@@ -13,9 +13,21 @@
             <i class="fa-solid fa-magnifying-glass fa-lg" style="color: grey; width: auto;"></i>
         </div>
         <div class="mobile-filter-div">
-            <div class="adv-filter" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="adv-filter btn " type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                (click)="openDateRange = !openDateRange">
                 <i class="fa-solid fa-filter" style="width: auto;"></i>
-                <h4 style="margin: 0; width: auto; color: grey;">Sort</h4>
+                <h5 style="margin: 0; width: auto; color: #b8b4b4;">Filters</h5>
+            </div>
+            <div class="date-menu" *ngIf="openDateRange">
+                <div><mat-label>Enter a date range</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                        <input matStartDate [(ngModel)]="startDate" placeholder="Start date">
+                        <input matEndDate [(ngModel)]="endDate" placeholder="End date"
+                            (dateChange)="onDateRangeChange()">
+                    </mat-date-range-input>
+                </div>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
             </div>
             <div class="filter-menu">
 
@@ -26,7 +38,9 @@
                     Edit Details
                 </p>
             </div>
-            <div class="export-btn">
+            <div class="export-btn" [style.color]="color == 'employee' ? '#1354D4' : '#5800a0'"
+                [style.border]="color == 'employee' ? '1px solid #1354D4' : '1px solid #5800a0'"
+                (click)="convertToCSV()">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
                     Export
@@ -45,7 +59,8 @@
                 <div><mat-label>Enter a date range</mat-label>
                     <mat-date-range-input [rangePicker]="picker">
                         <input matStartDate [(ngModel)]="startDate" placeholder="Start date">
-                        <input matEndDate [(ngModel)]="endDate" placeholder="End date">
+                        <input matEndDate [(ngModel)]="endDate" placeholder="End date"
+                            (dateChange)="onDateRangeChange()">
                     </mat-date-range-input>
                 </div>
                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
