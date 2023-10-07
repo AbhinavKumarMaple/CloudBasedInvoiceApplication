@@ -12,7 +12,8 @@ export class PdfService {
 
   constructor(private accountantService: AccountantService, private employeeService: EmployeeService) { }
 
-  generatePDF(data: any, accountantData: any, bankData: any) {
+  generatePDF(data: any, accountantData: any, bankData: any, clientData?: any) {
+    console.log(data)
     const pdf = new jsPDF('p', 'pt', 'A4');
 
     let x = 20;
@@ -59,15 +60,19 @@ export class PdfService {
     pdf.text('Due Date:   3-August-2023', x, y);
     y -= 40;
     x += 550
-    pdf.text(data.employeeName, x, y, { align: 'right' });
+    pdf.setFontSize(10);
+    pdf.setFont('Helvetica', 'bold');
+    pdf.text(clientData.businessName, x, y, { align: 'right' });
     y += 20;
-    pdf.text('Sam Wooldrige', x, y, { align: 'right' });
+    pdf.setFontSize(8);
+    pdf.setFont('Helvetica', 'normal');
+    pdf.text(clientData.address?.buildingNameNumber, x, y, { align: 'right' });
     y += 20;
-    pdf.text('4 Rawmec Business Park', x, y, { align: 'right' });
+    pdf.text(clientData.address?.streetName, x, y, { align: 'right' });
     y += 20;
-    pdf.text('Hoddesdon-EN11', x, y, { align: 'right' });
+    pdf.text(clientData.address?.landmark, x, y, { align: 'right' });
     y += 20;
-    pdf.text('United Kingdom', x, y, { align: 'right' });
+    pdf.text(clientData.address?.postalCode, x, y, { align: 'right' });
     y += 30;
     x = 20;
     pdf.setFontSize(10);
@@ -139,14 +144,15 @@ export class PdfService {
     pdf.save(fileName);
   }
 
-  getAccountantData(data: any, bankData: any) {
+  getAccountantData(data: any, bankData: any, clientData: any) {
     this.accountantService.getAccountantInfo().subscribe(response => {
-      this.generatePDF(data, response.body, bankData);
+      this.generatePDF(data, response.body, bankData, clientData);
     })
   }
 
   getEmployeeData(data: any, bankData: any) {
     this.employeeService.employeeInfo().subscribe(response => {
+      console.log(response.body);
       this.generatePDF(data, response.body, bankData);
     })
   }
