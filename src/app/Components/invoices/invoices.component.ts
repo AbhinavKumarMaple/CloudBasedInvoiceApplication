@@ -22,7 +22,7 @@ export class InvoicesComponent implements OnInit {
   page: number = 1;
   limit: number = 7;
   selectedInvoice: any;
-  tableHeaders: any = ['invoiceNumber', 'paymentStatus', 'date', 'employeeName', 'serviceDescription', 'netAmount', 'vatRate', 'vatAmount', 'totalGross', 'bankAccount', 'note'];
+  tableHeaders: any = ['invoiceNumber', 'paymentStatus', 'date', 'customerName', 'serviceDescription', 'netAmount', 'vatRate', 'vatAmount', 'totalGross', 'bankAccount', 'note'];
   viewGenerateInvoice: boolean = false;
   private _searchTerm$ = new Subject<string>();
   filteredCustomerList: any;
@@ -35,6 +35,7 @@ export class InvoicesComponent implements OnInit {
   startDate: any;
   endDate: any;
   openDateRange: boolean = false;
+  selectedInvoiceList: any[] = [];
 
   constructor(public dialog: MatDialog, private invoiceService: InvoiceService, private csvService: CsvServiceService, private pdfService: PdfService, private accountantService: AccountantService, private employeeService: EmployeeService) {
     this._searchTerm$.subscribe((searchTerm) => {
@@ -62,7 +63,6 @@ export class InvoicesComponent implements OnInit {
   }
 
   filterCustomers(searchTerm: string) {
-    console.log(searchTerm)
     if (!searchTerm || searchTerm.trim() === '') {
       this.filteredCustomerList = this.invoiceList;
     } else {
@@ -78,7 +78,6 @@ export class InvoicesComponent implements OnInit {
       this.invoiceService.getAllByEmp(dateRange).subscribe(response => {
         this.invoiceList = response.body;
         this.filteredCustomerList = this.invoiceList;
-        console.log(this.filteredCustomerList)
       })
     }
     else if (this.loggedInAs == 'customer') {
@@ -91,7 +90,6 @@ export class InvoicesComponent implements OnInit {
 
   openDialog(data?: any): void {
     const dialogRef = this.dialog.open(InvoiceUpdateComponent, { data: data });
-
     dialogRef.afterClosed().subscribe((result) => { });
   }
 
@@ -103,6 +101,7 @@ export class InvoicesComponent implements OnInit {
 
   rowSelected(event: any) {
     this.selectedInvoice = event;
+    this.selectedInvoiceList.push(event);
     this.viewGenerateInvoice = true;
   }
 
@@ -122,12 +121,16 @@ export class InvoicesComponent implements OnInit {
 
   downloadPdf(data: any) {
     this.openBankList = false;
-    if (this.loggedInAs == 'employee') {
-      this.pdfService.getEmployeeData(this.selectedInvoice, data);
-    }
-    else {
-      this.pdfService.getAccountantData(this.selectedInvoice, data);
-    }
+    this.selectedInvoiceList.forEach((selectedInvoice: any) => {
+      if (this.loggedInAs == 'employee') {
+        this.pdfService.getEmployeeData(selectedInvoice, data);
+      }
+      else {
+        this.employeeService.employeeInfoById(selectedInvoice.createdFor).subscribe(response => {
+          this.pdfService.getAccountantData(selectedInvoice, data, response.body);
+        })
+      }
+    })
   }
 
   leftPage() {

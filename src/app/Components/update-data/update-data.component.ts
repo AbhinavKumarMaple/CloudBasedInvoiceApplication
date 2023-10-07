@@ -25,7 +25,7 @@ export class UpdateDataComponent implements OnInit {
     this.editableData = data;
     if (data) {
       console.log(data)
-      const addressParts = this.editableData?.address?.split(',');
+      const addressParts = this.editableData?.address?.split(' ');
       this.building = addressParts[0].trim();
       this.street = addressParts[1]?.trim();
       this.landmark = addressParts[2]?.trim();
@@ -84,6 +84,7 @@ export class UpdateDataComponent implements OnInit {
       this.customerService.create(data).subscribe(response => {
         alert('Customer Added Successfully...')
         this.cancelDialog();
+        window.location.reload();
       })
     }
   }

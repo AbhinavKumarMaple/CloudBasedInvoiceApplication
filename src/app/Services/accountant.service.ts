@@ -14,7 +14,6 @@ export class AccountantService {
 
   constructor(private http: HttpClient, private cookieService: CookieService) {
     this.cookieValue = this.cookieService.get('token');
-    console.log(this.cookieValue);
   }
 
   login(data: any): Observable<any> {
