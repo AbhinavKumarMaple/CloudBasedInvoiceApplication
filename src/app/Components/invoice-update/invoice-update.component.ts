@@ -58,7 +58,6 @@ export class InvoiceUpdateComponent implements OnInit {
     this.getServiceDescription();
 
     this.invoiceForm = this.formbuilder.group({
-      invoiceNumber: [this.isEdit ? this.editableData.invoiceNumber : '', [Validators.required]],
       customerName: [this.isEdit ? this.editableData.customerName : '', [Validators.required,]],
       netAmount: [this.isEdit ? this.editableData.netAmount : '', [Validators.required]],
       vatRate: [this.isEdit ? this.editableData.vatRate : '', [Validators.required]],
@@ -159,7 +158,6 @@ export class InvoiceUpdateComponent implements OnInit {
       vatRate: this.invoiceForm.value.vatRate
     }
     const data = {
-      invoiceNumber: this.invoiceForm.value.invoiceNumber,
       customerName: this.invoiceForm.value.customerName.name,
       netAmount: this.invoiceForm.value.netAmount,
       vatRate: this.invoiceForm.value.vatRate.vatRate,
@@ -205,7 +203,6 @@ export class InvoiceUpdateComponent implements OnInit {
       this.invoiceForm.value.serviceDescription
     )
 
-    console.log(this.description)
   }
 
 }
