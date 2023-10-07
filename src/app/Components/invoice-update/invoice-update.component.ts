@@ -130,7 +130,7 @@ export class InvoiceUpdateComponent implements OnInit {
   dropdownSelected(selectedOption: any) {
     this.banksList = selectedOption?.banks;
     let customer = this.invoiceForm.get('customerName');
-    customer?.patchValue(selectedOption.name);
+    customer?.patchValue(selectedOption.name || selectedOption.businessName);
     this.openCustomerList = false;
   }
 
@@ -167,18 +167,17 @@ export class InvoiceUpdateComponent implements OnInit {
       totalGross: this.invoiceForm.value.totalGross,
       bankAccount: this.invoiceForm.value.bankAccount,
       date: this.invoiceForm.value.date,
-      serviceDescription: this.invoiceForm.value.serviceDescription.description,
+      serviceDescription: this.description,
       paymentMethod: this.invoiceForm.value.paymentMethod,
       paymentStatus: 'Unpaid',
       note: this.invoiceForm.value.note
     };
     const serviceDescData = {
-      description: this.invoiceForm.value.serviceDescription
+      description: this.description
     }
     if (this.isEdit) {
       this.invoiceService.updateById(data).subscribe(response => {
         alert('Invoice updated successfully');
-        this.serviceDescription.update(data.serviceDescription._id, data.serviceDescription.description).subscribe();
         this.vatRateService.update(data.vatRate._id, data.vatRate.vatRate).subscribe();
         this.cancelDialog();
         window.location.reload();
@@ -205,8 +204,6 @@ export class InvoiceUpdateComponent implements OnInit {
     this.description.push({
       description: this.invoiceForm.value.serviceDescription
     })
-
-    this.invoiceForm.value.serviceDescription.patchValue('')
 
     console.log(this.description)
   }

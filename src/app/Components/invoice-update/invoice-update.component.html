@@ -20,7 +20,7 @@
           <i class="fa-solid fa-chevron-down" (click)="openCustomerList = !openCustomerList"></i>
           <ul *ngIf="openCustomerList" class="list">
             <li class="options" *ngFor="let option of customerList" (click)="dropdownSelected(option)">
-              {{option.name}}
+              {{option.name || option.businessName}}
             </li>
           </ul>
         </div>

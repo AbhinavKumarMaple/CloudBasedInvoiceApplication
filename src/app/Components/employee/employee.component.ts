@@ -16,7 +16,7 @@ export class EmployeeComponent implements OnInit {
       this.filterCustomers(searchTerm);
     });
   }
-  tableHeader: string[] = ['_id', 'name', 'contactNumber', 'username', 'email', 'password', 'banks'];
+  tableHeader: string[] = ['_id', 'businessName', 'address', 'contactNumber', 'vatNumber', 'crnNumber', 'userName', 'email', 'password', 'banks', 'inviteLink'];
   employeeList: any;
   selectedEmployee: any;
   private _searchTerm$ = new Subject<string>();
@@ -59,8 +59,28 @@ export class EmployeeComponent implements OnInit {
 
   getEmployeeUnderAccountant() {
     this.employeeService.employeeUnderAccountant().subscribe(response => {
-      this.employeeList = response.body;
+      console.log(response.body);
+      this.employeeList = response.body.map((el: any) => {
+        return {
+          businessName: el.businessName,
+          address: el.address.address +
+            ',' +
+            el.address.streetLane +
+            ',' +
+            el.address.landmark +
+            ',' +
+            el.address.postalCode,
+          contactNumber: el.contactNumber,
+          vatNumber: el.vatNumber,
+          crnNumber: el.crnNumber,
+          userName: el.username,
+          email: el.email,
+          password: el.password,
+          banks: el.banks
+        }
+      });
       this.filteredCustomerList = this.employeeList;
+
     })
   }
 

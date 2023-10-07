@@ -80,10 +80,14 @@ export class LoginComponent {
       password: this.loginForm.value.password
     }
 
+    const empData = {
+      email: this.loginForm.value.username,
+      password: this.loginForm.value.password
+    }
     this.submitted = true;
     if (this.loginForm.valid) {
       if (this.loggedInAs == 0) {
-        this.employeeService.login(data).subscribe((response) => {
+        this.employeeService.login(empData).subscribe((response) => {
           if (response) {
             localStorage.setItem('loggedInAs', 'employee');
             this.tokenRefreshService.startTokenRefreshForEmployee();

@@ -20,7 +20,7 @@ export class EmployeeService {
       withCredentials: true,
     });
   }
-  employeeInfo(data: any): Observable<any> {
+  employeeInfo(): Observable<any> {
     return this.http.get(`${this.baseUrl}/employee/myinfo`, { observe: 'response', withCredentials: true });
   }
 

@@ -3,13 +3,14 @@ import jsPDF from 'jspdf';
 import { AccountantService } from './accountant.service';
 import * as moment from 'moment';
 import { CustomerService } from './customer.service';
+import { EmployeeService } from './employee.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PdfService {
 
-  constructor(private accountantService: AccountantService, private customerService: CustomerService) { }
+  constructor(private accountantService: AccountantService, private employeeService: EmployeeService) { }
 
   generatePDF(data: any, accountantData: any, bankData: any) {
     const pdf = new jsPDF('p', 'pt', 'A4');
@@ -138,6 +139,12 @@ export class PdfService {
 
   getAccountantData(data: any, bankData: any) {
     this.accountantService.getAccountantInfo().subscribe(response => {
+      this.generatePDF(data, response.body, bankData);
+    })
+  }
+
+  getEmployeeData(data: any, bankData: any) {
+    this.employeeService.employeeInfo().subscribe(response => {
       this.generatePDF(data, response.body, bankData);
     })
   }

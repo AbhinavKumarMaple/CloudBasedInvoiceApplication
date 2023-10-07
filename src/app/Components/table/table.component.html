@@ -18,23 +18,39 @@
             <td *ngFor="let header of tableHeaders">
                 <ng-container *ngIf="header !== 'inviteLink'; else inviteLinkCell">
                     <ng-container *ngIf="header !== '_id'">
-                        <span
-                            [style.background-color]="row[header] == 'paid' || row[header] == 'Paid' ? '#E1FCEF' : row[header] == 'unpaid' || row[header] == 'Unpaid' ? '#FAF0F3' : 'transperent'"
-                            [style.color]="row[header] == 'paid' || row[header] == 'Paid' ? '#14804A' : row[header] == 'unpaid' || row[header] == 'Unpaid' ? '#D12953' : 'black'"
-                            [style.padding]="row[header] == 'paid' ? '5px 10px' : '5px 10px'"
-                            [style.border-radius]="'50px'" (click)="getAllInvoices(header, row[header])">{{ header ===
-                            'password'
-                            ?
-                            '*****' : (header === 'date' ? (row[header] | date:'shortDate') : row[header])
-                            }}</span>
+                        <ng-container *ngIf="isArrayOfObjects(row[header])">
+                            {{row[header][0].bankName}}
+                            <i class="fa-solid fa-chevron-down" (click)="openBankList = !openBankList"></i>
+                            <ul *ngIf="openBankList" class="list">
+                                <li class="options" *ngFor="let item of row[header]">
+                                    {{item.bankName}}
+                                </li>
+                            </ul>
+                        </ng-container>
+                        <ng-container *ngIf="!isArrayOfObjects(row[header])">
+                            <!-- Regular content -->
+                            <span
+                                [style.background-color]="row[header] == 'paid' || row[header] == 'Paid' ? '#E1FCEF' : row[header] == 'unpaid' || row[header] == 'Unpaid' ? '#FAF0F3' : 'transparent'"
+                                [style.color]="row[header] == 'paid' || row[header] == 'Paid' ? '#14804A' : row[header] == 'unpaid' || row[header] == 'Unpaid' ? '#D12953' : 'black'"
+                                [style.padding]="row[header] == 'paid' ? '5px 10px' : '5px 10px'"
+                                [style.border-radius]="'50px'" (click)="getAllInvoices(header, row[header])">
+                                {{ header === 'password'
+                                ? '*****'
+                                : (header === 'date' ? (row[header] | date:'shortDate') : row[header])
+                                }}
+                            </span>
+                        </ng-container>
                     </ng-container>
                 </ng-container>
                 <ng-template #inviteLinkCell>
-                    <ng-container *ngIf=" header==='inviteLink'">
-                        <button class=" invite-btn" (click)="onInviteClick(row)">Invite</button>
+                    <ng-container *ngIf="header === 'inviteLink'">
+                        <button class="invite-btn" (click)="onInviteClick(row)">Invite</button>
                     </ng-container>
                 </ng-template>
             </td>
+
+
+
             <td>
                 <i class="fa-solid fa-trash fa-lg" style="color: rgb(255, 84, 84); cursor: pointer;"
                     (click)="delete(row)"></i>
