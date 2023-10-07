@@ -7,6 +7,7 @@ import { saveAs } from 'file-saver';
 import { PdfService } from 'src/app/Services/pdf.service';
 import { Subject } from 'rxjs';
 import { AccountantService } from 'src/app/Services/accountant.service';
+import { EmployeeService } from 'src/app/Services/employee.service';
 
 @Component({
   selector: 'app-invoices',
@@ -31,7 +32,7 @@ export class InvoicesComponent implements OnInit {
   selectedBank: any;
   openBankList: any = false;
 
-  constructor(public dialog: MatDialog, private invoiceService: InvoiceService, private csvService: CsvServiceService, private pdfService: PdfService, private accountantService: AccountantService) {
+  constructor(public dialog: MatDialog, private invoiceService: InvoiceService, private csvService: CsvServiceService, private pdfService: PdfService, private accountantService: AccountantService, private employeeService: EmployeeService) {
     this._searchTerm$.subscribe((searchTerm) => {
       this.filterCustomers(searchTerm);
     });
@@ -107,7 +108,12 @@ export class InvoicesComponent implements OnInit {
 
   downloadPdf(data: any) {
     this.openBankList = false;
-    this.pdfService.getAccountantData(this.selectedInvoice, data);
+    if (this.loggedInAs == 'employee') {
+      this.pdfService.getEmployeeData(this.selectedInvoice, data);
+    }
+    else {
+      this.pdfService.getAccountantData(this.selectedInvoice, data);
+    }
   }
 
   leftPage() {

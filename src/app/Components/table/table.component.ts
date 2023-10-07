@@ -23,6 +23,8 @@ export class TableComponent implements OnInit {
   isAscending: any;
   @Input() component: any;
   noOfRows: any = 0;
+  openBankList: boolean = false;
+
 
   constructor(private accountantService: AccountantService,
     private clipboard: Clipboard,
@@ -34,6 +36,10 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     this.toTitleCase();
+  }
+
+  isArrayOfObjects(obj: any): boolean {
+    return Array.isArray(obj);
   }
 
   onCheckboxChange(row: any): void {
@@ -50,8 +56,7 @@ export class TableComponent implements OnInit {
 
   onInviteClick(employee: any) {
     const data = {
-      username: employee.username,
-      password: employee.password
+      email: employee.email,
     }
     this.accountantService.generateEmpInviteLink(data).subscribe(response => {
       alert(response.body.message + ' Link copied to clipboard.');
@@ -110,6 +115,9 @@ export class TableComponent implements OnInit {
   getAllInvoices(header: any, row: any) {
     console.log(header)
     console.log(row);
+    if (header == 'name') {
+
+    }
   }
 
 }
