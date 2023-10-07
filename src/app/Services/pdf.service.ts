@@ -87,11 +87,13 @@ export class PdfService {
 
     pdf.setFontSize(8);
     pdf.setFont('Helvetica', 'normal');
-    const text = data.serviceDescription;
-    const lines = pdf.splitTextToSize(text, maxWidth);
+    const lines = data.serviceDescription;
     for (const line of lines) {
-      pdf.text(line, x, y);
-      y += 10;
+      const splitLines = pdf.splitTextToSize(line, maxWidth);
+      for (const splitLine of splitLines) {
+        pdf.text(splitLine, x, y);
+        y += 10;
+      }
     }
     x += 120
     y = z;

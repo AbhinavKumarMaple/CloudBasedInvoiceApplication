@@ -31,6 +31,9 @@ export class InvoicesComponent implements OnInit {
   bankList: any;
   selectedBank: any;
   openBankList: any = false;
+  startDate: any;
+  endDate: any;
+  openDateRange: boolean = false;
 
   constructor(public dialog: MatDialog, private invoiceService: InvoiceService, private csvService: CsvServiceService, private pdfService: PdfService, private accountantService: AccountantService, private employeeService: EmployeeService) {
     this._searchTerm$.subscribe((searchTerm) => {
