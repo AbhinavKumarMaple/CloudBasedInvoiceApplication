@@ -50,7 +50,7 @@ export class EmployeeComponent implements OnInit {
       this.filteredCustomerList = this.employeeList;
     } else {
       this.filteredCustomerList = this.employeeList.filter((employee: any) =>
-        employee.username.toLowerCase().includes(searchTerm.toLowerCase())
+        employee.businessName.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
   }

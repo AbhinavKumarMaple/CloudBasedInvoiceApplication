@@ -59,7 +59,7 @@ export class PdfService {
     pdf.text('Due Date:   3-August-2023', x, y);
     y -= 40;
     x += 550
-    pdf.text(data.customerName, x, y, { align: 'right' });
+    pdf.text(data.employeeName, x, y, { align: 'right' });
     y += 20;
     pdf.text('Sam Wooldrige', x, y, { align: 'right' });
     y += 20;
@@ -92,7 +92,7 @@ export class PdfService {
       const splitLines = pdf.splitTextToSize(line, maxWidth);
       for (const splitLine of splitLines) {
         pdf.text(splitLine, x, y);
-        y += 10;
+        y += 20;
       }
     }
     x += 120
@@ -100,7 +100,7 @@ export class PdfService {
 
     pdf.text(data.netAmount.toString(), x, y);
     x += 120;
-    pdf.text(data.vatRate.toString() + '%', x, y);
+    pdf.text(data.vatRate?.toString() + '%', x, y);
     x += 120;
     pdf.text(data.vatAmount.toString(), x, y);
     x += 120;

@@ -6,6 +6,7 @@ import { EmployeeService } from 'src/app/Services/employee.service';
 import { InvoiceService } from 'src/app/Services/invoice.service';
 import { ServiceDescriptionService } from 'src/app/Services/service-description.service';
 import { VatRateService } from 'src/app/Services/vat-rate.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-invoice-update',
@@ -164,12 +165,13 @@ export class InvoiceUpdateComponent implements OnInit {
       vatAmount: this.invoiceForm.value.vatAmount,
       totalGross: this.invoiceForm.value.totalGross,
       bankAccount: this.invoiceForm.value.bankAccount,
-      date: this.invoiceForm.value.date,
+      date: moment(this.invoiceForm.value.date).format('YYYY-MM-DD'),
       serviceDescription: this.description,
       paymentMethod: this.invoiceForm.value.paymentMethod,
       paymentStatus: 'Unpaid',
       note: this.invoiceForm.value.note
     };
+    ;
     const serviceDescData = {
       description: this.description
     }

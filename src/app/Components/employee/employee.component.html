@@ -83,6 +83,9 @@
             [component]="employee" (noOfRowsSelected)="rowCount($event)"></app-table>
     </div>
 </div>
+<div class="mobile-add" [style.background-color]="'#5800A0'" (click)="openDialog()">
+    <i class="fa-solid fa-plus fa-xl"></i>
+</div>
 
 <div *ngIf="isMenuVisible">
     <app-sidenav></app-sidenav>
