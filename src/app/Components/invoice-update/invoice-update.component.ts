@@ -65,7 +65,7 @@ export class InvoiceUpdateComponent implements OnInit {
       vatAmount: [this.isEdit ? this.editableData.vatAmount : '', [Validators.required]],
       totalGross: [this.isEdit ? this.editableData.totalGross : '', [Validators.required]],
       bankAccount: [this.isEdit ? this.editableData.bankAccount : '', [Validators.required]],
-      date: [this.isEdit ? this.editableData.date : '', [Validators.required]],
+      date: [this.isEdit ? this.editableData.date : new Date(), [Validators.required]],
       serviceDescription: [this.isEdit ? this.editableData.serviceDescription : '', [Validators.required]],
       paymentMethod: [this.isEdit ? this.editableData.paymentMethod : '', [Validators.required]],
       note: [this.isEdit ? this.editableData.note : '', [Validators.required]],
@@ -201,9 +201,9 @@ export class InvoiceUpdateComponent implements OnInit {
   }
 
   addDescription() {
-    this.description.push({
-      description: this.invoiceForm.value.serviceDescription
-    })
+    this.description.push(
+      this.invoiceForm.value.serviceDescription
+    )
 
     console.log(this.description)
   }
