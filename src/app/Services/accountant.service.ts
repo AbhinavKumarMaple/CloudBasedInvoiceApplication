@@ -52,4 +52,11 @@ export class AccountantService {
       withCredentials: true,
     });
   }
+
+  addImage(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/accountant/upload-image`, data, {
+      observe: 'response',
+      withCredentials: true,
+    });
+  }
 }
