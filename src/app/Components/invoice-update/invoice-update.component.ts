@@ -49,6 +49,7 @@ export class InvoiceUpdateComponent implements OnInit {
   ) {
     this.editableData = data;
     if (data) {
+      console.log(data)
       this.isEdit = true;
     }
   }

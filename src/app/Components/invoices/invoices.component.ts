@@ -107,6 +107,9 @@ export class InvoicesComponent implements OnInit {
 
   rowCount(event: any) {
     this.noOfRowsSelected = event;
+    if (this.noOfRowsSelected == 0) {
+      this.viewGenerateInvoice = false;
+    }
   }
 
   convertToCSV() {
