@@ -59,4 +59,11 @@ export class AccountantService {
       withCredentials: true,
     });
   }
+
+  getImage(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/accountant/getlogo`, {
+      observe: 'response',
+      withCredentials: true,
+    });
+  }
 }

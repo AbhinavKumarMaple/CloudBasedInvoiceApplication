@@ -46,6 +46,20 @@
                     </div>
                 </div>
                 <mat-divider class="horizontal"></mat-divider>
+                <div class="menu1">
+                    <div class="m1" *ngIf="loggedInAs == 'customer'" (click)="generatedInvoice()"
+                        routerLink="/home/generated-invoices" routerLinkActive="active"
+                        [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
+                        <img class="icon-img" src="../../../assets/Group 1224.png" alt="" />
+                        <span>Generated Invoice</span>
+                    </div>
+                    <div class="m2" *ngIf="loggedInAs == 'employee'" (click)="generatedInvoice()"
+                        routerLink="/home/generated-invoices" routerLinkActive="active"
+                        [style.color]="color == 'employee' ? '#1354D4' : '#5800A0'">
+                        <img class="icon-img" src="../../../assets/Group 1224.png" alt="" />
+                        <span>Generated Invoice</span>
+                    </div>
+                </div>
             </div>
             <div class="signout">
                 <div class="m1 signout-btn" (click)="logout()">
