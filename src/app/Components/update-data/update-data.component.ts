@@ -17,6 +17,7 @@ export class UpdateDataComponent implements OnInit {
   landmark?: any;
   postalCode?: any;
   isEdit: boolean = false;
+  bankList: any[] = [];
 
   constructor(private dialogRef: MatDialogRef<UpdateDataComponent>,
     private formbuilder: FormBuilder,
@@ -30,6 +31,12 @@ export class UpdateDataComponent implements OnInit {
       this.street = addressParts[1]?.trim();
       this.landmark = addressParts[2]?.trim();
       this.postalCode = addressParts[3]?.trim();
+      this.editableData.bankName.forEach((bank: any) => {
+        this.bankList.push({
+          bankName: bank
+        })
+      })
+
       this.isEdit = true;
     }
   }
