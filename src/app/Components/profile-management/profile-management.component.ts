@@ -24,7 +24,7 @@ export class ProfileManagementComponent {
   sortCode: any;
   @ViewChild('fileInput') fileInput!: ElementRef;
   logoImage: any;
-  logoURL: any;
+  logoUrl: any[] = [];
 
   constructor(private accountantService: AccountantService) {
   }
@@ -79,11 +79,13 @@ export class ProfileManagementComponent {
       this.BusinessDetails = response.body;
       this.AccountInfo = response.body;
       this.BankDetails = response.body.banks;
-      this.logoImage = response.body.logo;
-      console.log(this.AccountInfo)
-      this.convertBufferToDataURL(this.logoImage)
-
     });
+
+    this.accountantService.getImage().subscribe(res => {
+      this.logoImage = res.body;
+      this.convertDataToUrl(this.logoImage)
+    })
+
   }
 
   updateBusinessDetails() {
@@ -166,9 +168,10 @@ export class ProfileManagementComponent {
     })
   }
 
-  convertBufferToDataURL(buffer: any): void {
-    const binary = buffer[1].data.data.toString('base64');
-    this.logoURL = 'data:' + this.logoImage[1].contentType + ';base64,' + binary;
-    console.log(this.logoURL)
+  convertDataToUrl(data: any): void {
+    data.forEach((image: any) => {
+      this.logoUrl.push(`data:image/jpeg;base64,${image.data}`)
+    })
+
   }
 }

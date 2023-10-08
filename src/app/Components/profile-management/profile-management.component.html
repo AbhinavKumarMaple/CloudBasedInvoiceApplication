@@ -6,11 +6,15 @@
     <div class="forms">
       <div class="logo">
         <div class="logo-square">
-          <img [src]="" alt="" />
-          <div>
-            <input type="file" #fileInput accept="image/*" (change)="onFileSelected($event)" style="display: none;" />
-            <p style="cursor: pointer;" (click)="openFileExplorer()">Click Here to Upload Your Brand Logo</p>
+          <div><img [src]="logoUrl[0]" width="186px" height="186px" alt="" />
+            <div style="margin-left: 22px;">
+              <input type="file" #fileInput accept="image/*" (change)="onFileSelected($event)" style="display: none;" />
+              <p style="cursor: pointer;" (click)="openFileExplorer()">Click Here to Upload Your Brand Logo</p>
+            </div>
           </div>
+        </div>
+        <div class="image-list-div">
+          <div *ngFor="let image of logoUrl"><img [src]="image" alt="" /></div>
         </div>
       </div>
       <div class="business-details">
@@ -283,8 +287,14 @@
     </div>
     <div class="logo">
       <div class="logo-square">
-        <img src="../../../assets/Group 15.png" alt="" />
-        <p>Click Here to Upload Your Brand Logo</p>
+        <img [src]="logoUrl[0]" width="186px" height="186px" alt="" />
+        <div>
+          <input type="file" #fileInput accept="image/*" (change)="onFileSelected($event)" style="display: none;" />
+          <p style="cursor: pointer;" (click)="openFileExplorer()">Click Here to Upload Your Brand Logo</p>
+        </div>
+      </div>
+      <div class="image-list-div">
+        <div *ngFor="let image of logoUrl"><img [src]="image" alt="" /></div>
       </div>
     </div>
     <div class="bank-section">

@@ -33,6 +33,11 @@ export class SidenavComponent {
     localStorage.setItem('activeMenuItem', 'invoices');
     this.router.navigateByUrl('/home/invoices');
   }
+  generatedInvoice() {
+    this.activeMenuItem = 'generated-invoices';
+    localStorage.setItem('activeMenuItem', 'generatedInvoice');
+    this.router.navigateByUrl('/home/generated-invoices');
+  }
 
   logout() {
     localStorage.clear();
