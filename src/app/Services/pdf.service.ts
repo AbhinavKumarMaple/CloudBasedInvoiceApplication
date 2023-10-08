@@ -4,13 +4,14 @@ import { AccountantService } from './accountant.service';
 import * as moment from 'moment';
 import { CustomerService } from './customer.service';
 import { EmployeeService } from './employee.service';
+import { InvoiceService } from './invoice.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PdfService {
 
-  constructor(private accountantService: AccountantService, private employeeService: EmployeeService) { }
+  constructor(private accountantService: AccountantService, private employeeService: EmployeeService, private invoiceService: InvoiceService) { }
 
   generatePDF(data: any, accountantData: any, bankData: any, clientData?: any) {
     console.log(data)
@@ -146,6 +147,40 @@ export class PdfService {
 
   getAccountantData(data: any, bankData: any, clientData: any) {
     this.accountantService.getAccountantInfo().subscribe(response => {
+      console.log(data)
+      console.log(bankData)
+      console.log(clientData)
+      console.log(response.body)
+      let generatedData = {
+        invoiceNumber: data.invoiceNumber,
+        date: data.date,
+        dueDate: '',
+        customerName: data.customerName,
+        netAmount: data.netAmount,
+        vatRate: data.vatRate,
+        vatAmount: data.vatAmount,
+        totalGross: data.totalGross,
+        bankAccount: data.bankAccount,
+        note: data.note,
+        banks: [bankData],
+        customerAddress: {
+          street: clientData.buildingNameNumber,
+          city: clientData.landmark,
+          state: clientData.streetName,
+          postalCode: clientData.postalCode
+        },
+        accountantAddress: {
+          street: response.body.buildingNameNumber,
+          city: response.body.landmark,
+          state: response.body.streetName,
+          postalCode: response.body.postalCode
+        },
+        vatRegNo: response.body.vatNumber,
+        crn: response.body.crnNumber
+      }
+      this.invoiceService.generateInvoice(generatedData).subscribe(res => {
+        alert('Invoice generated successfully...');
+      })
       this.generatePDF(data, response.body, bankData, clientData);
     })
   }
