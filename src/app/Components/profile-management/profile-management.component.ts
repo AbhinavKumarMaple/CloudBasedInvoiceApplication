@@ -83,9 +83,20 @@ export class ProfileManagementComponent {
 
     this.accountantService.getImage().subscribe(res => {
       this.logoImage = res.body;
+      console.log(this.AccountInfo)
       this.convertDataToUrl(this.logoImage)
     })
 
+  }
+  manageCreadentials(){
+    let payload={
+      username: this.AccountInfo.username,
+      email:this.AccountInfo.email,
+      password: this.AccountInfo.password
+    }
+    this.accountantService.update(payload).subscribe((response:any)=>{
+      console.log(response)
+    })
   }
 
   updateBusinessDetails() {
@@ -96,6 +107,7 @@ export class ProfileManagementComponent {
       crnNumber: this.BusinessDetails.crnNumber,
     };
     this.accountantService.update(payload).subscribe((response: any) => {
+      console.log(response)
       location.reload();
     });
   }
@@ -117,9 +129,9 @@ export class ProfileManagementComponent {
   UpdateBankDetails(bank: any) {
     let payload = {
       bankName: bank.bankName,
-      accountName: bank.bankName,
-      accountNumber: bank.bankName,
-      sortCode: bank.bankName,
+      accountName: bank.accountName,
+      accountNumber: bank.accountNumber,
+      sortCode: bank.sortCode,
       _id: bank._id,
     };
     console.log(payload)
