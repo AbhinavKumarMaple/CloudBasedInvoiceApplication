@@ -13,9 +13,6 @@
             </div>
           </div>
         </div>
-        <div class="image-list-div">
-          <div *ngFor="let image of logoUrl"><img [src]="image" alt="" /></div>
-        </div>
       </div>
       <div class="business-details">
         <div class="inner-details">
@@ -293,9 +290,6 @@
           <p style="cursor: pointer;" (click)="openFileExplorer()">Click Here to Upload Your Brand Logo</p>
         </div>
       </div>
-      <div class="image-list-div">
-        <div *ngFor="let image of logoUrl"><img [src]="image" alt="" /></div>
-      </div>
     </div>
     <div class="bank-section">
       <div class="inner-sec">
@@ -436,5 +430,5 @@
   </div>
 </div>
 <div *ngIf="isMenuVisible">
-  <app-sidenav></app-sidenav>
+  <app-sidenav (isMenuVisible)="handleMenu($event)"></app-sidenav>
 </div>
