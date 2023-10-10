@@ -67,6 +67,7 @@
 }
 
 .forms {
+  border: 1px solid red;
   display: flex;
 
   @media screen and (max-width: 500px) {
@@ -81,6 +82,7 @@
 }
 
 .business-details {
+  border: 1px solid green;
   width: 100%;
 }
 
@@ -105,7 +107,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-left: 61px;
+  margin-top: 56px;
+
 }
 
 .logo-square p {
@@ -121,11 +124,12 @@
 }
 
 .inner-details {
+  border: 2px solid black;
   width: 100%;
   padding-top: 30px;
   display: flex;
   justify-content: center;
-  gap: 100px;
+  gap: 20px;
 
   @media screen and (max-width: 500px) {
     flex-direction: column;
@@ -250,6 +254,7 @@
 }
 
 .management-sec {
+  border: 1px solid black;
   padding-top: 30.5px;
 
   @media screen and (max-width: 500px) {
@@ -295,13 +300,13 @@
 }
 
 .bank-fields {
+  border: 1px solid pink;
   font-family: "Inter", sans-serif;
   color: black;
-  padding-left: 70px;
   font-size: 16px;
   display: flex;
-  gap: 101px;
   padding-top: 20px;
+  padding-left: 210px;
 
   @media screen and (max-width: 500px) {
     padding: 10px 30px 30px;
@@ -366,13 +371,14 @@
 }
 
 .bank-details-fields {
-  padding: 0px 60px;
+  padding-left: 185px;
   width: 100%;
   display: flex;
-  gap: 30px;
+  gap: 25px;
   flex-wrap: wrap;
-  justify-content: space-between;
+  // justify-content: space-between;
   padding-top: 30px;
+  border: 1px solid green;
 
   @media screen and (max-width: 500px) {
     padding: 0 20px;
