@@ -71,7 +71,7 @@ export class ProfileManagementComponent {
     this.showbankdetails = false
   }
   handleSidenav() {
-    this.isMenuVisible = true;
+    this.isMenuVisible = !this.isMenuVisible;
   }
   accountantInfo() {
     this.accountantService.getAccountantInfo().subscribe((response) => {
@@ -172,6 +172,12 @@ export class ProfileManagementComponent {
   }
 
   onFileSelected(event: any) {
+    // if (this.logoImage[0]) {
+    //   this.accountantService.removeImage(this.logoImage[0].id).subscribe();
+    // }
+    // else {
+    //   console.log('null')
+    // }
     this.selectedFile = event.target.files[0] as File;
     const formData = new FormData();
     formData.append('image', this.selectedFile);
@@ -185,5 +191,10 @@ export class ProfileManagementComponent {
       this.logoUrl.push(`data:image/jpeg;base64,${image.data}`)
     })
 
+  }
+
+  handleMenu(event: any) {
+    console.log(event)
+    this.isMenuVisible = event;
   }
 }
