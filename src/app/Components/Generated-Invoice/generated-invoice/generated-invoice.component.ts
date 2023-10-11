@@ -149,4 +149,9 @@ export class GeneratedInvoiceComponent {
   formatDate(date: Date): string {
     return moment(date).format('YYYY-MM-DD');
   }
+
+  handleMenu(event: any) {
+    console.log(event)
+    this.isMenuVisible = event;
+  }
 }
