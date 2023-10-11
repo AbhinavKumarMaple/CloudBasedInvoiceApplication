@@ -36,6 +36,7 @@ export class GeneratedInvoiceComponent {
   endDate: any;
   openDateRange: boolean = false;
   selectedInvoiceList: any[] = [];
+  generatedInvoice:string='generatedInvoice'
 
   constructor(public dialog: MatDialog, private invoiceService: InvoiceService, private csvService: CsvServiceService, private pdfService: PdfService, private accountantService: AccountantService, private employeeService: EmployeeService) {
     this._searchTerm$.subscribe((searchTerm) => {

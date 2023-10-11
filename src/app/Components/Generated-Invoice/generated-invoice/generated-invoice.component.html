@@ -89,7 +89,7 @@
     </div>
     <div class="table-div">
         <app-table [tableHeaders]="tableHeaders" [tableData]="filteredCustomerList" (rowSelected)="rowSelected($event)"
-            [component]="invoice" (noOfRowsSelected)="rowCount($event)"></app-table>
+            [component]="generatedInvoice" (noOfRowsSelected)="rowCount($event)"></app-table>
     </div>
     <div class="pageIndex">
         <i class="fa-solid fa-chevron-left fa-2xl" (click)="leftPage()"></i>
