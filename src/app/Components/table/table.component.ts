@@ -16,6 +16,7 @@ export class TableComponent implements OnInit {
   @Input() tableData: any[] = [];
   @Output() rowSelected = new EventEmitter<any>();
   @Output() noOfRowsSelected = new EventEmitter<any>();
+  @Output() unselectRow = new EventEmitter<any>();
 
   user: any = localStorage.getItem('loggedInAs');
   title: any;
@@ -47,6 +48,9 @@ export class TableComponent implements OnInit {
     row.selected ? this.noOfRows++ : this.noOfRows--;
     if (row.selected) {
       this.rowSelected.emit(row);
+    }
+    else {
+      this.unselectRow.emit(row);
     }
     this.noOfRowsSelected.emit(this.noOfRows);
   }
