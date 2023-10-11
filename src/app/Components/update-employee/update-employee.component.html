@@ -14,9 +14,10 @@
               <div class="logo-square">
                 <div style="text-align: center">
                   <img
-                   style="border-radius: 20px; margin-top: 50px;"
+                    style="border-radius: 20px; margin-top: 50px"
                     [src]="logourl[0]"
-                    width="146px" height="146px"
+                    width="146px"
+                    height="146px"
                     alt=""
                   />
                   <div>
@@ -102,12 +103,12 @@
                 </div>
               </div>
               <div class="savings-sec">
-                <div class="inner-credentials">
-                  <div class="bank-fields">
-                    <span class="ad">Bank Details</span>
-                  </div>
-                  <div class="banklist-div" *ngFor="let bank of bankList">
-                    <div class="addedbank-div" >
+                <div class="bank-fields">
+                  <span class="ad">Bank Details</span>
+                </div>
+                <div class="inner-credentials"  *ngFor="let bank of bankList">
+                  <div class="banklist-div">
+                    <div class="addedbank-div">
                       <p>{{ bank.bankName }}</p>
                       <i
                         class="fa-solid fa-trash"
@@ -116,7 +117,10 @@
                       ></i>
                     </div>
                   </div>
-                  <div class="bank-details-fields" *ngFor="let bank of bankList">
+                  <div
+                    class="bank-details-fields"
+                    
+                  >
                     <div class="f-1">
                       <p class="f-1-outline">Bank Name</p>
                       <input type="text" [(ngModel)]="bank.bankName" />

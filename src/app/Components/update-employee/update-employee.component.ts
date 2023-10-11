@@ -16,6 +16,8 @@ import { EmployeeService } from 'src/app/Services/employee.service';
   styleUrls: ['./update-employee.component.scss'],
 })
 export class UpdateEmployeeComponent implements OnInit {
+  isEditingbankDetails: boolean = false;
+  showbankdetails = false;
   logo: any[] = [];
   logourl:any[]=[]
   businessName: any;
@@ -47,6 +49,7 @@ export class UpdateEmployeeComponent implements OnInit {
   accountantId: any = localStorage.getItem('accId');
 
   constructor(
+    private accountantService:AccountantService,
     public dialogRef: MatDialogRef<UpdateEmployeeComponent>,
     private employeeService: EmployeeService,
     private sanitizer: DomSanitizer,
@@ -67,14 +70,14 @@ export class UpdateEmployeeComponent implements OnInit {
     // this.password = this.isEdit ? this.editableData.password : '';
     // this.logo= this.isEdit ? this.editableData.image:'';
 
-    // this.editableData.banks.forEach((bank: any) => {
-    //   this.bankList.push({
-    //     bankName: bank.bankName,
-    //     accountName: bank.accountName,
-    //     accountNumber: bank.accountNumber,
-    //     sortCode: bank.sortCode,
-    //   });
-    // });
+    this.editableData.banks.forEach((bank: any) => {
+      this.bankList.push({
+        bankName: bank.bankName,
+        accountName: bank.accountName,
+        accountNumber: bank.accountNumber,
+        sortCode: bank.sortCode,
+      });
+    });
     // const addressParts = this.editableData?.address?.split(' ');
     // this.buildingNameNumber = addressParts[0]?.trim();
     // this.streetName = addressParts[1]?.trim();
@@ -109,12 +112,32 @@ export class UpdateEmployeeComponent implements OnInit {
       });
       
   }
-
+  cancelBankEdit() {
+    this.isEditingbankDetails = false;
+    this.showbankdetails = false
+  }
+  editBankDetails() {
+    this.showbankdetails = !this.showbankdetails;
+    this.isEditingbankDetails = true;
+  }
   onNoClick(): void {
     this.dialogRef.close();
   }
   cancelDialog(): void {
     this.dialogRef.close();
+  }
+  addBankAccount() {
+    console.log('hey');
+    let payload = {
+      bankName: this.bankName,
+      accountName: this.accountName,
+      accountNumber: this.accountNumber,
+      sortCode: this.sortCode,
+    };
+    this.accountantService.addBank(payload).subscribe((response) => {
+      console.log(response);
+      window.location.reload();
+    });
   }
 
   addClient() {
