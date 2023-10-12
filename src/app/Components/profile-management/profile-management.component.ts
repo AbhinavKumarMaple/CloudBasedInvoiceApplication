@@ -84,6 +84,7 @@ export class ProfileManagementComponent implements OnInit {
 
     this.accountantService.getImage().subscribe(res => {
       this.logoImage = res.body;
+     
       console.log(this.logoImage)
       this.convertDataToUrl(this.logoImage)
     })
