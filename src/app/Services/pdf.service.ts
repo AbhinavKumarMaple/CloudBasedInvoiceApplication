@@ -67,17 +67,30 @@ export class PdfService {
     x += 550
     pdf.setFontSize(10);
     pdf.setFont('Helvetica', 'bold');
-    pdf.text(clientData.businessName != null ? clientData.businessName : clientData.customerName, x, y, { align: 'right' });
+    if (clientData?.businessName != null) {
+      pdf.text(clientData.businessName, x, y, { align: 'right' });
+    }
+    else {
+      pdf.text(data.employeeName, x, y, { align: 'right' });
+    }
     y += 20;
     pdf.setFontSize(8);
     pdf.setFont('Helvetica', 'normal');
-    pdf.text(clientData.address?.buildingNameNumber, x, y, { align: 'right' });
+    if (clientData?.address != null) {
+      pdf.text(clientData.address?.buildingNameNumber, x, y, { align: 'right' });
+    }
     y += 20;
-    pdf.text(clientData.address?.streetName, x, y, { align: 'right' });
+    if (clientData?.address != null) {
+      pdf.text(clientData.address?.streetName, x, y, { align: 'right' });
+    }
     y += 20;
-    pdf.text(clientData.address?.landmark, x, y, { align: 'right' });
+    if (clientData?.address != null) {
+      pdf.text(clientData.address?.landmark, x, y, { align: 'right' });
+    }
     y += 20;
-    pdf.text(clientData.address?.postalCode, x, y, { align: 'right' });
+    if (clientData?.address != null) {
+      pdf.text(clientData.address?.postalCode, x, y, { align: 'right' });
+    }
     y += 30;
     x = 20;
     pdf.setFontSize(10);
