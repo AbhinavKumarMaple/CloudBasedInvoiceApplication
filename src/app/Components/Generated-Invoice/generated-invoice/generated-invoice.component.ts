@@ -57,8 +57,8 @@ export class GeneratedInvoiceComponent {
       endDate: this.endDate
     }
     this.getInvoiceList(data);
-    this.getAcountantBanks()
-
+    this.getAcountantBanks();
+    this.getLogo();
     this.color = localStorage.getItem('loggedInAs');
   }
   setLimit() {
@@ -168,6 +168,7 @@ export class GeneratedInvoiceComponent {
     if (this.loggedInAs == 'customer') {
       this.accountantService.getImage().subscribe(res => {
         this.logoImage = res.body;
+        console.log(this.logoImage);
         this.convertDataToUrl(this.logoImage)
       })
     }

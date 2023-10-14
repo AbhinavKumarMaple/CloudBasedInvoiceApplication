@@ -212,8 +212,8 @@ export class InvoiceUpdateComponent implements OnInit {
     if (this.isEdit) {
       if (this.activeMenuItem == 'generatedInvoice') {
         this.invoiceService.updateGeneratedInvoiceById(this.editableData._id, data).subscribe();
+        alert('Invoice updated successfully...');
         this.cancelDialog();
-        window.location.reload();
       }
       else {
         this.invoiceService.updateById(this.editableData._id, data).subscribe(response => {
