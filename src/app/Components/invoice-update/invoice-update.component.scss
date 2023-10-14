@@ -14,7 +14,7 @@
 
 .list {
   position: absolute;
-  top: 40px;
+  top: 83px;
   left: 0;
   border: 1px solid grey;
   border-radius: 20px;
@@ -57,13 +57,18 @@
   display: flex;
   gap: 10px;
   align-items: baseline;
+  justify-content: space-between;
 }
 
 .s-desc {
-  max-height: 131px;
+  height: 150px;
   overflow-y: scroll;
   margin-left: 18px;
   width: 250px;
+
+  @media screen and (max-width: 500px) {
+    margin-left: 0;
+  }
 }
 
 .left-sec {
@@ -94,7 +99,7 @@
   flex-direction: column;
   align-items: center;
   height: 96%;
-  gap: 30px;
+  gap: 20px;
 
   @media screen and (max-width: 500px) {
     width: 100%

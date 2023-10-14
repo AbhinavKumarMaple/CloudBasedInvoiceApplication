@@ -242,7 +242,7 @@ export class InvoiceUpdateComponent implements OnInit {
               console.log(response)
             });
           })
-          window.location.reload();
+          //window.location.reload();
         }
       })
     }
@@ -252,7 +252,12 @@ export class InvoiceUpdateComponent implements OnInit {
     this.description.push(
       this.invoiceForm.value.serviceDescription
     )
+    let description = this.invoiceForm.get('serviceDescription');
+    description?.patchValue('');
+  }
 
+  removeServiceDescrption(desc: any) {
+    this.description = this.description.filter(d => d != desc);
   }
 
 }
