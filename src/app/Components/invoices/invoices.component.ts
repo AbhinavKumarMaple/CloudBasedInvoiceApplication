@@ -80,7 +80,7 @@ export class InvoicesComponent implements OnInit, OnChanges {
       this.filteredCustomerList = this.invoiceList;
     } else {
       this.filteredCustomerList = this.invoiceList.filter((invoice: any) =>
-        invoice.employeeName.toLowerCase().includes(searchTerm.toLowerCase())
+        invoice.customerName.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
   }

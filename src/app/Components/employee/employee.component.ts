@@ -21,7 +21,7 @@ export class EmployeeComponent implements OnInit {
       this.filterCustomers(searchTerm);
     });
   }
-  tableHeader: string[] = ['_id', 'businessName', 'address', 'contactNumber', 'vatNumber', 'crnNumber', 'userName', 'email', 'password', 'banks', 'inviteLink'];
+  tableHeader: string[] = ['_id', 'businessName', 'address', 'contactNumber', 'vatNumber', 'crnNumber', 'userName', 'email', 'banks', 'inviteLink'];
   employeeList: any;
   selectedEmployee: any;
   private _searchTerm$ = new Subject<string>();
