@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/Services/auth.service';
 import { TokenRefreshService } from 'src/app/Services/token-refresh.service';
 
 @Component({
@@ -12,9 +13,10 @@ export class ManagementSidenavComponent implements OnInit {
   loggedInAs: any = localStorage.getItem('loggedInAs');
   color: any;
 
-  constructor(private router: Router, private tokenRefreshService: TokenRefreshService) { }
+  constructor(private router: Router, private tokenRefreshService: TokenRefreshService, private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.authService.loadToken();
     // Retrieve the active menu item from browser storage (localStorage)
     const storedActiveMenuItem = localStorage.getItem('activeMenuItem');
     this.color = localStorage.getItem('loggedInAs');
@@ -31,6 +33,7 @@ export class ManagementSidenavComponent implements OnInit {
       this.tokenRefreshService.refreshAccessTokenEmployee();
     }
     else if (this.loggedInAs == 'customer') {
+
       this.tokenRefreshService.refreshAccessTokenCustomer();
     }
   }

@@ -34,6 +34,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { GeneratedInvoiceComponent } from './Components/Generated-Invoice/generated-invoice/generated-invoice.component';
+import { AuthService } from './Services/auth.service';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { GeneratedInvoiceComponent } from './Components/Generated-Invoice/genera
       useClass: AuthInterceptor,
       multi: true,
     },
+    AuthService,
   ],
   bootstrap: [AppComponent],
 })

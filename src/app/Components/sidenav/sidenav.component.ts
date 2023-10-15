@@ -16,6 +16,12 @@ export class SidenavComponent implements OnInit {
   constructor(private router: Router, private tokenRefreshService: TokenRefreshService) { }
 
   ngOnInit(): void {
+    if (this.loggedInAs == 'employee') {
+      this.tokenRefreshService.refreshAccessTokenEmployee();
+    }
+    else if (this.loggedInAs == 'customer') {
+      this.tokenRefreshService.refreshAccessTokenCustomer();
+    }
   }
   closeMenu() {
     this.isMenuVisible.emit(false);
