@@ -143,7 +143,6 @@ export class ProfileManagementComponent implements OnInit {
     }
     else if (this.loggedInAs == 'customer') {
       this.accountantService.update(payload).subscribe((response: any) => {
-        console.log(response);
         window.location.reload();
       });
     }
