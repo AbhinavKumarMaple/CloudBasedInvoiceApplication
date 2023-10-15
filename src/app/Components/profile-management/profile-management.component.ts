@@ -177,7 +177,7 @@ export class ProfileManagementComponent implements OnInit {
       _id: bank._id,
     };
     if (this.loggedInAs == 'employee') {
-      this.employeeService.update(this.clientId, payload).subscribe(res => {
+      this.employeeService.updateBank(payload).subscribe(res => {
         window.location.reload();
       })
     }
@@ -192,11 +192,18 @@ export class ProfileManagementComponent implements OnInit {
     let payload = {
       _id: [bank._id],
     };
-    console.log(payload);
-    this.accountantService.removeBank(payload).subscribe((response: any) => {
-      console.log(response);
-      window.location.reload();
-    });
+    if (this.loggedInAs == 'employee') {
+      this.employeeService.deleteBank(payload).subscribe(res => {
+        window.location.reload();
+      })
+    }
+    else if (this.loggedInAs == 'customer') {
+      this.accountantService.removeBank(payload).subscribe((response: any) => {
+        console.log(response);
+        window.location.reload();
+      });
+    }
+
   }
   OpenBankAccountForm() {
     this.addbankaccount = true;
@@ -205,17 +212,23 @@ export class ProfileManagementComponent implements OnInit {
     this.addbankaccount = false;
   }
   addBankAccount() {
-    console.log('hey');
     let payload = {
       bankName: this.bankName,
       accountName: this.accountName,
       accountNumber: this.accountNumber,
       sortCode: this.sortCode,
     };
-    this.accountantService.addBank(payload).subscribe((response) => {
-      console.log(response);
-      window.location.reload();
-    });
+    if (this.loggedInAs == 'employee') {
+      this.employeeService.addBank(payload).subscribe(res => {
+        window.location.reload();
+      })
+    }
+    else if (this.loggedInAs == 'customer') {
+      this.accountantService.addBank(payload).subscribe((response) => {
+        console.log(response);
+        window.location.reload();
+      });
+    }
   }
 
   openFileExplorer(): void {
