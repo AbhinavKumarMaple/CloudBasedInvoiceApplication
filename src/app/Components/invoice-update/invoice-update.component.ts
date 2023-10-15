@@ -208,7 +208,6 @@ export class InvoiceUpdateComponent implements OnInit {
       paymentStatus: this.isEdit ? this.invoiceForm.value.paymentStatus : 'Unpaid',
       note: this.invoiceForm.value.note
     };
-    console.log(data);
     if (this.isEdit) {
       if (this.activeMenuItem == 'generatedInvoice') {
         this.invoiceService.updateGeneratedInvoiceById(this.editableData._id, data).subscribe();
@@ -227,8 +226,6 @@ export class InvoiceUpdateComponent implements OnInit {
     else {
       this.invoiceService.create(data).subscribe(response => {
         if (response) {
-          alert('Invoice created successfully.')
-          this.cancelDialog();
           this.vatRateService.generate(vatRateData).subscribe(response => {
             if (response.error) {
               alert(response.error.message);
@@ -242,7 +239,9 @@ export class InvoiceUpdateComponent implements OnInit {
               console.log(response)
             });
           })
-          //window.location.reload();
+          alert('Invoice created successfully.')
+          this.cancelDialog();
+          window.location.reload();
         }
       })
     }
