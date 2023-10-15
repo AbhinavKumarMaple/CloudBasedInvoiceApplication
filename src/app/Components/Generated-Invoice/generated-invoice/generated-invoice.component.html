@@ -107,12 +107,12 @@
                     {{option.bankName}}
                 </li>
             </ul>
-            <div class="edit-btn" (click)="openDialog(selectedInvoice)" *ngIf="noOfRowsSelected == 1">
+            <!-- <div class="edit-btn" (click)="openDialog(selectedInvoice)" *ngIf="noOfRowsSelected == 1">
                 <i class="fa-solid fa-pen-to-square" style="width: auto;"></i>
                 <p class="customer" style="margin: 0;">
                     Edit Invoice Details
                 </p>
-            </div>
+            </div> -->
             <div class="export-btn" [style.color]="color == 'employee' ? '#1354D4' : '#5800a0'"
                 [style.border]="color == 'employee' ? '1px solid #1354D4' : '1px solid #5800a0'"
                 (click)="convertToCSV()">

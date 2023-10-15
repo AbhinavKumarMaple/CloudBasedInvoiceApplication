@@ -214,9 +214,17 @@ export class InvoicesComponent implements OnInit, OnChanges {
   }
 
   getAcountantBanks() {
-    this.accountantService.getAccountantInfo().subscribe(response => {
-      this.bankList = response.body.banks;
-    })
+    if (this.loggedInAs == 'employee') {
+      this.employeeService.employeeBankInfo().subscribe(res => {
+        this.bankList = res.body.banks;
+      })
+    }
+    else if (this.loggedInAs == 'customer') {
+      this.accountantService.getAccountantInfo().subscribe(response => {
+        this.bankList = response.body.banks;
+      })
+    }
+
   }
 
   onDateRangeChange() {

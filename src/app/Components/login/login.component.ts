@@ -113,7 +113,10 @@ export class LoginComponent {
             this.tokenRefreshService.startTokenRefreshForEmployee();
             this.route.navigate(['/home/invoices'])
           }
-        });
+        },
+          (error) => {
+            alert(error.error.message)
+          });
       }
       else if (this.loggedInAs == 1) {
         this.accountantService.login(data).subscribe(response => {
@@ -126,7 +129,10 @@ export class LoginComponent {
               localStorage.setItem('id', response.body._id)
             })
           }
-        });;
+        },
+          (error) => {
+            alert(error.error.message);
+          });;
       }
     }
     else {

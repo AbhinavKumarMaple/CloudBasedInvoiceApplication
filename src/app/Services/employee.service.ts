@@ -68,4 +68,8 @@ export class EmployeeService {
   deleteImage(id: any, imageId: any): Observable<any> {
     return this.http.delete(`${this.baseUrl}/employee/remove-image/id=${imageId}&employeeId=${id}`, { observe: 'response', withCredentials: true });
   }
+
+  employeeBankInfo(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/employee/bank`, { observe: 'response', withCredentials: true });
+  }
 }

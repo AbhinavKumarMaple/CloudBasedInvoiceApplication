@@ -176,7 +176,6 @@ export class PdfService {
   }
 
   getAccountantData(data: any, bankData: any, clientData: any, image: any) {
-    console.log(clientData)
     this.accountantService.getAccountantInfo().subscribe(response => {
       const formData = new FormData();
       formData.append('invoiceNumber', data.invoiceNumber);

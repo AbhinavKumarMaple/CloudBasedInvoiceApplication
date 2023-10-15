@@ -66,9 +66,17 @@ export class InvoiceUpdateComponent implements OnInit {
     this.getVatRate();
     this.getCustomer();
     this.getServiceDescription();
-    this.accountantService.getAccountantInfo().subscribe(res => {
-      this.banksList = res.body.banks;
-    })
+    if (this.loggedInAs == 'employee') {
+      this.employeeService.employeeBankInfo().subscribe(res => {
+        this.banksList = res.body.banks;
+      })
+    }
+    else if (this.loggedInAs == 'customer') {
+      this.accountantService.getAccountantInfo().subscribe(res => {
+        this.banksList = res.body.banks;
+      })
+    }
+
     this.description = this.isEdit ? this.editableData.serviceDescription : []
 
     this.invoiceForm = this.formbuilder.group({
