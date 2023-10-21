@@ -131,6 +131,9 @@ export class InvoiceUpdateComponent implements OnInit {
       this.vatService.getVatRate().subscribe(response => {
         if (response) {
           this.vatRateOptions = response.body;
+          this.vatRateOptions.push({ vatRate: 20 });
+          this.vatRateOptions.push({ vatRate: 5 });
+          this.vatRateOptions.push({ vatRate: 0 });
         }
       })
     }
@@ -200,7 +203,7 @@ export class InvoiceUpdateComponent implements OnInit {
   dropdownSelected(selectedOption: any) {
     this.createdFor = selectedOption._id;
     let customer = this.invoiceForm.get('customerName');
-    customer?.patchValue(selectedOption.name ? selectedOption.name : selectedOption.businessName);
+    customer?.patchValue(selectedOption.name ? selectedOption.name : selectedOption.username);
     this.openCustomerList = false;
   }
 
