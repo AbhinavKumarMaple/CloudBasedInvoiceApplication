@@ -45,7 +45,7 @@ export class UpdateEmployeeComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput!: ElementRef;
   selectedFile: any = '../../../assets/logo.jpg';
-  logoUrl: any;
+  logoUrl: any = '../../../assets/logo.jpg';
   accountantId: any = localStorage.getItem('accId');
 
   constructor(
