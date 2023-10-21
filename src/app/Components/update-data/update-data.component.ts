@@ -66,6 +66,14 @@ export class UpdateDataComponent implements OnInit {
   }
 
   saveCustomer() {
+    this.bankList.push(
+      {
+        bankName: this.customerForm.value.bankName,
+        accountNumber: this.customerForm.value.accountNumber,
+        accountName: this.customerForm.value.accountName,
+        sortCode: this.customerForm.value.sortCode
+      }
+    )
     const data = {
       name: this.customerForm.value.customerName,
       contactNumber: this.customerForm.value.contactNumber,

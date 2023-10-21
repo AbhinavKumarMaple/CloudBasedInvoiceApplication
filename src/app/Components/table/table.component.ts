@@ -125,7 +125,6 @@ export class TableComponent implements OnInit {
       this.invoiceService.deleteGeneratedInvoice(data._id).subscribe((response) => {
         console.log(data);
         alert('Invoice deleted successfully...');
-        window.location.reload();
       });
     }
   }

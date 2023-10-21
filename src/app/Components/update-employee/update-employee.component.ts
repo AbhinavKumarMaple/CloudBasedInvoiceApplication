@@ -126,15 +126,21 @@ export class UpdateEmployeeComponent implements OnInit {
   }
 
   addClient() {
+    this.bankList.push({
+      bankName: this.bankName,
+      accountName: this.accountName,
+      accountNumber: this.accountNumber,
+      sortCode: this.sortCode,
+    })
     let data = {
       businessName: this.businessName,
       contactNumber: this.contactNumber,
-      vatNumber: this.vatNumber,
-      crnNumber: this.crnNumber,
+      vatNumber: this.vatNumber ? this.vatNumber : '',
+      crnNumber: this.crnNumber ? this.crnNumber : '',
       address: {
         buildingNameNumber: this.buildingNameNumber,
         streetName: this.streetName,
-        landmark: this.landmark,
+        landmark: this.landmark ? this.landmark : '',
         postalCode: this.postalCode,
       },
       username: this.username,
