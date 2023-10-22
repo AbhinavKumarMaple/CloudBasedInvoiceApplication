@@ -50,21 +50,21 @@
               </div>
               <div class="f-1">
                 <p class="f-1-outline">Contact Number</p>
-                <input type="text" *ngIf="isEditingbusiness" [(ngModel)]="BusinessDetails.contactNumber" />
+                <input type="number" *ngIf="isEditingbusiness" [(ngModel)]="BusinessDetails.contactNumber" />
                 <span class="f-1-title" *ngIf="!isEditingbusiness">{{
                   BusinessDetails.contactNumber
                   }}</span>
               </div>
               <div class="f-1">
                 <p class="f-1-outline">VAT Number(Optional)</p>
-                <input type="text" *ngIf="isEditingbusiness" [(ngModel)]="BusinessDetails.vatNumber" />
+                <input type="number" *ngIf="isEditingbusiness" [(ngModel)]="BusinessDetails.vatNumber" />
                 <span class="f-1-title" *ngIf="!isEditingbusiness">{{
                   BusinessDetails.vatNumber
                   }}</span>
               </div>
               <div class="f-1">
                 <p class="f-1-outline">CRN Number(Optional)</p>
-                <input type="text" *ngIf="isEditingbusiness" [(ngModel)]="BusinessDetails.crnNumber" />
+                <input type="number" *ngIf="isEditingbusiness" [(ngModel)]="BusinessDetails.crnNumber" />
                 <span class="f-1-title" *ngIf="!isEditingbusiness">{{
                   BusinessDetails.crnNumber
                   }}</span>
@@ -221,14 +221,14 @@
               </div>
               <div class="f-1">
                 <p class="f-1-outline">Account Number</p>
-                <input type="text" *ngIf="isEditingbankDetails" [(ngModel)]="bank.accountNumber" />
+                <input type="number" *ngIf="isEditingbankDetails" [(ngModel)]="bank.accountNumber" />
                 <span class="f-1-title" *ngIf="!isEditingbankDetails">{{
                   bank.accountNumber
                   }}</span>
               </div>
               <div class="f-1">
                 <p class="f-1-outline">Sort Code</p>
-                <input type="text" *ngIf="isEditingbankDetails" [(ngModel)]="bank.sortCode" />
+                <input type="number" *ngIf="isEditingbankDetails" [(ngModel)]="bank.sortCode" />
                 <span class="f-1-title" *ngIf="!isEditingbankDetails">{{
                   bank.sortCode
                   }}</span>
@@ -254,11 +254,11 @@
               </div>
               <div class="f-1">
                 <p class="f-1-outline">Account Number</p>
-                <input type="text" [(ngModel)]="accountNumber" />
+                <input type="number" [(ngModel)]="accountNumber" />
               </div>
               <div class="f-1">
                 <p class="f-1-outline">Sort Code</p>
-                <input type="text" [(ngModel)]="sortCode" />
+                <input type="number" [(ngModel)]="sortCode" />
               </div>
             </div>
           </div>
@@ -349,15 +349,15 @@
         </div>
         <div class="f-1">
           <p class="f-1-outline">Contact Number</p>
-          <input type="text" [(ngModel)]="BusinessDetails.contactNumber" />
+          <input type="number" [(ngModel)]="BusinessDetails.contactNumber" />
         </div>
         <div class="f-1">
           <p class="f-1-outline">VAT Number</p>
-          <input type="text" [(ngModel)]="BusinessDetails.vatNumber" />
+          <input type="number" [(ngModel)]="BusinessDetails.vatNumber" />
         </div>
         <div class="f-1">
           <p class="f-1-outline">CRN Number</p>
-          <input type="text" [(ngModel)]="BusinessDetails.crnNumber" />
+          <input type="number" [(ngModel)]="BusinessDetails.crnNumber" />
         </div>
         <div class="f-1 update" (click)="updateBusinessDetails()">
           <span>Update</span>
@@ -382,11 +382,11 @@
         </div>
         <div class="f-1">
           <p class="f-1-outline">Account Number</p>
-          <input type="text" [(ngModel)]="bank.accountNumber" />
+          <input type="number" [(ngModel)]="bank.accountNumber" />
         </div>
         <div class="f-1">
           <p class="f-1-outline">Sort Code</p>
-          <input type="text" [(ngModel)]="bank.sortCode" />
+          <input type="number" [(ngModel)]="bank.sortCode" />
         </div>
         <div class="buttons-sec">
           <div class="f-1 update" (click)="UpdateBankDetails(bank)">
@@ -412,11 +412,11 @@
         </div>
         <div class="f-1">
           <p class="f-1-outline">Account Number</p>
-          <input type="text" [(ngModel)]="accountNumber" />
+          <input type="number" [(ngModel)]="accountNumber" />
         </div>
         <div class="f-1">
           <p class="f-1-outline">Sort Code</p>
-          <input type="text" [(ngModel)]="sortCode" />
+          <input type="number" [(ngModel)]="sortCode" />
         </div>
         <div class="buttons-sec">
           <div class="f-1 update" (click)="addBankAccount()">

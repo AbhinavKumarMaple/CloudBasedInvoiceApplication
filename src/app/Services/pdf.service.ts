@@ -15,7 +15,9 @@ export class PdfService {
   employeeLogo: any;
   activeMenuItem: any = localStorage.getItem('activeMenuItem');
 
-  constructor(private accountantService: AccountantService, private employeeService: EmployeeService, private invoiceService: InvoiceService, private customerService: CustomerService) { }
+  constructor(private accountantService: AccountantService, private employeeService: EmployeeService, private invoiceService: InvoiceService, private customerService: CustomerService) {
+    this.activeMenuItem = localStorage.getItem('activeMenuItem');
+   }
 
   generatePDF(data: any, accountantData: any, bankData: any, clientData?: any, image?: any, customerData?: any) {
     const pdf = new jsPDF('p', 'pt', 'A4');
@@ -192,9 +194,10 @@ export class PdfService {
       formData.append('totalGross', data.totalGross);
       formData.append('bankAccount', data.bankAccount);
       formData.append('note', data.note);
-      for (let i = 0; i < bankData.length; i++) {
-        formData.append('banks[]', JSON.stringify(bankData[i]));
-      }
+      formData.append(`banks[0][bankName]`, bankData.bankName);
+        formData.append(`banks[0][accountName]`, bankData.accountName);
+        formData.append(`banks[0][accountNumber]`, bankData.accountNumber);
+        formData.append(`banks[0][sortCode]`, bankData.sortCode);
       formData.append('customerAddress', JSON.stringify({
         street: clientData.buildingNameNumber,
         city: clientData.landmark,
@@ -210,19 +213,23 @@ export class PdfService {
       formData.append('vatRegNo', response.body.vatNumber);
       formData.append('crn', response.body.crnNumber);
       formData.append('image', image);
+      if (this.activeMenuItem != 'generatedInvoice') {
       this.invoiceService.generateInvoice(formData).subscribe(res => {
         alert('Invoice generated successfully...');
       })
+    }
       this.generatePDF(data, response.body, bankData, clientData, image);
     })
   }
 
   getEmployeeData(data: any, bankData: any) {
+    console.log(data);
     this.employeeService.employeeInfo().subscribe(response => {
       let responseBody = response.body;
       this.convertDataToUrl(response.body.logo);
       const formData = new FormData();
       formData.append('invoiceNumber', data.invoiceNumber);
+      formData.append('createdFor', data.createdFor);
       formData.append('date', data.date);
       formData.append('dueDate', '');
       formData.append('customerName', data.customerName);
@@ -232,9 +239,10 @@ export class PdfService {
       formData.append('totalGross', data.totalGross);
       formData.append('bankAccount', data.bankAccount);
       formData.append('note', data.note);
-      for (let i = 0; i < bankData.length; i++) {
-        formData.append('banks[]', JSON.stringify(bankData[i]));
-      }
+        formData.append(`banks[0][bankName]`, bankData.bankName);
+        formData.append(`banks[0][accountName]`, bankData.accountName);
+        formData.append(`banks[0][accountNumber]`, bankData.accountNumber);
+        formData.append(`banks[0][sortCode]`, bankData.sortCode);
       formData.append('customerAddress', JSON.stringify({
         street: response.body.buildingNameNumber,
         city: response.body.landmark,
@@ -259,8 +267,7 @@ export class PdfService {
       let customerData;
       this.customerService.getCustomerByID(data.createdFor).subscribe(response => {
         customerData = response.body;
-        this.generatePDF(data, responseBody, bankData, null, this.employeeLogo, customerData);
-
+          this.generatePDF(data, responseBody, bankData, null, this.employeeLogo, customerData);
       })
     })
   }

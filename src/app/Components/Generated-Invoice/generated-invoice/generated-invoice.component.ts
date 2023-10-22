@@ -93,7 +93,6 @@ export class GeneratedInvoiceComponent {
         this.invoiceList = response.body.generatedInvoices;
         this.totalPages = response.body.totalPages;
         this.filteredCustomerList = this.invoiceList;
-        console.log(this.filteredCustomerList)
       })
     }
     else {
@@ -101,7 +100,6 @@ export class GeneratedInvoiceComponent {
         this.invoiceList = response.body.generatedInvoices;
         this.totalPages = response.body.totalPages;
         this.filteredCustomerList = this.invoiceList;
-        console.log(this.filteredCustomerList)
       })
     }
   }
@@ -141,17 +139,31 @@ export class GeneratedInvoiceComponent {
     saveAs(blob, 'invoice.csv');
   }
 
-  generateInvoice() {
-    this.openBankList = !this.openBankList;
-  }
+  // generateInvoice() {
+  //   this.openBankList = !this.openBankList;
 
-  downloadPdf(data: any) {
-    this.openBankList = false;
+  // }
+
+  downloadPdf() {
+    
     this.selectedInvoiceList.forEach((selectedInvoice: any) => {
       if (this.loggedInAs == 'employee') {
+        let data = {
+          bankName: selectedInvoice.banks[0].bankName,
+          accountName: selectedInvoice.banks[0].accountName,
+          accountNumber: selectedInvoice.banks[0].accountNumber,
+          sortCode: selectedInvoice.banks[0].sortCode
+        }
         this.pdfService.getEmployeeData(selectedInvoice, data);
       }
       else {
+        console.log(selectedInvoice)
+        let data = {
+          bankName: selectedInvoice.banks[0].bankName,
+          accountName: selectedInvoice.banks[0].accountName,
+          accountNumber: selectedInvoice.banks[0].accountNumber,
+          sortCode: selectedInvoice.banks[0].sortCode
+        }
         console.log(selectedInvoice.createdFor)
         this.employeeService.InvoiceInfoById(selectedInvoice.createdFor).subscribe(response => {
           this.pdfService.getAccountantData(selectedInvoice, data, response.body, this.logoUrl[0]);
