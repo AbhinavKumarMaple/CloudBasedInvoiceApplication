@@ -96,7 +96,11 @@ export class ManagementSidenavComponent implements OnInit {
 
   convertDataToUrl(data: any): void {
     data.forEach((image: any) => {
-      this.logoUrl.push(`data:image/jpeg;base64,${image.data}`);
+      if (image.data) {
+        this.logoUrl.push(`data:image/jpeg;base64,${image.data}`);
+      } else {
+        this.logoUrl.push('../../../assets/logo.jpg');
+      }
     });
   }
 }

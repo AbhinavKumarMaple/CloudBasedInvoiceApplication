@@ -32,8 +32,8 @@ export class ProfileManagementComponent implements OnInit {
   address2: any = '';
   constructor(
     private accountantService: AccountantService,
-    private employeeService: EmployeeService,
-  ) { }
+    private employeeService: EmployeeService
+  ) {}
 
   AccountInfo: any = [];
   BusinessDetails: any = [];
@@ -43,8 +43,7 @@ export class ProfileManagementComponent implements OnInit {
   ngOnInit() {
     if (this.loggedInAs == 'employee') {
       this.clientInfo();
-    }
-    else if (this.loggedInAs == 'customer') {
+    } else if (this.loggedInAs == 'customer') {
       this.accountantInfo();
     }
   }
@@ -102,7 +101,7 @@ export class ProfileManagementComponent implements OnInit {
   }
 
   clientInfo() {
-    this.employeeService.employeeInfo().subscribe(response => {
+    this.employeeService.employeeInfo().subscribe((response) => {
       this.clientId = response.body._id;
       this.AddressDetails = response.body.address;
       this.address2 = response.body.address2;
@@ -111,7 +110,7 @@ export class ProfileManagementComponent implements OnInit {
       this.BankDetails = response.body.banks;
       this.logoImage = response.body.logo;
       this.convertDataToUrl(this.logoImage);
-    })
+    });
   }
 
   manageCreadentials() {
@@ -120,11 +119,10 @@ export class ProfileManagementComponent implements OnInit {
       email: this.AccountInfo.email,
     };
     if (this.loggedInAs == 'employee') {
-      this.employeeService.update(this.clientId, payload).subscribe(res => {
+      this.employeeService.update(this.clientId, payload).subscribe((res) => {
         window.location.reload();
-      })
-    }
-    else if (this.loggedInAs == 'customer') {
+      });
+    } else if (this.loggedInAs == 'customer') {
       this.accountantService.update(payload).subscribe((response: any) => {
         window.location.reload();
       });
@@ -140,11 +138,10 @@ export class ProfileManagementComponent implements OnInit {
     };
 
     if (this.loggedInAs == 'employee') {
-      this.employeeService.update(this.clientId, payload).subscribe(res => {
+      this.employeeService.update(this.clientId, payload).subscribe((res) => {
         window.location.reload();
-      })
-    }
-    else if (this.loggedInAs == 'customer') {
+      });
+    } else if (this.loggedInAs == 'customer') {
       this.accountantService.update(payload).subscribe((response: any) => {
         window.location.reload();
       });
@@ -160,11 +157,10 @@ export class ProfileManagementComponent implements OnInit {
       address2: this.address2,
     };
     if (this.loggedInAs == 'employee') {
-      this.employeeService.update(this.clientId, payload).subscribe(res => {
+      this.employeeService.update(this.clientId, payload).subscribe((res) => {
         window.location.reload();
-      })
-    }
-    else if (this.loggedInAs == 'customer') {
+      });
+    } else if (this.loggedInAs == 'customer') {
       this.accountantService.update(payload).subscribe((response: any) => {
         console.log(response);
         window.location.reload();
@@ -180,11 +176,10 @@ export class ProfileManagementComponent implements OnInit {
       _id: bank._id,
     };
     if (this.loggedInAs == 'employee') {
-      this.employeeService.updateBank(payload).subscribe(res => {
+      this.employeeService.updateBank(payload).subscribe((res) => {
         window.location.reload();
-      })
-    }
-    else if (this.loggedInAs == 'customer') {
+      });
+    } else if (this.loggedInAs == 'customer') {
       this.accountantService.updateBank(payload).subscribe((response: any) => {
         console.log(response);
         window.location.reload();
@@ -196,17 +191,15 @@ export class ProfileManagementComponent implements OnInit {
       _id: [bank._id],
     };
     if (this.loggedInAs == 'employee') {
-      this.employeeService.deleteBank(payload).subscribe(res => {
+      this.employeeService.deleteBank(payload).subscribe((res) => {
         window.location.reload();
-      })
-    }
-    else if (this.loggedInAs == 'customer') {
+      });
+    } else if (this.loggedInAs == 'customer') {
       this.accountantService.removeBank(payload).subscribe((response: any) => {
         console.log(response);
         window.location.reload();
       });
     }
-
   }
   OpenBankAccountForm() {
     this.addbankaccount = true;
@@ -222,11 +215,10 @@ export class ProfileManagementComponent implements OnInit {
       sortCode: this.sortCode,
     };
     if (this.loggedInAs == 'employee') {
-      this.employeeService.addBank(payload).subscribe(res => {
+      this.employeeService.addBank(payload).subscribe((res) => {
         window.location.reload();
-      })
-    }
-    else if (this.loggedInAs == 'customer') {
+      });
+    } else if (this.loggedInAs == 'customer') {
       this.accountantService.addBank(payload).subscribe((response) => {
         console.log(response);
         window.location.reload();
@@ -243,15 +235,27 @@ export class ProfileManagementComponent implements OnInit {
 
     const formData = new FormData();
     formData.append('image', this.selectedFile);
-    this.accountantService.addImage(formData).subscribe((res) => {
-      this.accountantInfo();
-      window.location.reload();
-    });
+    if (this.loggedInAs == 'employee') {
+      formData.append('employeeId', this.clientId);
+      this.employeeService.addImage(formData).subscribe((res: any) => {
+        this.clientInfo();
+        window.location.reload();
+      });
+    } else if (this.loggedInAs == 'customer') {
+      this.accountantService.addImage(formData).subscribe((res) => {
+        this.accountantInfo();
+        window.location.reload();
+      });
+    }
   }
 
   convertDataToUrl(data: any): void {
     data.forEach((image: any) => {
-      this.logoUrl.push(`data:image/jpeg;base64,${image.data}`);
+      if (image.data) {
+        this.logoUrl.push(`data:image/jpeg;base64,${image.data}`);
+      } else {
+        this.logoUrl.push('../../../assets/logo.jpg');
+      }
     });
   }
 
