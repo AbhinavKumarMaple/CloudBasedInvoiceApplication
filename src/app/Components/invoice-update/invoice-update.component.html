@@ -30,10 +30,10 @@
           </div>
           <div class="f-1">
             <p class="f-1-outline">VAT RATE</p>
-            <input type="text" formControlName="vatRate" (input)="calculateGross()" />
+            <input type="text" formControlName="vatRate" (input)="calculateGross()"/>
             <i class="fa-solid fa-chevron-down" (click)="openVatList = !openVatList"></i>
             <ul *ngIf="openVatList" class="list">
-              <li class="options" *ngFor="let option of vatRateOptions" (click)="calculateGross(option.vatRate)">
+              <li class="options" *ngFor="let option of filterVatRateOptions" (click)="calculateGross(option.vatRate)">
                 {{option.vatRate}}
               </li>
             </ul>
@@ -87,10 +87,10 @@
 
           </div>
           <div class="f-2">
-            <textarea name="" id="" cols="30" rows="10" formControlName="serviceDescription"></textarea>
+            <textarea name="" id="" cols="30" rows="10" formControlName="serviceDescription" (ngModelChange)="onDescChange($event)"></textarea>
             <i class="fa-solid fa-chevron-down" (click)="openServiceList = !openServiceList"></i>
             <ul *ngIf="openServiceList" class="list">
-              <li class="options" *ngFor="let option of serviceDescriptionList" (click)="setDesc(option.description)">
+              <li class="options" *ngFor="let option of filterDescList" (click)="setDesc(option.description)">
                 {{option.description}}
               </li>
             </ul>

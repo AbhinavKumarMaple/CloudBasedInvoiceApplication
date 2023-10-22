@@ -44,7 +44,10 @@ export class InvoiceUpdateComponent implements OnInit {
   startDate: any;
   endDate: any;
   private _searchTerm$ = new Subject<string>();
+  private _descTerm$ = new Subject<string>();
   filteredCustomerList: any[] = [];
+  filterDescList: any[] = [];
+  filterVatRateOptions: any[] = [];
 
   constructor(private dialogRef: MatDialogRef<InvoiceUpdateComponent>,
     private formbuilder: FormBuilder,
@@ -65,6 +68,11 @@ export class InvoiceUpdateComponent implements OnInit {
     this._searchTerm$.subscribe((searchTerm) => {
       this.filterCustomers(searchTerm);
     });
+
+    this._descTerm$.subscribe((descTerm) => {
+      this.filterDesc(descTerm);
+    });
+
   }
 
   ngOnInit(): void {
@@ -115,6 +123,20 @@ export class InvoiceUpdateComponent implements OnInit {
     }
   }
 
+  onDescChange(searchTerm: string) {
+    this._descTerm$.next(searchTerm);
+    this.openServiceList = true;
+  }
+
+  filterDesc(searchTerm: string) {
+    if (!searchTerm || searchTerm.trim() === '') {
+      this.filterDescList = this.serviceDescriptionList;
+    } else {
+      this.filterDescList = this.serviceDescriptionList.filter((invoice: any) =>
+        invoice.description.toLowerCase().includes(searchTerm.toLowerCase()));
+    }
+  }
+
   cancelDialog(): void {
     this.dialogRef.close();
   }
@@ -126,6 +148,7 @@ export class InvoiceUpdateComponent implements OnInit {
         this.vatRateOptions.push({ vatRate: 20 });
         this.vatRateOptions.push({ vatRate: 5 });
         this.vatRateOptions.push({ vatRate: 0 });
+        this.filterVatRateOptions = this.vatRateOptions;
       })
     } else {
       this.vatService.getVatRate().subscribe(response => {
@@ -134,6 +157,7 @@ export class InvoiceUpdateComponent implements OnInit {
           this.vatRateOptions.push({ vatRate: 20 });
           this.vatRateOptions.push({ vatRate: 5 });
           this.vatRateOptions.push({ vatRate: 0 });
+          this.filterVatRateOptions = this.vatRateOptions;
         }
       })
     }
@@ -142,6 +166,7 @@ export class InvoiceUpdateComponent implements OnInit {
   getServiceDescription() {
     this.serviceDescription.getServiceDesc().subscribe(response => {
       this.serviceDescriptionList = response.body;
+      this.filterDescList = this.serviceDescriptionList;
     })
   }
 

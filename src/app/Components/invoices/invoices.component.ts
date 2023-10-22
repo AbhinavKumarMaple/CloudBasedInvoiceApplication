@@ -39,7 +39,7 @@ export class InvoicesComponent implements OnInit, OnChanges {
   selectedInvoiceList: any[] = [];
   logoImage: any;
   logoUrl: any[] = [];
-  searchedUserName: string = ' ';
+  searchedUserName: string = '';
   invoiceByUserId: any = null;
   totalPages: any;
 

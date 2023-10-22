@@ -2,6 +2,7 @@ import {
   Component,
   ElementRef,
   Inject,
+  NgZone,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -20,20 +21,20 @@ export class UpdateEmployeeComponent implements OnInit {
   showbankdetails = false;
   logo: any[] = [];
   logourl: any[] = [];
-  businessName: any;
-  vatNumber: any;
-  name: any;
-  crnNumber: any;
+  businessName: any = '';
+  vatNumber: any = '';
+  name: any = '';
+  crnNumber: any = '';
   landmark: any = '';
-  postalCode: any;
-  buildingNameNumber: any;
-  streetName: any;
-  bankName: any;
-  sortCode: any;
-  accountName: any;
-  accountNumber: any;
-  contactNumber: any;
-  username: any;
+  postalCode: any = '';
+  buildingNameNumber: any = '';
+  streetName: any = '';
+  bankName: any = '';
+  sortCode: any = '';
+  accountName: any = '';
+  accountNumber: any = '';
+  contactNumber: any = '';
+  username: any = '';
   email: any;
   password: any;
   editableData: any;
@@ -44,7 +45,7 @@ export class UpdateEmployeeComponent implements OnInit {
   street: any;
 
   @ViewChild('fileInput') fileInput!: ElementRef;
-  selectedFile: any = '../../../assets/logo.jpg';
+  selectedFile: any;
   logoUrl: any = '../../../assets/logo.jpg';
   accountantId: any = localStorage.getItem('accId');
 
@@ -53,6 +54,7 @@ export class UpdateEmployeeComponent implements OnInit {
     public dialogRef: MatDialogRef<UpdateEmployeeComponent>,
     private employeeService: EmployeeService,
     private sanitizer: DomSanitizer,
+    private ngZone: NgZone,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     if (data) {
@@ -62,7 +64,14 @@ export class UpdateEmployeeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    const file = {
+      lastModifiedDate: Date.now(),
+      name: "logo.jpg",
+      size: 134063,
+      type: "Image/jpeg",
+      webkitRelativePath:""
+    }
+    this.selectedFile = new File([], file.name, file);
     this.editableData.banks.forEach((bank: any) => {
       this.bankList.push({
         bankName: bank.bankName,
@@ -93,7 +102,6 @@ export class UpdateEmployeeComponent implements OnInit {
         this.username = response.body.username;
         this.email = response.body.email;
         this.logo = response.body.logo;
-        console.log(this.logo);
         this.convertDataToUrl(this.logo);
       });
   }
@@ -111,26 +119,29 @@ export class UpdateEmployeeComponent implements OnInit {
   cancelDialog(): void {
     this.dialogRef.close();
   }
-  addBankAccount() {
-    let payload = {
-      bankName: this.bankName,
-      accountName: this.accountName,
-      accountNumber: this.accountNumber,
-      sortCode: this.sortCode,
-    };
-    this.accountantService.addBank(payload).subscribe((response) => {
-      console.log(response);
-      window.location.reload();
-    });
-  }
+  // addBankAccount() {
+  //   let payload = {
+  //     bankName: this.bankName,
+  //     accountName: this.accountName,
+  //     accountNumber: this.accountNumber,
+  //     sortCode: this.sortCode,
+  //   };
+  //   this.accountantService.addBank(payload).subscribe((response) => {
+  //     console.log(response);
+  //     window.location.reload();
+  //   });
+  // }
 
   addClient() {
-    this.bankList.push({
-      bankName: this.bankName,
-      accountName: this.accountName,
-      accountNumber: this.accountNumber,
-      sortCode: this.sortCode,
-    })
+    if (this.bankName != '' && this.accountName != '' && this.accountNumber != '' && this.sortCode != '')
+    {
+      this.bankList.push({
+        bankName: this.bankName,
+        accountName: this.accountName,
+        accountNumber: this.accountNumber,
+        sortCode: this.sortCode,
+      })
+    }
     let data = {
       businessName: this.businessName,
       contactNumber: this.contactNumber,
@@ -178,7 +189,6 @@ export class UpdateEmployeeComponent implements OnInit {
         formData.append(`banks[${index}][sortCode]`, bank.sortCode);
       })
       formData.append('image', this.selectedFile);
-
       this.employeeService.addEmployee(formData).subscribe((response) => {
         console.log(response);
         alert('Client added successfully...');
@@ -230,11 +240,18 @@ export class UpdateEmployeeComponent implements OnInit {
     formData.append('employeeId', this.editableData?._id);
     this.employeeService.addImage(formData).subscribe();
 
-
   }
   convertDataToUrl(data: any): void {
     data.forEach((image: any) => {
-      this.logourl.push(`data:image/jpeg;base64,${image.data}`);
+      if (image.data)
+      {
+        this.logourl.push(`data:image/jpeg;base64,${image.data}`);
+      }
+      else
+      {
+        this.logourl.push(this.logoUrl)
+      }
     });
   }
+
 }
