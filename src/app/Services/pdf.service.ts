@@ -21,6 +21,7 @@ export class PdfService {
 
   generatePDF(data: any, accountantData: any, bankData: any, clientData?: any, image?: any, customerData?: any) {
     const pdf = new jsPDF('p', 'pt', 'A4');
+    var logo = '../../assets/logo.jpg';
 
     let x = 20;
     let y = 40;
@@ -29,7 +30,13 @@ export class PdfService {
     let maxWidth = 100;
 
     pdf.setFontSize(16);
-    pdf.addImage(image ? image : 'LOGO', x, y, imageWidth, imageHeight);
+    if(image.data)
+    {
+      pdf.addImage(image, x, y, imageWidth, imageHeight);
+    }
+    else{
+      pdf.addImage(logo, x, y, imageWidth, imageHeight);
+    }
     x += 550;
 
     pdf.setFontSize(12);
