@@ -14,6 +14,7 @@ export class PdfService {
   logoUrl: any[] = [];
   employeeLogo: any;
   activeMenuItem: any = localStorage.getItem('activeMenuItem');
+  isImage: boolean = true;
 
   constructor(private accountantService: AccountantService, private employeeService: EmployeeService, private invoiceService: InvoiceService, private customerService: CustomerService) {
     this.activeMenuItem = localStorage.getItem('activeMenuItem');
@@ -30,11 +31,11 @@ export class PdfService {
     let maxWidth = 100;
 
     pdf.setFontSize(16);
-    if(image.data)
+    if(image != null && this.isImage)
     {
       pdf.addImage(image, x, y, imageWidth, imageHeight);
     }
-    else{
+    else if(!this.isImage){
       pdf.addImage(logo, x, y, imageWidth, imageHeight);
     }
     x += 550;
@@ -187,6 +188,7 @@ export class PdfService {
   }
 
   getAccountantData(data: any, bankData: any, clientData: any, image: any) {
+    console.log(image)
     this.accountantService.getAccountantInfo().subscribe(response => {
       const formData = new FormData();
       formData.append('invoiceNumber', data.invoiceNumber);
@@ -281,9 +283,15 @@ export class PdfService {
 
   convertDataToUrl(data: any): void {
     data.forEach((image: any) => {
+      if(image.data)
+      {
+        this.isImage = true;
+      }
+      else {
+        this.isImage =false;
+      }
       this.employeeLogo = `data:image/jpeg;base64,${image.data}`
     })
-
   }
 
 }
