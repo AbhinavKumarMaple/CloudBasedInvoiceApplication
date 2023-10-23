@@ -124,6 +124,7 @@
   font-size: 16px;
   color: #5800a0;
   margin-left: 30px;
+  
 }
 
 // main content
@@ -135,6 +136,7 @@
   border-radius: 20px;
   padding: 20px;
   margin-left: 292px;
+  overflow-x: hidden;
 
   @media screen and (max-width: 500px) {
     padding: 0;
@@ -142,6 +144,7 @@
     height: 100%;
     width: 100%;
     border-radius: 0;
+    overflow: auto;
   }
 }
 
