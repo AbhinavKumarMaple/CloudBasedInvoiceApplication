@@ -1,3 +1,5 @@
+<!-- for adding a new client -->
+
 <div class="container">
   <div class="inner-content">
     <div class="details">
@@ -79,15 +81,15 @@
                 </div>
                 <div class="bank-details-fields">
                   <div class="f-1">
-                    <p class="f-1-outline">User Name <span style="color: red;">*</span></p>
+                    <p class="f-1-outline">User Name</p>
                     <input type="text" [(ngModel)]="username" />
                   </div>
                   <div class="f-1">
-                    <p class="f-1-outline">Email <span style="color: red;">*</span></p>
-                    <input type="text" [(ngModel)]="email" />
+                    <p class="f-1-outline">Email<span style="color: red;">*</span></p>
+                    <input type="text" [(ngModel)]="email" required />
                   </div>
                   <div class="f-1">
-                    <p class="f-1-outline">Password <span style="color: red;">*</span></p>
+                    <p class="f-1-outline">Password </p>
                     <input type="password" [(ngModel)]="password" />
                   </div>
                 </div>

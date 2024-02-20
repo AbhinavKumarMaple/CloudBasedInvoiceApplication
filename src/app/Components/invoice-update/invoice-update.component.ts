@@ -14,7 +14,7 @@ import { Subject, subscribeOn } from 'rxjs';
 @Component({
   selector: 'app-invoice-update',
   templateUrl: './invoice-update.component.html',
-  styleUrls: ['./invoice-update.component.scss']
+  styleUrls: ['./invoice-update.component.scss'],
 })
 export class InvoiceUpdateComponent implements OnInit {
   invoiceForm!: FormGroup;
@@ -49,7 +49,8 @@ export class InvoiceUpdateComponent implements OnInit {
   filterDescList: any[] = [];
   filterVatRateOptions: any[] = [];
 
-  constructor(private dialogRef: MatDialogRef<InvoiceUpdateComponent>,
+  constructor(
+    private dialogRef: MatDialogRef<InvoiceUpdateComponent>,
     private formbuilder: FormBuilder,
     private vatService: VatRateService,
     private invoiceService: InvoiceService,
@@ -58,11 +59,11 @@ export class InvoiceUpdateComponent implements OnInit {
     private serviceDescription: ServiceDescriptionService,
     private employeeService: EmployeeService,
     private accountantService: AccountantService,
-    @Inject(MAT_DIALOG_DATA) public data?: any,
+    @Inject(MAT_DIALOG_DATA) public data?: any
   ) {
     this.editableData = data;
     if (data) {
-      console.log(data)
+      console.log(data);
       this.isEdit = true;
     }
     this._searchTerm$.subscribe((searchTerm) => {
@@ -72,7 +73,6 @@ export class InvoiceUpdateComponent implements OnInit {
     this._descTerm$.subscribe((descTerm) => {
       this.filterDesc(descTerm);
     });
-
   }
 
   ngOnInit(): void {
@@ -80,30 +80,56 @@ export class InvoiceUpdateComponent implements OnInit {
     this.getCustomer();
     this.getServiceDescription();
     if (this.loggedInAs == 'employee') {
-      this.employeeService.employeeBankInfo().subscribe(res => {
+      this.employeeService.employeeBankInfo().subscribe((res) => {
         this.banksList = res.body.banks;
-      })
-    }
-    else if (this.loggedInAs == 'customer') {
-      this.accountantService.getAccountantInfo().subscribe(res => {
+      });
+    } else if (this.loggedInAs == 'customer') {
+      this.accountantService.getAccountantInfo().subscribe((res) => {
         this.banksList = res.body.banks;
-      })
+      });
     }
 
-    this.description = this.isEdit ? this.editableData.serviceDescription : []
+    this.description = this.isEdit ? this.editableData.serviceDescription : [];
 
     this.invoiceForm = this.formbuilder.group({
-      customerName: [this.isEdit ? this.editableData.customerName : '', [Validators.required,]],
-      netAmount: [this.isEdit ? this.editableData.netAmount : '', [Validators.required]],
-      vatRate: [this.isEdit ? this.editableData.vatRate : '', [Validators.required]],
-      vatAmount: [this.isEdit ? this.editableData.vatAmount : '', [Validators.required]],
-      totalGross: [this.isEdit ? this.editableData.totalGross : '', [Validators.required]],
-      bankAccount: [this.isEdit ? this.editableData.bankAccount : '', [Validators.required]],
-      date: [this.isEdit ? this.editableData.date : new Date(), [Validators.required]],
-      paymentMethod: [this.isEdit ? this.editableData.paymentMethod : '', [Validators.required]],
+      customerName: [
+        this.isEdit ? this.editableData.customerName : '',
+        [Validators.required],
+      ],
+      netAmount: [
+        this.isEdit ? this.editableData.netAmount : '',
+        [Validators.required],
+      ],
+      vatRate: [
+        this.isEdit ? this.editableData.vatRate : '',
+        [Validators.required],
+      ],
+      vatAmount: [
+        this.isEdit ? this.editableData.vatAmount : '',
+        [Validators.required],
+      ],
+      totalGross: [
+        this.isEdit ? this.editableData.totalGross : '',
+        [Validators.required],
+      ],
+      bankAccount: [
+        this.isEdit ? this.editableData.bankAccount : '',
+        [Validators.required],
+      ],
+      date: [
+        this.isEdit ? this.editableData.date : new Date(),
+        [Validators.required],
+      ],
+      paymentMethod: [
+        this.isEdit ? this.editableData.paymentMethod : '',
+        [Validators.required],
+      ],
       note: [this.isEdit ? this.editableData.note : '', [Validators.required]],
-      paymentStatus: [this.isEdit ? this.editableData.paymentStatus : '', [Validators.required]],
-      serviceDescription: ['', [Validators.required]]
+      paymentStatus: [
+        this.isEdit ? this.editableData.paymentStatus : '',
+        [Validators.required],
+      ],
+      serviceDescription: ['', [Validators.required]],
     });
     this.createdFor = this.isEdit ? this.editableData.createdFor : '';
   }
@@ -117,9 +143,13 @@ export class InvoiceUpdateComponent implements OnInit {
     if (!searchTerm || searchTerm.trim() === '') {
       this.filteredCustomerList = this.customerList;
     } else {
-      this.filteredCustomerList = this.customerList.filter((invoice: any) =>
-        (invoice.name ? invoice.name.toLowerCase().includes(searchTerm.toLowerCase()) : false) ||
-        invoice.username.toLowerCase().includes(searchTerm.toLowerCase()));
+      this.filteredCustomerList = this.customerList.filter(
+        (invoice: any) =>
+          (invoice.name
+            ? invoice.name.toLowerCase().includes(searchTerm.toLowerCase())
+            : false) ||
+          invoice.username.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     }
   }
 
@@ -133,7 +163,8 @@ export class InvoiceUpdateComponent implements OnInit {
       this.filterDescList = this.serviceDescriptionList;
     } else {
       this.filterDescList = this.serviceDescriptionList.filter((invoice: any) =>
-        invoice.description.toLowerCase().includes(searchTerm.toLowerCase()));
+        invoice.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     }
   }
 
@@ -143,15 +174,15 @@ export class InvoiceUpdateComponent implements OnInit {
 
   getVatRate() {
     if (this.loggedInAs == 'employee') {
-      this.vatService.getVatRate().subscribe(response => {
+      this.vatService.getVatRate().subscribe((response) => {
         this.vatRateOptions = response.body;
         this.vatRateOptions.push({ vatRate: 20 });
         this.vatRateOptions.push({ vatRate: 5 });
         this.vatRateOptions.push({ vatRate: 0 });
         this.filterVatRateOptions = this.vatRateOptions;
-      })
+      });
     } else {
-      this.vatService.getVatRate().subscribe(response => {
+      this.vatService.getVatRate().subscribe((response) => {
         if (response) {
           this.vatRateOptions = response.body;
           this.vatRateOptions.push({ vatRate: 20 });
@@ -159,15 +190,15 @@ export class InvoiceUpdateComponent implements OnInit {
           this.vatRateOptions.push({ vatRate: 0 });
           this.filterVatRateOptions = this.vatRateOptions;
         }
-      })
+      });
     }
   }
 
   getServiceDescription() {
-    this.serviceDescription.getServiceDesc().subscribe(response => {
+    this.serviceDescription.getServiceDesc().subscribe((response) => {
       this.serviceDescriptionList = response.body;
       this.filterDescList = this.serviceDescriptionList;
-    })
+    });
   }
 
   getCustomer() {
@@ -178,26 +209,29 @@ export class InvoiceUpdateComponent implements OnInit {
       this.endDate = currentDate.format('YYYY-MM-DD');
       let data = {
         startDate: this.startDate,
-        endDate: this.endDate
-      }
-      this.customerService.getAllCustomer(1, 100000, data).subscribe(response => {
-        this.customerList = response.body.customers;
-        this.filteredCustomerList = this.customerList;
-      })
-    }
-    else if (this.loggedInAs == 'customer') {
+        endDate: this.endDate,
+      };
+      this.customerService
+        .getAllCustomer(1, 100000, data)
+        .subscribe((response) => {
+          this.customerList = response.body.customers;
+          this.filteredCustomerList = this.customerList;
+        });
+    } else if (this.loggedInAs == 'customer') {
       const currentDate = moment();
       const startDate = currentDate.clone().subtract(1, 'day');
       this.startDate = startDate.format('YYYY-MM-DD');
       this.endDate = currentDate.format('YYYY-MM-DD');
       let data = {
         startDate: this.startDate,
-        endDate: this.endDate
-      }
-      this.employeeService.employeeUnderAccountant(1, 1000000, data).subscribe(response => {
-        this.customerList = response.body.employees;
-        this.filteredCustomerList = this.customerList;
-      })
+        endDate: this.endDate,
+      };
+      this.employeeService
+        .employeeUnderAccountant(1, 1000000, data)
+        .subscribe((response) => {
+          this.customerList = response.body.employees;
+          this.filteredCustomerList = this.customerList;
+        });
     }
   }
 
@@ -228,7 +262,9 @@ export class InvoiceUpdateComponent implements OnInit {
   dropdownSelected(selectedOption: any) {
     this.createdFor = selectedOption._id;
     let customer = this.invoiceForm.get('customerName');
-    customer?.patchValue(selectedOption.name ? selectedOption.name : selectedOption.username);
+    customer?.patchValue(
+      selectedOption.name ? selectedOption.name : selectedOption.username
+    );
     this.openCustomerList = false;
   }
 
@@ -241,83 +277,105 @@ export class InvoiceUpdateComponent implements OnInit {
 
     if (value) {
       vatRate?.patchValue(value);
-      vat?.patchValue((this.invoiceForm.value.netAmount * value) / 100)
-      gross?.patchValue(Number(this.invoiceForm.value.netAmount) + Number(this.invoiceForm.value.vatAmount))
+      const netAmount = this.invoiceForm.value.netAmount;
+      vat?.patchValue((netAmount * value) / 100);
+      gross?.patchValue(netAmount + this.invoiceForm.value.vatAmount);
+    } else {
+      const netAmount = parseFloat(this.invoiceForm.value.netAmount);
+      vat?.patchValue((netAmount * this.invoiceForm.value.vatRate) / 100);
+      gross?.patchValue(netAmount + this.invoiceForm.value.vatAmount);
     }
-    else {
-      vat?.patchValue((this.invoiceForm.value.netAmount * this.invoiceForm.value.vatRate) / 100)
-      gross?.patchValue(Number(this.invoiceForm.value.netAmount) + Number(this.invoiceForm.value.vatAmount))
+  }
+  addDescription() {
+    const netAmountControl = this.invoiceForm.get('netAmount');
+    const vatRateControl = this.invoiceForm.get('vatRate');
+    const serviceDescriptionControl =
+      this.invoiceForm.get('serviceDescription');
+
+    if (netAmountControl && vatRateControl && serviceDescriptionControl) {
+      const netAmount = netAmountControl.value;
+      const vatRate = vatRateControl.value;
+      const vatAmount = (netAmount * vatRate) / 100;
+      const totalGross = Number(netAmount) + vatAmount;
+
+      const serviceDescription = serviceDescriptionControl.value;
+      const newServiceDescription = {
+        description: serviceDescription,
+        netAmount: netAmount,
+        vatRate: vatRate,
+        vatAmount: vatAmount,
+        totalGross: totalGross,
+      };
+
+      this.description.push(newServiceDescription);
+
+      // Clear relevant form fields
+      this.invoiceForm.patchValue({
+        serviceDescription: '',
+        netAmount: null,
+        vatRate: null,
+        vatAmount: null,
+        totalGross: null,
+      });
     }
   }
 
-
   saveInvoice() {
-    const vatRateData = {
-      vatRate: this.invoiceForm.value.vatRate
-    }
     const data = {
       customerName: this.invoiceForm.value.customerName,
       createdFor: this.createdFor,
-      netAmount: this.invoiceForm.value.netAmount,
-      vatRate: this.invoiceForm.value.vatRate,
-      vatAmount: this.invoiceForm.value.vatAmount,
-      totalGross: this.invoiceForm.value.totalGross,
       bankAccount: this.invoiceForm.value.bankAccount,
       date: moment(this.invoiceForm.value.date).format('YYYY-MM-DD'),
-      serviceDescription: this.description,
+      serviceDescription: this.description.map((desc: any) => ({
+        description: desc.description,
+        netAmount: desc.netAmount,
+        vatRate: desc.vatRate,
+        vatAmount: desc.vatAmount,
+        totalGross: desc.totalGross,
+      })),
       paymentMethod: this.invoiceForm.value.paymentMethod,
-      paymentStatus: this.isEdit ? this.invoiceForm.value.paymentStatus : 'Unpaid',
-      note: this.invoiceForm.value.note
+      paymentStatus: this.isEdit
+        ? this.invoiceForm.value.paymentStatus
+        : 'Unpaid',
+      note: this.invoiceForm.value.note,
     };
+
     if (this.isEdit) {
       if (this.activeMenuItem == 'generatedInvoice') {
-        this.invoiceService.updateGeneratedInvoiceById(this.editableData._id, data).subscribe();
-        alert('Invoice updated successfully...');
-        this.cancelDialog();
-      }
-      else {
-        this.invoiceService.updateById(this.editableData._id, data).subscribe(response => {
-          alert('Invoice updated successfully');
-          this.vatRateService.update(data.vatRate._id, data.vatRate.vatRate).subscribe();
-          this.cancelDialog();
-          window.location.reload();
-        })
-      }
-    }
-    else {
-      this.invoiceService.create(data).subscribe(response => {
-        if (response) {
-          this.vatRateService.generate(vatRateData).subscribe(response => {
-            if (response.error) {
-              alert(response.error.message);
-            }
+        this.invoiceService
+          .updateGeneratedInvoiceById(this.editableData._id, data)
+          .subscribe(() => {
+            alert('Invoice updated successfully...');
+            this.cancelDialog();
           });
-          this.description.forEach((desc: any) => {
-            let data = {
-              description: desc
-            }
-            this.serviceDescription.generate(data).subscribe(response => {
-              console.log(response)
-            });
-          })
-          alert('Invoice created successfully.')
-          this.cancelDialog();
-          window.location.reload();
-        }
-      })
+      } else {
+        console.log('data strcuture: ', data);
+        this.invoiceService
+          .updateById(this.editableData._id, data)
+          .subscribe(() => {
+            alert('Invoice updated successfully');
+            this.cancelDialog();
+            window.location.reload();
+          });
+      }
+    } else {
+      this.invoiceService.create(data).subscribe(() => {
+        alert('Invoice created successfully.');
+        this.cancelDialog();
+        window.location.reload();
+      });
     }
   }
 
-  addDescription() {
-    this.description.push(
-      this.invoiceForm.value.serviceDescription
-    )
-    let description = this.invoiceForm.get('serviceDescription');
-    description?.patchValue('');
-  }
+  // addDescription() {
+  //   this.description.push(
+  //     this.invoiceForm.value.serviceDescription
+  //   )
+  //   let description = this.invoiceForm.get('serviceDescription');
+  //   description?.patchValue('');
+  // }
 
   removeServiceDescrption(desc: any) {
-    this.description = this.description.filter(d => d != desc);
+    this.description = this.description.filter((d) => d != desc);
   }
-
 }

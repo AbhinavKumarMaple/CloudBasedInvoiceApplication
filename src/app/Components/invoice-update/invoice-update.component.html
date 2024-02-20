@@ -1,3 +1,5 @@
+<!-- page for generating invoice -->
+
 <div class="outer-update">
   <div class="inner-update">
     <div class="bank-details">
@@ -69,7 +71,7 @@
         </div>
         <div class="right-sec">
           <div class="f-1">
-            <p class="f-1-outline">DATE</p>
+            <p class="f-1-outline">DUE DATE</p>
             <input matInput [matDatepicker]="picker" formControlName="date">
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
@@ -79,11 +81,15 @@
             <div class="s-desc">
               <div class="desc-div" *ngFor="let desc of description">
                 <i class="fa-solid fa-circle fa-xs"></i>
-                <p>{{desc}}</p>
-                <i class="fa-solid fa-trash" style="color: rgb(255, 71, 71); cursor: pointer;"
-                  (click)="removeServiceDescrption(desc)"></i>
+                <p>{{desc.description}}</p>
+                <p>Net Amount: {{desc.netAmount}}</p>
+                <p>VAT Rate: {{desc.vatRate}}</p>
+                <p>VAT Amount: {{desc.vatAmount}}</p>
+                <p>Total Gross: {{desc.totalGross}}</p>
+                <i class="fa-solid fa-trash" style="color: rgb(255, 71, 71); cursor: pointer;" (click)="removeServiceDescrption(desc)"></i>
               </div>
             </div>
+            
 
           </div>
           <div class="f-2">
@@ -98,7 +104,7 @@
           <div class="addDesc-div" (click)="addDescription()">
             <i class="fa-solid fa-plus" style="margin-right: 10px;"></i>
             <span>Add Description</span>
-          </div>
+          </div>          
           <div class="f-1" *ngIf="isEdit">
             <p class="f-1-outline">PAYMENT METHOD</p>
             <input type="text" formControlName="paymentMethod" readonly />

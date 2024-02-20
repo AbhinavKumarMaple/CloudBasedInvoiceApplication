@@ -13,7 +13,7 @@ import * as moment from 'moment';
 @Component({
   selector: 'app-generated-invoice',
   templateUrl: './generated-invoice.component.html',
-  styleUrls: ['./generated-invoice.component.scss']
+  styleUrls: ['./generated-invoice.component.scss'],
 })
 export class GeneratedInvoiceComponent {
   loggedInAs: any = localStorage.getItem('loggedInAs');
@@ -22,12 +22,22 @@ export class GeneratedInvoiceComponent {
   page: number = 1;
   limit: number = 7;
   selectedInvoice: any;
-  tableHeaders: any = ['invoiceNumber', 'date', 'customerName', 'netAmount', 'vatRate', 'vatAmount', 'totalGross', 'bankAccount', 'note'];
+  tableHeaders: any = [
+    'invoiceNumber',
+    'date',
+    'customerName',
+    'netAmount',
+    'vatRate',
+    'vatAmount',
+    'totalGross',
+    'bankAccount',
+    'note',
+  ];
   viewGenerateInvoice: boolean = false;
   private _searchTerm$ = new Subject<string>();
   filteredCustomerList: any;
   searchTerm: any;
-  invoice: string = 'invoice'
+  invoice: string = 'invoice';
   noOfRowsSelected: any;
   bankList: any;
   selectedBank: any;
@@ -36,13 +46,20 @@ export class GeneratedInvoiceComponent {
   endDate: any;
   openDateRange: boolean = false;
   selectedInvoiceList: any[] = [];
-  generatedInvoice: string = 'generatedInvoice'
+  generatedInvoice: string = 'generatedInvoice';
   searchedUserName: string = '';
   logoImage: any;
   logoUrl: any[] = [];
   totalPages: any;
 
-  constructor(public dialog: MatDialog, private invoiceService: InvoiceService, private csvService: CsvServiceService, private pdfService: PdfService, private accountantService: AccountantService, private employeeService: EmployeeService) {
+  constructor(
+    public dialog: MatDialog,
+    private invoiceService: InvoiceService,
+    private csvService: CsvServiceService,
+    private pdfService: PdfService,
+    private accountantService: AccountantService,
+    private employeeService: EmployeeService
+  ) {
     this._searchTerm$.subscribe((searchTerm) => {
       this.filterCustomers(searchTerm);
     });
@@ -55,8 +72,8 @@ export class GeneratedInvoiceComponent {
     this.endDate = currentDate.format('YYYY-MM-DD');
     let data = {
       startDate: this.startDate,
-      endDate: this.endDate
-    }
+      endDate: this.endDate,
+    };
     this.getInvoiceList(data);
     this.getAcountantBanks();
     this.getLogo();
@@ -69,8 +86,8 @@ export class GeneratedInvoiceComponent {
     this.endDate = currentDate.format('YYYY-MM-DD');
     let data = {
       startDate: this.startDate,
-      endDate: this.endDate
-    }
+      endDate: this.endDate,
+    };
     this.getInvoiceList(data);
   }
   onTextChange(searchTerm: string) {
@@ -89,30 +106,33 @@ export class GeneratedInvoiceComponent {
 
   getInvoiceList(dateRange: any, userName?: any) {
     if (userName && userName?.length > 1) {
-      this.invoiceService.getGeneratedInvoice(this.page, this.limit, dateRange, userName).subscribe(response => {
-        this.invoiceList = response.body.generatedInvoices;
-        this.totalPages = response.body.totalPages;
-        this.filteredCustomerList = this.invoiceList;
-      })
-    }
-    else {
-      this.invoiceService.getGeneratedInvoice(this.page, this.limit, dateRange).subscribe(response => {
-        this.invoiceList = response.body.generatedInvoices;
-        this.totalPages = response.body.totalPages;
-        this.filteredCustomerList = this.invoiceList;
-      })
+      this.invoiceService
+        .getGeneratedInvoice(this.page, this.limit, dateRange, userName)
+        .subscribe((response) => {
+          this.invoiceList = response.body.generatedInvoices;
+          this.totalPages = response.body.totalPages;
+          this.filteredCustomerList = this.invoiceList;
+        });
+    } else {
+      this.invoiceService
+        .getGeneratedInvoice(this.page, this.limit, dateRange)
+        .subscribe((response) => {
+          this.invoiceList = response.body.generatedInvoices;
+          this.totalPages = response.body.totalPages;
+          this.filteredCustomerList = this.invoiceList;
+        });
     }
   }
 
   openDialog(data?: any): void {
     const dialogRef = this.dialog.open(InvoiceUpdateComponent, { data: data });
-    dialogRef.afterClosed().subscribe((result) => { });
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 
   isMenuVisible: boolean = false;
 
   handleSidenav() {
-    this.isMenuVisible = true
+    this.isMenuVisible = true;
   }
 
   rowSelected(event: any) {
@@ -122,7 +142,9 @@ export class GeneratedInvoiceComponent {
   }
 
   unselectRow(event: any) {
-    this.selectedInvoiceList = this.selectedInvoiceList.filter(invoice => invoice._id != event._id);
+    this.selectedInvoiceList = this.selectedInvoiceList.filter(
+      (invoice) => invoice._id != event._id
+    );
   }
 
   rowCount(event: any) {
@@ -134,66 +156,70 @@ export class GeneratedInvoiceComponent {
 
   convertToCSV() {
     const columnsToDownload = this.tableHeaders;
-    const csvContent = this.csvService.convertToCSV(this.invoiceList, columnsToDownload);
+    const csvContent = this.csvService.convertToCSV(
+      this.invoiceList,
+      columnsToDownload
+    );
     const blob = new Blob([csvContent], { type: 'text/csv' });
     saveAs(blob, 'invoice.csv');
   }
 
   // generateInvoice() {
   //   this.openBankList = !this.openBankList;
-
   // }
 
   downloadPdf() {
-    
     this.selectedInvoiceList.forEach((selectedInvoice: any) => {
       if (this.loggedInAs == 'employee') {
         let data = {
           bankName: selectedInvoice.banks[0].bankName,
           accountName: selectedInvoice.banks[0].accountName,
           accountNumber: selectedInvoice.banks[0].accountNumber,
-          sortCode: selectedInvoice.banks[0].sortCode
-        }
+          sortCode: selectedInvoice.banks[0].sortCode,
+        };
         this.pdfService.getEmployeeData(selectedInvoice, data);
-      }
-      else {
-        console.log(selectedInvoice)
+      } else {
+        console.log(selectedInvoice);
         let data = {
           bankName: selectedInvoice.banks[0].bankName,
           accountName: selectedInvoice.banks[0].accountName,
           accountNumber: selectedInvoice.banks[0].accountNumber,
-          sortCode: selectedInvoice.banks[0].sortCode
-        }
-        console.log(selectedInvoice.createdFor)
-        this.employeeService.InvoiceInfoById(selectedInvoice.createdFor).subscribe(response => {
-          this.pdfService.getAccountantData(selectedInvoice, data, response.body, this.logoUrl[0]);
-
-        })
+          sortCode: selectedInvoice.banks[0].sortCode,
+        };
+        console.log(selectedInvoice.createdFor);
+        this.employeeService
+          .InvoiceInfoById(selectedInvoice.createdFor)
+          .subscribe((response) => {
+            this.pdfService.getAccountantData(
+              selectedInvoice,
+              data,
+              response.body,
+              this.logoUrl[0]
+            );
+          });
       }
-    })
+    });
   }
 
   getAcountantBanks() {
-    this.accountantService.getAccountantInfo().subscribe(response => {
+    this.accountantService.getAccountantInfo().subscribe((response) => {
       this.bankList = response.body.banks;
-    })
+    });
   }
 
   getLogo() {
     if (this.loggedInAs == 'customer') {
-      this.accountantService.getImage().subscribe(res => {
+      this.accountantService.getImage().subscribe((res) => {
         this.logoImage = res.body;
         console.log(this.logoImage);
-        this.convertDataToUrl(this.logoImage)
-      })
+        this.convertDataToUrl(this.logoImage);
+      });
     }
-
   }
   convertDataToUrl(data: any): void {
     data.forEach((image: any) => {
-      this.logoUrl.push(`data:image/jpeg;base64,${image.data}`)
-    })
-
+      this.logoUrl.push(`data:image/jpeg;base64,${image.data}`);
+    });
   }
 
   leftPage() {
@@ -201,8 +227,8 @@ export class GeneratedInvoiceComponent {
     let formatedEndDate = this.formatDate(this.endDate);
     let data = {
       startDate: formatedStartDate,
-      endDate: formatedEndDate
-    }
+      endDate: formatedEndDate,
+    };
     if (this.page >= 1) {
       this.page -= 1;
       this.getInvoiceList(data);
@@ -213,27 +239,25 @@ export class GeneratedInvoiceComponent {
     let formatedEndDate = this.formatDate(this.endDate);
     let data = {
       startDate: formatedStartDate,
-      endDate: formatedEndDate
-    }
+      endDate: formatedEndDate,
+    };
     this.page += 1;
     if (this.page > this.totalPages) {
       alert('This is last page...');
       this.page -= 1;
-    }
-    else {
+    } else {
       this.getInvoiceList(data);
     }
   }
 
   onDateRangeChange() {
-
     let formatedStartDate = this.formatDate(this.startDate);
     let formatedEndDate = this.formatDate(this.endDate);
     this.openDateRange = false;
     let data = {
       startDate: formatedStartDate,
-      endDate: formatedEndDate
-    }
+      endDate: formatedEndDate,
+    };
     this.getInvoiceList(data);
   }
 
@@ -242,7 +266,7 @@ export class GeneratedInvoiceComponent {
   }
 
   handleMenu(event: any) {
-    console.log(event)
+    console.log(event);
     this.isMenuVisible = event;
   }
 
@@ -253,8 +277,8 @@ export class GeneratedInvoiceComponent {
     this.endDate = currentDate.format('YYYY-MM-DD');
     let data = {
       startDate: this.startDate,
-      endDate: this.endDate
-    }
+      endDate: this.endDate,
+    };
     if (this.searchedUserName != '') {
       this.getInvoiceList(data, this.searchedUserName);
     }

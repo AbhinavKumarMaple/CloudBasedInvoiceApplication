@@ -28,6 +28,7 @@ export class TableComponent implements OnInit {
   noOfRows: any = 0;
   openBankList: boolean[] = [];
   selectAll = false;
+  serviceDescriptionHeaders = ['Description', 'Net Amount', 'VAT Rate', 'VAT Amount', 'Total Gross'];
 
   constructor(
     private accountantService: AccountantService,
@@ -129,6 +130,8 @@ export class TableComponent implements OnInit {
       });
     }
   }
+  selectedServiceDescription: string = '';
+
   getAllInvoices(header: any, row: any) {
     console.log(header);
     console.log(row);

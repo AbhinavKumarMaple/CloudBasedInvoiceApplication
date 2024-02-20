@@ -18,7 +18,7 @@
                 <input type="checkbox" [(ngModel)]="row.selected" (change)="onCheckboxChange(row)">
             </td>
             <td *ngFor="let header of tableHeaders">
-                <ng-container *ngIf="header !== 'inviteLink'; else inviteLinkCell">
+                <ng-container *ngIf="header !== 'serviceDescription'; else serviceDescriptionDropdown">
                     <ng-container *ngIf="header !== '_id'">
                         <ng-container *ngIf="isArrayOfObjects(row[header])">
                             {{row[header][0]?.bankName || row[header][0]}}
@@ -44,15 +44,16 @@
                         </ng-container>
                     </ng-container>
                 </ng-container>
-                <ng-template #inviteLinkCell>
-                    <ng-container *ngIf="header === 'inviteLink'">
-                        <button class="invite-btn" (click)="onInviteClick(row)">Invite</button>
+                <ng-template #serviceDescriptionDropdown>
+                    <ng-container *ngIf="header === 'serviceDescription'">
+                        <select>
+                            <option *ngFor="let service of row[header]" [value]="service.description">
+                                {{ service.description }} - Net Amount: {{ service.netAmount }} - VAT Rate: {{ service.vatRate }}% - VAT Amount: {{ service.vatAmount }} - Total Gross: {{ service.totalGross }}
+                            </option>
+                        </select>
                     </ng-container>
                 </ng-template>
             </td>
-
-
-
             <td>
                 <i class="fa-solid fa-trash fa-lg" style="color: rgb(255, 84, 84); cursor: pointer;"
                     (click)="delete(row)"></i>

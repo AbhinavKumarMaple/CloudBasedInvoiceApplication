@@ -133,6 +133,11 @@ export class UpdateEmployeeComponent implements OnInit {
   // }
 
   addClient() {
+    if (!this.email ) {
+      // Show an error message or prevent form submission
+      alert('Please fill out all required fields.');
+      return;
+    }
     if (this.bankName != '' && this.accountName != '' && this.accountNumber != '' && this.sortCode != '')
     {
       this.bankList.push({

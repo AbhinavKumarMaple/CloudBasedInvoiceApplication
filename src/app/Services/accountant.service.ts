@@ -12,6 +12,7 @@ export class AccountantService {
   private baseUrl =
     'https://invoice-backend-nodejs-production-up.up.railway.app/api';
 
+
   constructor(private http: HttpClient, private cookieService: CookieService) {
     this.cookieValue = this.cookieService.get('token');
   }

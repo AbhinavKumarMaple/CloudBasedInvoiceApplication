@@ -23,12 +23,24 @@ export class InvoicesComponent implements OnInit, OnChanges {
   page: number = 1;
   limit: number = 7;
   selectedInvoice: any;
-  tableHeaders: any = ['invoiceNumber', 'paymentStatus', 'date', 'customerName', 'serviceDescription', 'netAmount', 'vatRate', 'vatAmount', 'totalGross', 'paymentMethod', 'bankAccount', 'note'];
+  tableHeaders: any = [
+    'invoiceNumber',
+    'customerName',
+    'date',
+    'serviceDescription',
+    'netAmount',
+    'vatAmount',
+    'totalGross',
+    'paymentStatus',
+    'paymentMethod',
+    'bankAccount',
+    'note',
+  ];
   viewGenerateInvoice: boolean = false;
   private _searchTerm$ = new Subject<string>();
   filteredCustomerList: any;
   searchTerm: any;
-  invoice: string = 'invoice'
+  invoice: string = 'invoice';
   noOfRowsSelected: any;
   bankList: any;
   selectedBank: any;
@@ -43,26 +55,32 @@ export class InvoicesComponent implements OnInit, OnChanges {
   invoiceByUserId: any = null;
   totalPages: any;
 
-  constructor(public dialog: MatDialog, private invoiceService: InvoiceService, private csvService: CsvServiceService, private pdfService: PdfService, private accountantService: AccountantService, private employeeService: EmployeeService, private sharedService: SharedDataService) {
+  constructor(
+    public dialog: MatDialog,
+    private invoiceService: InvoiceService,
+    private csvService: CsvServiceService,
+    private pdfService: PdfService,
+    private accountantService: AccountantService,
+    private employeeService: EmployeeService,
+    private sharedService: SharedDataService
+  ) {
     this._searchTerm$.subscribe((searchTerm) => {
       this.filterCustomers(searchTerm);
     });
   }
-  ngOnChanges(changes: SimpleChanges): void {
-
-  }
+  ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnInit(): void {
     this.invoiceByUserId = this.sharedService.returnData();
-    console.log(this.invoiceByUserId)
+    console.log(this.invoiceByUserId);
     const currentDate = moment();
     const startDate = currentDate.clone().subtract(1, 'day');
     this.startDate = startDate.format('YYYY-MM-DD');
     this.endDate = currentDate.format('YYYY-MM-DD');
     let data = {
       startDate: this.startDate,
-      endDate: this.endDate
-    }
+      endDate: this.endDate,
+    };
     this.getInvoiceList(data);
 
     this.color = localStorage.getItem('loggedInAs');
@@ -89,67 +107,81 @@ export class InvoicesComponent implements OnInit, OnChanges {
   getInvoiceList(dateRange: any, searchedUserName?: any) {
     if (searchedUserName && searchedUserName?.length > 1) {
       if (this.loggedInAs == 'employee') {
-        this.invoiceService.getAllByEmp(this.page, this.limit, dateRange, searchedUserName).subscribe(response => {
-          this.invoiceList = response.body.invoices;
-          this.totalPages = response.body.totalPages;
-          if (this.invoiceByUserId != null) {
-            this.filteredCustomerList = this.invoiceList.filter((invoice: any) => invoice.createdFor == this.invoiceByUserId)
-          }
-          else {
-            this.filteredCustomerList = this.invoiceList;
-          }
-        })
+        this.invoiceService
+          .getAllByEmp(this.page, this.limit, dateRange, searchedUserName)
+          .subscribe((response) => {
+            this.invoiceList = response.body.invoices;
+            this.totalPages = response.body.totalPages;
+            if (this.invoiceByUserId != null) {
+              this.filteredCustomerList = this.invoiceList.filter(
+                (invoice: any) => invoice.createdFor == this.invoiceByUserId
+              );
+            } else {
+              this.filteredCustomerList = this.invoiceList;
+            }
+          });
+      } else if (this.loggedInAs == 'customer') {
+        this.invoiceService
+          .getAllByAccountant(
+            this.page,
+            this.limit,
+            dateRange,
+            searchedUserName
+          )
+          .subscribe((response) => {
+            this.invoiceList = response.body.invoices;
+            this.totalPages = response.body.totalPages;
+            if (this.invoiceByUserId != null) {
+              this.filteredCustomerList = this.invoiceList.filter(
+                (invoice: any) => invoice.createdFor == this.invoiceByUserId
+              );
+            } else {
+              this.filteredCustomerList = this.invoiceList;
+            }
+          });
       }
-      else if (this.loggedInAs == 'customer') {
-        this.invoiceService.getAllByAccountant(this.page, this.limit, dateRange, searchedUserName).subscribe(response => {
-          this.invoiceList = response.body.invoices;
-          this.totalPages = response.body.totalPages;
-          if (this.invoiceByUserId != null) {
-            this.filteredCustomerList = this.invoiceList.filter((invoice: any) => invoice.createdFor == this.invoiceByUserId)
-          }
-          else {
-            this.filteredCustomerList = this.invoiceList;
-          }
-        })
-      }
-    }
-    else {
+    } else {
       if (this.loggedInAs == 'employee') {
-        this.invoiceService.getAllByEmp(this.page, this.limit, dateRange).subscribe(response => {
-          this.invoiceList = response.body.invoices;
-          this.totalPages = response.body.totalPages;
-          if (this.invoiceByUserId != null) {
-            this.filteredCustomerList = this.invoiceList.filter((invoice: any) => invoice.createdFor == this.invoiceByUserId)
-          }
-          else {
-            this.filteredCustomerList = this.invoiceList;
-          }
-        })
-      }
-      else if (this.loggedInAs == 'customer') {
-        this.invoiceService.getAllByAccountant(this.page, this.limit, dateRange).subscribe(response => {
-          this.invoiceList = response.body.invoices;
-          this.totalPages = response.body.totalPages;
-          if (this.invoiceByUserId != null) {
-            this.filteredCustomerList = this.invoiceList.filter((invoice: any) => invoice.createdFor == this.invoiceByUserId)
-          }
-          else {
-            this.filteredCustomerList = this.invoiceList;
-          }
-        })
+        this.invoiceService
+          .getAllByEmp(this.page, this.limit, dateRange)
+          .subscribe((response) => {
+            this.invoiceList = response.body.invoices;
+            this.totalPages = response.body.totalPages;
+            if (this.invoiceByUserId != null) {
+              this.filteredCustomerList = this.invoiceList.filter(
+                (invoice: any) => invoice.createdFor == this.invoiceByUserId
+              );
+            } else {
+              this.filteredCustomerList = this.invoiceList;
+            }
+          });
+      } else if (this.loggedInAs == 'customer') {
+        this.invoiceService
+          .getAllByAccountant(this.page, this.limit, dateRange)
+          .subscribe((response) => {
+            this.invoiceList = response.body.invoices;
+            this.totalPages = response.body.totalPages;
+            if (this.invoiceByUserId != null) {
+              this.filteredCustomerList = this.invoiceList.filter(
+                (invoice: any) => invoice.createdFor == this.invoiceByUserId
+              );
+            } else {
+              this.filteredCustomerList = this.invoiceList;
+            }
+          });
       }
     }
   }
 
   openDialog(data?: any): void {
     const dialogRef = this.dialog.open(InvoiceUpdateComponent, { data: data });
-    dialogRef.afterClosed().subscribe((result) => { });
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 
   isMenuVisible: boolean = false;
 
   handleSidenav() {
-    this.isMenuVisible = true
+    this.isMenuVisible = true;
   }
 
   rowSelected(event: any) {
@@ -159,7 +191,9 @@ export class InvoicesComponent implements OnInit, OnChanges {
   }
 
   unselectRow(event: any) {
-    this.selectedInvoiceList = this.selectedInvoiceList.filter(invoice => invoice._id != event._id);
+    this.selectedInvoiceList = this.selectedInvoiceList.filter(
+      (invoice) => invoice._id != event._id
+    );
   }
 
   rowCount(event: any) {
@@ -170,11 +204,48 @@ export class InvoicesComponent implements OnInit, OnChanges {
   }
 
   convertToCSV() {
-    const columnsToDownload = this.tableHeaders;
-    const csvContent = this.csvService.convertToCSV(this.invoiceList, columnsToDownload);
+    let dataToConvert = this.filteredCustomerList.map((invoice: any) => {
+      // Extracting service descriptions and joining them into a string
+      const serviceDescriptions = invoice.serviceDescription
+        .map(
+          (service: any) =>
+            `${service.description}(Net Amount: ${service.netAmount}; VAT Rate: ${service.vatRate}; VAT Amount: ${service.vatAmount}; Total Gross: ${service.totalGross})`
+        )
+        .join('; ');
+
+      // Return an object with the same keys as tableHeaders array
+      return {
+        invoiceNumber: invoice.invoiceNumber,
+        paymentStatus: invoice.paymentStatus,
+        date: invoice.date,
+        customerName: invoice.customerName,
+        serviceDescription: serviceDescriptions, // Updated to include service descriptions
+        netAmount: invoice.netAmount,
+        vatAmount: invoice.vatAmount,
+        totalGross: invoice.totalGross,
+        paymentMethod: invoice.paymentMethod,
+        bankAccount: invoice.bankAccount,
+        note: invoice.note,
+      };
+    });
+
+    // Now dataToConvert contains all information, including service descriptions
+
+    // Extract headers
+    const headers = Object.keys(dataToConvert[0]);
+
+    // Convert data to CSV
+    let csvContent = headers.join(',') + '\n';
+    dataToConvert.forEach((row: any) => {
+      const values = headers.map((header) => row[header]);
+      csvContent += values.join(',') + '\n';
+    });
+
+    // Create a blob and download the file
     const blob = new Blob([csvContent], { type: 'text/csv' });
     saveAs(blob, 'invoice.csv');
   }
+
   generateInvoice() {
     this.openBankList = !this.openBankList;
   }
@@ -184,14 +255,20 @@ export class InvoicesComponent implements OnInit, OnChanges {
     this.selectedInvoiceList.forEach((selectedInvoice: any) => {
       if (this.loggedInAs == 'employee') {
         this.pdfService.getEmployeeData(selectedInvoice, data);
+      } else {
+        console.log(selectedInvoice.createdFor);
+        this.employeeService
+          .InvoiceInfoById(selectedInvoice.createdFor)
+          .subscribe((response) => {
+            this.pdfService.getAccountantData(
+              selectedInvoice,
+              data,
+              response.body,
+              this.logoUrl[0]
+            );
+          });
       }
-      else {
-        console.log(selectedInvoice.createdFor)
-        this.employeeService.InvoiceInfoById(selectedInvoice.createdFor).subscribe(response => {
-          this.pdfService.getAccountantData(selectedInvoice, data, response.body, this.logoUrl[0]);
-        })
-      }
-    })
+    });
   }
 
   leftPage() {
@@ -199,8 +276,8 @@ export class InvoicesComponent implements OnInit, OnChanges {
     let formatedEndDate = this.formatDate(this.endDate);
     let data = {
       startDate: formatedStartDate,
-      endDate: formatedEndDate
-    }
+      endDate: formatedEndDate,
+    };
     if (this.page >= 1) {
       this.page -= 1;
       this.getInvoiceList(data);
@@ -211,41 +288,37 @@ export class InvoicesComponent implements OnInit, OnChanges {
     let formatedEndDate = this.formatDate(this.endDate);
     let data = {
       startDate: formatedStartDate,
-      endDate: formatedEndDate
-    }
+      endDate: formatedEndDate,
+    };
     this.page += 1;
     if (this.page > this.totalPages) {
       alert('This is last page...');
       this.page -= 1;
-    }
-    else {
+    } else {
       this.getInvoiceList(data);
     }
   }
 
   getAcountantBanks() {
     if (this.loggedInAs == 'employee') {
-      this.employeeService.employeeBankInfo().subscribe(res => {
+      this.employeeService.employeeBankInfo().subscribe((res) => {
         this.bankList = res.body.banks;
-      })
-    }
-    else if (this.loggedInAs == 'customer') {
-      this.accountantService.getAccountantInfo().subscribe(response => {
+      });
+    } else if (this.loggedInAs == 'customer') {
+      this.accountantService.getAccountantInfo().subscribe((response) => {
         this.bankList = response.body.banks;
-      })
+      });
     }
-
   }
 
   onDateRangeChange() {
-
     let formatedStartDate = this.formatDate(this.startDate);
     let formatedEndDate = this.formatDate(this.endDate);
     this.openDateRange = false;
     let data = {
       startDate: formatedStartDate,
-      endDate: formatedEndDate
-    }
+      endDate: formatedEndDate,
+    };
     this.getInvoiceList(data);
   }
 
@@ -255,21 +328,19 @@ export class InvoicesComponent implements OnInit, OnChanges {
 
   getLogo() {
     if (this.loggedInAs == 'customer') {
-      this.accountantService.getImage().subscribe(res => {
+      this.accountantService.getImage().subscribe((res) => {
         this.logoImage = res.body;
-        this.convertDataToUrl(this.logoImage)
-      })
+        this.convertDataToUrl(this.logoImage);
+      });
     }
-
   }
   convertDataToUrl(data: any): void {
     data.forEach((image: any) => {
-      this.logoUrl.push(`data:image/jpeg;base64,${image.data}`)
-    })
-
+      this.logoUrl.push(`data:image/jpeg;base64,${image.data}`);
+    });
   }
   handleMenu(event: any) {
-    console.log(event)
+    console.log(event);
     this.isMenuVisible = event;
   }
 
@@ -280,8 +351,8 @@ export class InvoicesComponent implements OnInit, OnChanges {
     this.endDate = currentDate.format('YYYY-MM-DD');
     let data = {
       startDate: this.startDate,
-      endDate: this.endDate
-    }
+      endDate: this.endDate,
+    };
     this.getInvoiceList(data);
   }
 
@@ -292,15 +363,13 @@ export class InvoicesComponent implements OnInit, OnChanges {
     this.endDate = currentDate.format('YYYY-MM-DD');
     let data = {
       startDate: this.startDate,
-      endDate: this.endDate
-    }
+      endDate: this.endDate,
+    };
     if (this.searchedUserName.length > 1) {
       this.getInvoiceList(data, this.searchedUserName);
-    }
-    else {
+    } else {
       this.getInvoiceList(data);
     }
     this.openDateRange = false;
   }
-
 }

@@ -10,18 +10,33 @@ import * as moment from 'moment';
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
-  styleUrls: ['./employee.component.scss']
+  styleUrls: ['./employee.component.scss'],
 })
 export class EmployeeComponent implements OnInit {
   page: number = 1;
   limit: number = 7;
   isMenuVisible: boolean = false;
-  constructor(public dialog: MatDialog, private employeeService: EmployeeService, private csvService: CsvServiceService) {
+  constructor(
+    public dialog: MatDialog,
+    private employeeService: EmployeeService,
+    private csvService: CsvServiceService
+  ) {
     this._searchTerm$.subscribe((searchTerm) => {
       this.filterCustomers(searchTerm);
     });
   }
-  tableHeader: string[] = ['_id', 'businessName', 'address', 'contactNumber', 'vatNumber', 'crnNumber', 'userName', 'email', 'banks', 'inviteLink'];
+  tableHeader: string[] = [
+    '_id',
+    'businessName',
+    'address',
+    'contactNumber',
+    'vatNumber',
+    'crnNumber',
+    'userName',
+    'email',
+    'banks',
+    'inviteLink',
+  ];
   employeeList: any;
   selectedEmployee: any;
   private _searchTerm$ = new Subject<string>();
@@ -35,26 +50,21 @@ export class EmployeeComponent implements OnInit {
   searchedUserName: string = 'a';
   totalPages: any;
 
-
   handleSidenav() {
-    this.isMenuVisible = true
+    this.isMenuVisible = true;
   }
   openDialog(data?: any): void {
     const dialogRef = this.dialog.open(UpdateEmployeeComponent, { data: data });
 
-    dialogRef.afterClosed().subscribe((result) => {
-
-    });
-
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 
   onTextChange(searchTerm: string) {
     this._searchTerm$.next(searchTerm);
   }
 
-
   filterCustomers(searchTerm: string) {
-    console.log(searchTerm)
+    console.log(searchTerm);
     if (!searchTerm || searchTerm.trim() === '') {
       this.filteredCustomerList = this.employeeList;
     } else {
@@ -64,7 +74,6 @@ export class EmployeeComponent implements OnInit {
     }
   }
 
-
   ngOnInit(): void {
     const currentDate = moment();
     const startDate = currentDate.clone().subtract(1, 'day');
@@ -72,61 +81,68 @@ export class EmployeeComponent implements OnInit {
     this.endDate = currentDate.format('YYYY-MM-DD');
     let data = {
       startDate: this.startDate,
-      endDate: this.endDate
-    }
+      endDate: this.endDate,
+    };
     this.getEmployeeUnderAccountant(data);
   }
 
   getEmployeeUnderAccountant(data?: any, userName?: any) {
     if (userName && userName?.length > 1) {
-      this.employeeService.employeeUnderAccountant(this.page, this.limit, data, userName).subscribe(response => {
-        this.totalPages = response.body.totalPages;
-        this.employeeList = response.body.employees.map((el: any) => {
-          return {
-            _id: el._id,
-            businessName: el.businessName,
-            address: (el.address?.buildingNameNumber ? el.address.buildingNameNumber : '') +
-              (el.address?.streetName ? ' ' + el.address?.streetName : '') +
-              (el.address?.landmark ? ' ' + el.address?.landmark : '') +
-              (el.address?.postalCode ? ' ' + el.address?.postalCode : ''),
-            contactNumber: el.contactNumber,
-            vatNumber: el.vatNumber,
-            crnNumber: el.crnNumber,
-            userName: el.username,
-            email: el.email,
-            password: el.password,
-            banks: el.banks,
-            image: el.image,
-          }
+      this.employeeService
+        .employeeUnderAccountant(this.page, this.limit, data, userName)
+        .subscribe((response) => {
+          this.totalPages = response.body.totalPages;
+          this.employeeList = response.body.employees.map((el: any) => {
+            return {
+              _id: el._id,
+              businessName: el.businessName,
+              address:
+                (el.address?.buildingNameNumber
+                  ? el.address.buildingNameNumber
+                  : '') +
+                (el.address?.streetName ? ' ' + el.address?.streetName : '') +
+                (el.address?.landmark ? ' ' + el.address?.landmark : '') +
+                (el.address?.postalCode ? ' ' + el.address?.postalCode : ''),
+              contactNumber: el.contactNumber,
+              vatNumber: el.vatNumber,
+              crnNumber: el.crnNumber,
+              userName: el.username,
+              email: el.email,
+              password: el.password,
+              banks: el.banks,
+              image: el.image,
+            };
+          });
+          this.filteredCustomerList = this.employeeList;
         });
-        this.filteredCustomerList = this.employeeList;
-
-      })
-    }
-    else {
-      this.employeeService.employeeUnderAccountant(this.page, this.limit, data).subscribe(response => {
-        this.totalPages = response.body.totalPages;
-        this.employeeList = response.body.employees.map((el: any) => {
-          return {
-            _id: el._id,
-            businessName: el.businessName,
-            address: (el.address?.buildingNameNumber ? el.address.buildingNameNumber : '') +
-              (el.address?.streetName ? ' ' + el.address?.streetName : '') +
-              (el.address?.landmark ? ' ' + el.address?.landmark : '') +
-              (el.address?.postalCode ? ' ' + el.address?.postalCode : ''),
-            contactNumber: el.contactNumber,
-            vatNumber: el.vatNumber,
-            crnNumber: el.crnNumber,
-            userName: el.username,
-            email: el.email,
-            password: el.password,
-            banks: el.banks,
-            image: el.image,
-          }
+    } else {
+      this.employeeService
+        .employeeUnderAccountant(this.page, this.limit, data)
+        .subscribe((response) => {
+          this.totalPages = response.body.totalPages;
+          this.employeeList = response.body.employees.map((el: any) => {
+            return {
+              _id: el._id,
+              businessName: el.businessName,
+              address:
+                (el.address?.buildingNameNumber
+                  ? el.address.buildingNameNumber
+                  : '') +
+                (el.address?.streetName ? ' ' + el.address?.streetName : '') +
+                (el.address?.landmark ? ' ' + el.address?.landmark : '') +
+                (el.address?.postalCode ? ' ' + el.address?.postalCode : ''),
+              contactNumber: el.contactNumber,
+              vatNumber: el.vatNumber,
+              crnNumber: el.crnNumber,
+              userName: el.username,
+              email: el.email,
+              password: el.password,
+              banks: el.banks,
+              image: el.image,
+            };
+          });
+          this.filteredCustomerList = this.employeeList;
         });
-        this.filteredCustomerList = this.employeeList;
-
-      })
     }
   }
 
@@ -140,13 +156,16 @@ export class EmployeeComponent implements OnInit {
 
   convertToCSV() {
     const columnsToDownload = this.tableHeader;
-    const csvContent = this.csvService.convertToCSV(this.employeeList, columnsToDownload);
+    const csvContent = this.csvService.convertToCSV(
+      this.employeeList,
+      columnsToDownload
+    );
     const blob = new Blob([csvContent], { type: 'text/csv' });
     saveAs(blob, 'client.csv');
   }
 
   handleMenu(event: any) {
-    console.log(event)
+    console.log(event);
     this.isMenuVisible = event;
   }
 
@@ -155,8 +174,8 @@ export class EmployeeComponent implements OnInit {
     let formatedEndDate = this.formatDate(this.endDate);
     let data = {
       startDate: formatedStartDate,
-      endDate: formatedEndDate
-    }
+      endDate: formatedEndDate,
+    };
     if (this.page >= 1) {
       this.page -= 1;
       this.getEmployeeUnderAccountant(data);
@@ -167,14 +186,13 @@ export class EmployeeComponent implements OnInit {
     let formatedEndDate = this.formatDate(this.endDate);
     let data = {
       startDate: formatedStartDate,
-      endDate: formatedEndDate
-    }
+      endDate: formatedEndDate,
+    };
     this.page += 1;
     if (this.page > this.totalPages) {
       alert('This is last page...');
       this.page -= 1;
-    }
-    else {
+    } else {
       this.getEmployeeUnderAccountant(data);
     }
   }
@@ -189,8 +207,8 @@ export class EmployeeComponent implements OnInit {
     this.endDate = currentDate.format('YYYY-MM-DD');
     let data = {
       startDate: this.startDate,
-      endDate: this.endDate
-    }
+      endDate: this.endDate,
+    };
     this.getEmployeeUnderAccountant(data);
   }
 
@@ -201,15 +219,13 @@ export class EmployeeComponent implements OnInit {
     this.endDate = currentDate.format('YYYY-MM-DD');
     let data = {
       startDate: this.startDate,
-      endDate: this.endDate
-    }
+      endDate: this.endDate,
+    };
     if (this.searchedUserName.length > 1) {
       this.getEmployeeUnderAccountant(data, this.searchedUserName);
-    }
-    else {
+    } else {
       this.getEmployeeUnderAccountant(data);
     }
     this.openDateRange = false;
   }
-
 }
