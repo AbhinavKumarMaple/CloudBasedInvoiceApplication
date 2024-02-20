@@ -18,40 +18,48 @@
                 <input type="checkbox" [(ngModel)]="row.selected" (change)="onCheckboxChange(row)">
             </td>
             <td *ngFor="let header of tableHeaders">
-                <ng-container *ngIf="header !== 'serviceDescription'; else serviceDescriptionDropdown">
-                    <ng-container *ngIf="header !== '_id'">
-                        <ng-container *ngIf="isArrayOfObjects(row[header])">
-                            {{row[header][0]?.bankName || row[header][0]}}
-                            <i class="fa-solid fa-chevron-down" (click)="openBankList[i] = !openBankList[i]"></i>
-                            <ul *ngIf="openBankList[i]" class="list">
-                                <li class="options" *ngFor="let item of row[header]">
-                                    {{item?.bankName || item }}
-                                </li>
-                            </ul>
-                        </ng-container>
-                        <ng-container *ngIf="!isArrayOfObjects(row[header])">
-                            <!-- Regular content -->
-                            <span
-                                [style.background-color]="row[header] == 'paid' || row[header] == 'Paid' ? '#E1FCEF' : row[header] == 'unpaid' || row[header] == 'Unpaid' ? '#FAF0F3' : 'transparent'"
-                                [style.color]="row[header] == 'paid' || row[header] == 'Paid' ? '#14804A' : row[header] == 'unpaid' || row[header] == 'Unpaid' ? '#D12953' : 'black'"
-                                [style.padding]="row[header] == 'paid' ? '5px 10px' : '5px 10px'"
-                                [style.border-radius]="'50px'" (click)="getAllInvoices(header, row)">
-                                {{ header === 'password'
-                                ? '*****'
-                                : (header === 'date' ? (row[header] | date:'shortDate') : row[header])
-                                }}
-                            </span>
-                        </ng-container>
-                    </ng-container>
+                <!-- Check if the header is 'inviteLink' -->
+                <ng-container *ngIf="header === 'inviteLink'; else notInviteLinkCell">
+                    <!-- Place the 'Invite' button under the 'inviteLink' column -->
+                    <button class="invite-btn" (click)="onInviteClick(row)">Invite</button>
                 </ng-container>
-                <ng-template #serviceDescriptionDropdown>
-                    <ng-container *ngIf="header === 'serviceDescription'">
-                        <select>
-                            <option *ngFor="let service of row[header]" [value]="service.description">
-                                {{ service.description }} - Net Amount: {{ service.netAmount }} - VAT Rate: {{ service.vatRate }}% - VAT Amount: {{ service.vatAmount }} - Total Gross: {{ service.totalGross }}
-                            </option>
-                        </select>
+                <ng-template #notInviteLinkCell>
+                    <ng-container *ngIf="header !== 'serviceDescription'; else serviceDescriptionDropdown">
+                        <ng-container *ngIf="header !== '_id'">
+                            <ng-container *ngIf="isArrayOfObjects(row[header])">
+                                {{row[header][0]?.bankName || row[header][0]}}
+                                <i class="fa-solid fa-chevron-down" (click)="openBankList[i] = !openBankList[i]"></i>
+                                <ul *ngIf="openBankList[i]" class="list">
+                                    <li class="options" *ngFor="let item of row[header]">
+                                        {{item?.bankName || item }}
+                                    </li>
+                                </ul>
+                            </ng-container>
+                            <ng-container *ngIf="!isArrayOfObjects(row[header])">
+                                <!-- Regular content -->
+                                <span
+                                    [style.background-color]="row[header] == 'paid' || row[header] == 'Paid' ? '#E1FCEF' : row[header] == 'unpaid' || row[header] == 'Unpaid' ? '#FAF0F3' : 'transparent'"
+                                    [style.color]="row[header] == 'paid' || row[header] == 'Paid' ? '#14804A' : row[header] == 'unpaid' || row[header] == 'Unpaid' ? '#D12953' : 'black'"
+                                    [style.padding]="row[header] == 'paid' ? '5px 10px' : '5px 10px'"
+                                    [style.border-radius]="'50px'" (click)="getAllInvoices(header, row)">
+                                    {{ header === 'password'
+                                    ? '*****'
+                                    : (header === 'date' ? (row[header] | date:'shortDate') : row[header])
+                                    }}
+                                </span>
+                            </ng-container>
+                        </ng-container>
                     </ng-container>
+
+                    <ng-template #serviceDescriptionDropdown>
+                        <ng-container *ngIf="header === 'serviceDescription'">
+                            <select>
+                                <option *ngFor="let service of row[header]" [value]="service.description">
+                                    {{ service.description }} - Net Amount: {{ service.netAmount }} - VAT Rate: {{ service.vatRate }}% - VAT Amount: {{ service.vatAmount }} - Total Gross: {{ service.totalGross }}
+                                </option>
+                            </select>
+                        </ng-container>
+                    </ng-template>
                 </ng-template>
             </td>
             <td>
