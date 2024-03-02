@@ -66,11 +66,11 @@ export class UpdateEmployeeComponent implements OnInit {
   ngOnInit(): void {
     const file = {
       lastModifiedDate: Date.now(),
-      name: "logo.jpg",
+      name: 'logo.jpg',
       size: 134063,
-      type: "Image/jpeg",
-      webkitRelativePath:""
-    }
+      type: 'Image/jpeg',
+      webkitRelativePath: '',
+    };
     this.selectedFile = new File([], file.name, file);
     this.editableData.banks.forEach((bank: any) => {
       this.bankList.push({
@@ -133,19 +133,23 @@ export class UpdateEmployeeComponent implements OnInit {
   // }
 
   addClient() {
-    if (!this.email ) {
+    if (!this.username || !this.businessName) {
       // Show an error message or prevent form submission
       alert('Please fill out all required fields.');
       return;
     }
-    if (this.bankName != '' && this.accountName != '' && this.accountNumber != '' && this.sortCode != '')
-    {
+    if (
+      this.bankName != '' &&
+      this.accountName != '' &&
+      this.accountNumber != '' &&
+      this.sortCode != ''
+    ) {
       this.bankList.push({
         bankName: this.bankName,
         accountName: this.accountName,
         accountNumber: this.accountNumber,
         sortCode: this.sortCode,
-      })
+      });
     }
     let data = {
       businessName: this.businessName,
@@ -171,7 +175,6 @@ export class UpdateEmployeeComponent implements OnInit {
           alert('Client updated successfully...');
           this.cancelDialog();
           window.location.reload();
-
         });
     } else {
       const formData = new FormData();
@@ -192,16 +195,19 @@ export class UpdateEmployeeComponent implements OnInit {
         formData.append(`banks[${index}][accountName]`, bank.accountName);
         formData.append(`banks[${index}][accountNumber]`, bank.accountNumber);
         formData.append(`banks[${index}][sortCode]`, bank.sortCode);
-      })
-      formData.append('image', this.selectedFile);
-      this.employeeService.addEmployee(formData).subscribe((response) => {
-        console.log(response);
-        alert('Client added successfully...');
-        this.cancelDialog();
-        window.location.reload();
-      }, (error) => {
-        alert(error.error.message)
       });
+      formData.append('image', this.selectedFile);
+      this.employeeService.addEmployee(formData).subscribe(
+        (response) => {
+          console.log(response);
+          alert('Client added successfully...');
+          this.cancelDialog();
+          window.location.reload();
+        },
+        (error) => {
+          alert(error.error.message);
+        }
+      );
     }
   }
 
@@ -244,19 +250,14 @@ export class UpdateEmployeeComponent implements OnInit {
     formData.append('image', this.selectedFile);
     formData.append('employeeId', this.editableData?._id);
     this.employeeService.addImage(formData).subscribe();
-
   }
   convertDataToUrl(data: any): void {
     data.forEach((image: any) => {
-      if (image.data)
-      {
+      if (image.data) {
         this.logourl.push(`data:image/jpeg;base64,${image.data}`);
-      }
-      else
-      {
-        this.logourl.push(this.logoUrl)
+      } else {
+        this.logourl.push(this.logoUrl);
       }
     });
   }
-
 }

@@ -88,7 +88,7 @@ export class PdfService {
     x = 20;
     pdf.setFontSize(10);
     pdf.setFont('Helvetica', 'bold');
-    pdf.text('Invoice To Client', x, y);
+    pdf.text('Invoice To ', clientData.userName, x, y);
     y += 20;
     pdf.setFontSize(8);
     pdf.setFont('Helvetica', 'normal');
