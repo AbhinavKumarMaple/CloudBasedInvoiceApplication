@@ -274,16 +274,42 @@ export class InvoiceUpdateComponent implements OnInit {
     let vatRate = this.invoiceForm.get('vatRate');
 
     this.openVatList = false;
-
+    console.log('calculate ran');
     if (value) {
       vatRate?.patchValue(value);
-      const netAmount = this.invoiceForm.value.netAmount;
-      vat?.patchValue((netAmount * value) / 100);
-      gross?.patchValue(netAmount + this.invoiceForm.value.vatAmount);
+      const netAmount: any = parseFloat(this.invoiceForm.value.netAmount);
+      vat?.patchValue(
+        parseFloat(((netAmount * parseFloat(value)) / 100).toString()).toFixed(
+          2
+        )
+      );
+      gross?.patchValue(
+        parseFloat(
+          netAmount + parseFloat(this.invoiceForm.value.vatAmount)
+        ).toFixed(2)
+      );
     } else {
-      const netAmount = parseFloat(this.invoiceForm.value.netAmount);
-      vat?.patchValue((netAmount * this.invoiceForm.value.vatRate) / 100);
-      gross?.patchValue(netAmount + this.invoiceForm.value.vatAmount);
+      const netAmount: any = parseFloat(this.invoiceForm.value.netAmount);
+      vat?.patchValue(
+        parseFloat(
+          ((netAmount * this.invoiceForm.value.vatRate) / 100).toString()
+        ).toFixed(2)
+      );
+      gross?.patchValue(
+        parseFloat(
+          netAmount + parseFloat(this.invoiceForm.value.vatAmount)
+        ).toFixed(2)
+      );
+      console.log(
+        'vat',
+        parseFloat(
+          ((netAmount * this.invoiceForm.value.vatRate) / 100).toString()
+        ).toFixed(2),
+        'gross',
+        parseFloat(
+          netAmount + parseFloat(this.invoiceForm.value.vatAmount).toString()
+        ).toFixed(2)
+      );
     }
   }
   addDescription() {
