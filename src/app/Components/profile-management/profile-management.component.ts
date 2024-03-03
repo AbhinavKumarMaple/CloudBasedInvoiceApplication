@@ -114,10 +114,17 @@ export class ProfileManagementComponent implements OnInit {
   }
 
   manageCreadentials() {
-    let payload = {
-      username: this.AccountInfo.username,
-      email: this.AccountInfo.email,
-    };
+    let payload: any = {}; // Define payload object
+
+    if (this.AccountInfo.username) {
+      payload.username = this.AccountInfo.username; // Add username to payload if present
+    }
+    if (this.AccountInfo.email) {
+      payload.email = this.AccountInfo.email; // Add email to payload if present
+    }
+    if (this.AccountInfo.password) {
+      payload.password = this.AccountInfo.password; // Add password to payload if present
+    }
     if (this.loggedInAs == 'employee') {
       this.employeeService.update(this.clientId, payload).subscribe((res) => {
         window.location.reload();

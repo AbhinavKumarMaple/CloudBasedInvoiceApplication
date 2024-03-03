@@ -58,32 +58,35 @@ export class LoginComponent {
     this.loggedInAs = 1;
   }
 
-  constructor(private route: Router,
+  constructor(
+    private route: Router,
     private formbuilder: FormBuilder,
     private employeeService: EmployeeService,
     private accountantService: AccountantService,
     private tokenRefreshService: TokenRefreshService,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-
-    this.activatedRoute.queryParams.subscribe(params => {
+    this.activatedRoute.queryParams.subscribe((params) => {
       const token = params['token'];
 
       if (token) {
-        this.employeeService.loginByToken(token).subscribe(response => {
+        this.employeeService.loginByToken(token).subscribe((response) => {
           if (response.status) {
-            localStorage.setItem('expirationTime', response.body.expirationTime);
+            localStorage.setItem(
+              'expirationTime',
+              response.body.expirationTime
+            );
             localStorage.setItem('loggedInAs', 'employee');
             this.tokenRefreshService.startTokenRefreshForEmployee();
-            this.route.navigate(['/home/invoices'])
-          }
-          else {
+            this.route.navigate(['/home/invoices']);
+          } else {
             alert('Invalid token...');
           }
-        })
+        });
       }
-    })
+    });
 
     this.loginForm = this.formbuilder.group({
       username: ['', [Validators.required]],
@@ -96,47 +99,57 @@ export class LoginComponent {
   onSubmit() {
     const data = {
       email: this.loginForm.value.username,
-      password: this.loginForm.value.password
-    }
+      password: this.loginForm.value.password,
+    };
 
     const empData = {
       email: this.loginForm.value.username,
-      password: this.loginForm.value.password
-    }
+      password: this.loginForm.value.password,
+    };
     this.submitted = true;
     if (this.loginForm.valid) {
       if (this.loggedInAs == 0) {
-        this.employeeService.login(empData).subscribe((response) => {
-          if (response) {
-            localStorage.setItem('expirationTime', new Date(response.body.expirationTime).toUTCString());
-            localStorage.setItem('loggedInAs', 'employee');
-            this.tokenRefreshService.startTokenRefreshForEmployee();
-            this.route.navigate(['/home/invoices'])
-          }
-        },
-          (error) => {
-            alert(error.error.message)
-          });
-      }
-      else if (this.loggedInAs == 1) {
-        this.accountantService.login(data).subscribe(response => {
-          if (response) {
-            localStorage.setItem('expirationTime', new Date(response.body.expirationTime).toUTCString());
-            localStorage.setItem('loggedInAs', 'customer');
-            this.tokenRefreshService.startTokenRefreshForCustomer();
-            this.route.navigate(['/home/profile'])
-            this.accountantService.getAccountantInfo().subscribe(response => {
-              localStorage.setItem('id', response.body._id)
-            })
-          }
-        },
+        this.employeeService.login(empData).subscribe(
+          (response) => {
+            if (response) {
+              localStorage.setItem(
+                'expirationTime',
+                new Date(response.body.expirationTime).toUTCString()
+              );
+              localStorage.setItem('loggedInAs', 'employee');
+              this.tokenRefreshService.startTokenRefreshForEmployee();
+              this.route.navigate(['/home/invoices']);
+            }
+          },
           (error) => {
             alert(error.error.message);
-          });;
+          }
+        );
+      } else if (this.loggedInAs == 1) {
+        this.accountantService.login(data).subscribe(
+          (response) => {
+            if (response) {
+              localStorage.setItem(
+                'expirationTime',
+                new Date(response.body.expirationTime).toUTCString()
+              );
+              localStorage.setItem('loggedInAs', 'customer');
+              this.tokenRefreshService.startTokenRefreshForCustomer();
+              this.route.navigate(['/home/profile']);
+              this.accountantService
+                .getAccountantInfo()
+                .subscribe((response) => {
+                  localStorage.setItem('id', response.body._id);
+                });
+            }
+          },
+          (error) => {
+            alert(error.error.message);
+          }
+        );
       }
-    }
-    else {
-      alert('Invalid login details.')
+    } else {
+      alert('Invalid login details.');
     }
   }
 

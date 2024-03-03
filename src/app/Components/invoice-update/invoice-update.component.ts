@@ -365,8 +365,8 @@ export class InvoiceUpdateComponent implements OnInit {
         : 'Unpaid',
       note: this.invoiceForm.value.note,
     };
-
     if (this.isEdit) {
+      console.log('invoice data from gemerate', data);
       if (this.activeMenuItem == 'generatedInvoice') {
         this.invoiceService
           .updateGeneratedInvoiceById(this.editableData._id, data)
@@ -386,6 +386,7 @@ export class InvoiceUpdateComponent implements OnInit {
       }
     } else {
       this.invoiceService.create(data).subscribe(() => {
+        console.log('invoice data from gemerate', JSON.stringify(data));
         alert('Invoice created successfully.');
         this.cancelDialog();
         window.location.reload();

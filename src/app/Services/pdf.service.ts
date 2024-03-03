@@ -32,6 +32,7 @@ export class PdfService {
     image?: any,
     customerData?: any
   ) {
+    console.group('pdf generated');
     const currentDate = new Date();
     const pdf = new jsPDF('p', 'pt', 'A4');
     var logo = '../../assets/logo.jpg';
@@ -88,7 +89,17 @@ export class PdfService {
     x = 20;
     pdf.setFontSize(10);
     pdf.setFont('Helvetica', 'bold');
-    pdf.text(`Invoice To ${clientData.username}`, x, y);
+    pdf.text(
+      `Invoice To ${
+        clientData?.username
+          ? clientData?.username
+          : customerData?.name
+          ? customerData?.name
+          : ''
+      }`,
+      x,
+      y
+    );
     // console.log('clientData', clientData, 'customerData', customerData);
     y += 20;
     pdf.setFontSize(8);
@@ -280,6 +291,7 @@ export class PdfService {
       formData.append('vatRegNo', response.body.vatNumber);
       formData.append('crn', response.body.crnNumber);
       formData.append('image', image);
+      console.log('gen invoice', formData);
       if (this.activeMenuItem != 'generatedInvoice') {
         this.invoiceService.generateInvoice(formData).subscribe((res) => {
           alert('Invoice generated successfully...');
@@ -293,12 +305,17 @@ export class PdfService {
     console.log(data);
     this.employeeService.employeeInfo().subscribe((response) => {
       let responseBody = response.body;
+      const currentDate = new Date();
       this.convertDataToUrl(response.body.logo);
       const formData = new FormData();
       formData.append('invoiceNumber', data.invoiceNumber);
       formData.append('createdFor', data.createdFor);
-      formData.append('date', data.date);
-      formData.append('dueDate', '');
+      formData.append(
+        'serviceDescription',
+        JSON.stringify(data.serviceDescription)
+      );
+      formData.append('date', currentDate.toLocaleString());
+      formData.append('dueDate', data.date);
       formData.append('customerName', data.customerName);
       formData.append('netAmount', data.netAmount);
       formData.append('vatRate', data.vatRate);
@@ -331,6 +348,7 @@ export class PdfService {
       formData.append('vatRegNo', response.body.vatNumber);
       formData.append('crn', response.body.crnNumber);
       formData.append('image', this.employeeLogo);
+      console.log('gen invoice down', formData);
       if (this.activeMenuItem != 'generatedInvoice') {
         this.invoiceService.generateInvoice(formData).subscribe((res) => {
           alert('Invoice generated successfully...');
@@ -342,6 +360,7 @@ export class PdfService {
         .getCustomerByID(data.createdFor)
         .subscribe((response) => {
           customerData = response.body;
+          console.log('employee data', customerData);
           this.generatePDF(
             data,
             responseBody,

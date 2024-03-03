@@ -114,7 +114,7 @@ export class InvoiceService {
   }
 
   generateInvoice(data: any): Observable<any> {
-    console.log('data from invoice api ', data);
+    console.log('data from invoice api ', JSON.stringify(data));
     // return this.http.post(`${this.baseUrl}/generatedinvoice/create`, data, { observe: 'response', withCredentials: true });
     return this.http.post(`${this.baseUrl}/generatedinvoice/create`, data, {
       observe: 'response',
