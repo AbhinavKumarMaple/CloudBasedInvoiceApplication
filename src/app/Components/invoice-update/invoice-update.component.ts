@@ -386,7 +386,6 @@ export class InvoiceUpdateComponent implements OnInit {
       }
     } else {
       this.invoiceService.create(data).subscribe(() => {
-        console.log('invoice data from gemerate', JSON.stringify(data));
         alert('Invoice created successfully.');
         this.cancelDialog();
         window.location.reload();
