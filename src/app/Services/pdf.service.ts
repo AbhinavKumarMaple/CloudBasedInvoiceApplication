@@ -53,37 +53,46 @@ export class PdfService {
 
     pdf.setFontSize(12);
     pdf.setFont('Helvetica', 'bold');
-    pdf.text(accountantData.businessName, x, y, { align: 'right' });
+    pdf.text(accountantData?.businessName || '', x, y, { align: 'right' });
     y += 20;
     pdf.setFontSize(8);
     pdf.setFont('Helvetica', 'bold');
-    pdf.text(accountantData.name ? accountantData.name : '', x, y, {
+    pdf.text(accountantData?.name ? accountantData.name : '', x, y, {
       align: 'right',
     });
     y += 20;
-    pdf.text(accountantData.address.buildingNameNumber, x, y, {
+    pdf.text(accountantData?.address?.buildingNameNumber || '', x, y, {
       align: 'right',
     });
     y += 20;
-    pdf.text(accountantData.address.streetName, x, y, { align: 'right' });
+    pdf.text(accountantData?.address?.streetName || '', x, y, {
+      align: 'right',
+    });
     y += 20;
-    if (accountantData.address2 != null) {
-      pdf.text(accountantData?.address2, x, y, { align: 'right' });
+    if (accountantData?.address2 != null) {
+      pdf.text(accountantData?.address2 || '', x, y, { align: 'right' });
       y += 20;
     }
-    pdf.text(accountantData.address.postalCode.toString(), x, y, {
+    pdf.text(accountantData?.address?.postalCode?.toString() || '', x, y, {
       align: 'right',
     });
     y += 20;
-    pdf.text(accountantData.contactNumber.toString(), x, y, { align: 'right' });
-    y += 20;
-    pdf.text('CRN:' + accountantData.crnNumber.toString(), x, y, {
+    pdf.text(accountantData?.contactNumber?.toString() || '', x, y, {
       align: 'right',
     });
     y += 20;
-    pdf.text('VAT Reg. No:' + accountantData.vatNumber.toString(), x, y, {
+    pdf.text('CRN:' + accountantData?.crnNumber?.toString() || '', x, y, {
       align: 'right',
     });
+    y += 20;
+    pdf.text(
+      'VAT Reg. No:' + accountantData?.vatNumber?.toString() || '',
+      x,
+      y,
+      {
+        align: 'right',
+      }
+    );
     y += 30;
 
     x = 20;
@@ -105,7 +114,7 @@ export class PdfService {
     pdf.setFontSize(8);
     pdf.setFont('Helvetica', 'normal');
     const formattedDate = moment(data.date).format('D MMMM YYYY');
-    pdf.text('Invoice Date:   ' + currentDate.toLocaleString(), x, y);
+    pdf.text('Invoice Date:   ' + currentDate?.toLocaleString(), x, y);
     y += 20;
     pdf.text('Due Date:   ' + formattedDate, x, y);
     y -= 40;
@@ -115,29 +124,33 @@ export class PdfService {
     if (clientData?.businessName != null) {
       pdf.text(clientData.businessName, x, y, { align: 'right' });
     } else {
-      pdf.text(customerData.name, x, y, { align: 'right' });
+      pdf.text(customerData?.name || '', x, y, { align: 'right' });
     }
     y += 20;
     pdf.setFontSize(8);
     pdf.setFont('Helvetica', 'normal');
     if (clientData?.address != null) {
-      pdf.text(clientData.address?.buildingNameNumber, x, y, {
+      pdf.text(clientData?.address?.buildingNameNumber || '', x, y, {
         align: 'right',
       });
     } else {
-      pdf.text(customerData.address?.address, x, y, { align: 'right' });
+      pdf.text(customerData?.address?.address || '', x, y, { align: 'right' });
     }
     y += 20;
     if (clientData?.address != null) {
-      pdf.text(clientData.address?.streetName, x, y, { align: 'right' });
+      pdf.text(clientData?.address?.streetName || '', x, y, { align: 'right' });
     } else {
-      pdf.text(customerData.address?.streetLane, x, y, { align: 'right' });
+      pdf.text(customerData?.address?.streetLane || '', x, y, {
+        align: 'right',
+      });
     }
     y += 20;
     if (clientData?.address != null) {
-      pdf.text(clientData.address?.postalCode, x, y, { align: 'right' });
+      pdf.text(clientData?.address?.postalCode || '', x, y, { align: 'right' });
     } else {
-      pdf.text(customerData.address?.postalCode, x, y, { align: 'right' });
+      pdf.text(customerData?.address?.postalCode || '', x, y, {
+        align: 'right',
+      });
     }
     y += 20;
     if (clientData?.address2 != null) {
@@ -169,23 +182,23 @@ export class PdfService {
     const serviceDescriptionsHeight = data.serviceDescription.length * 20; // Assuming each description is 20 units in height
 
     // Add service descriptions
-    data.serviceDescription.forEach((service: any, index: number) => {
-      const description = service.description;
-      const netAmount = service.netAmount;
-      const vatRate = service.vatRate;
-      const vatAmount = service.vatAmount;
-      const totalGross = service.totalGross;
+    data?.serviceDescription.forEach((service: any, index: number) => {
+      const description = service?.description || '';
+      const netAmount = service?.netAmount || 0;
+      const vatRate = service?.vatRate || 0;
+      const vatAmount = service?.vatAmount || 0;
+      const totalGross = service?.totalGross || 0;
 
       // Display service description details
       pdf.text(description, x, y);
       x += 120;
-      pdf.text(netAmount.toString(), x, y);
+      pdf.text(netAmount?.toString() || '0', x, y);
       x += 120;
-      pdf.text(vatRate.toString() + '%', x, y);
+      pdf.text(vatRate?.toString() || '0' + '%', x, y);
       x += 120;
-      pdf.text(vatAmount.toString(), x, y);
+      pdf.text(vatAmount?.toString() || '0', x, y);
       x += 120;
-      pdf.text(totalGross.toString(), x, y);
+      pdf.text(totalGross?.toString() || '0', x, y);
       x = 20;
       y += 20;
     });
@@ -207,15 +220,15 @@ export class PdfService {
     x = pdf.internal.pageSize.width - 20;
     y += 20;
     // Display text aligned to the right side below all the service descriptions
-    pdf.text('Net Amount:    ' + data.netAmount.toString(), x, y, {
+    pdf.text('Net Amount:    ' + data?.netAmount?.toString() || '0', x, y, {
       align: 'right',
     });
     y += 20;
-    pdf.text('VAT Amount:    ' + data.vatAmount.toString(), x, y, {
+    pdf.text('VAT Amount:    ' + data?.vatAmount?.toString() || '0', x, y, {
       align: 'right',
     });
     y += 20;
-    pdf.text('Gross Amount:    ' + data.totalGross.toString(), x, y, {
+    pdf.text('Gross Amount:    ' + data?.totalGross?.toString() || '0', x, y, {
       align: 'right',
     });
     y += 20;
@@ -229,17 +242,17 @@ export class PdfService {
     y += 20;
     pdf.setFontSize(8);
     pdf.setFont('Helvetica', 'normal');
-    pdf.text('Bank Name:   ' + bankData.bankName, x, y);
+    pdf.text('Bank Name:   ' + bankData?.bankName || '', x, y);
     x += 150;
-    pdf.text('A/C Name:    ' + bankData.accountName, x, y);
+    pdf.text('A/C Name:    ' + bankData?.accountName || '', x, y);
     y += 20;
     x = 20;
-    pdf.text('Account No.:    ' + bankData.accountNumber, x, y);
+    pdf.text('Account No.:    ' + bankData?.accountNumber || '0', x, y);
     x += 150;
-    pdf.text('Sort Code:    ' + bankData.sortCode, x, y);
+    pdf.text('Sort Code:    ' + bankData?.sortCode || '0', x, y);
     y += 60;
     x = 20;
-    pdf.text('Note:    ' + data.note, x, y);
+    pdf.text('Note:    ' + data?.note || '', x, y);
 
     const fileName = 'Invoice.pdf';
     pdf.save(fileName);
@@ -251,47 +264,47 @@ export class PdfService {
       const formData = new FormData();
       const currentDate = new Date();
 
-      formData.append('invoiceNumber', data.invoiceNumber);
+      formData.append('invoiceNumber', data?.invoiceNumber);
       formData.append('createdFor', clientData._id);
       formData.append(
         'serviceDescription',
         JSON.stringify(data.serviceDescription)
       ); // Parse serviceDescription as JSON
       formData.append('date', currentDate.toLocaleString());
-      formData.append('dueDate', data.date);
-      formData.append('customerName', data.customerName);
-      formData.append('netAmount', data.netAmount);
-      formData.append('vatRate', data.vatRate);
-      formData.append('vatAmount', data.vatAmount);
-      formData.append('totalGross', data.totalGross);
-      formData.append('bankAccount', data.bankAccount);
-      formData.append('note', data.note);
-      formData.append(`banks[0][bankName]`, bankData.bankName);
-      formData.append(`banks[0][accountName]`, bankData.accountName);
-      formData.append(`banks[0][accountNumber]`, bankData.accountNumber);
-      formData.append(`banks[0][sortCode]`, bankData.sortCode);
+      formData.append('dueDate', data?.date);
+      formData.append('customerName', data?.customerName || '');
+      formData.append('netAmount', data?.netAmount || 0);
+      formData.append('vatRate', data?.vatRate || 0);
+      formData.append('vatAmount', data?.vatAmount || 0);
+      formData.append('totalGross', data?.totalGross || 0);
+      formData.append('bankAccount', data?.bankAccount || '');
+      formData.append('note', data?.note || '');
+      formData.append(`banks[0][bankName]`, bankData?.bankName || '');
+      formData.append(`banks[0][accountName]`, bankData?.accountName || '');
+      formData.append(`banks[0][accountNumber]`, bankData?.accountNumber || '');
+      formData.append(`banks[0][sortCode]`, bankData?.sortCode || '');
       formData.append(
         'customerAddress',
         JSON.stringify({
-          street: clientData.buildingNameNumber,
-          city: clientData.landmark,
-          state: clientData.streetName,
-          postalCode: clientData.postalCode,
+          street: clientData?.buildingNameNumber || '',
+          city: clientData?.landmark || '',
+          state: clientData?.streetName || '',
+          postalCode: clientData?.postalCode || '',
         })
       );
       formData.append(
         'accountantAddress',
         JSON.stringify({
-          street: response.body.buildingNameNumber,
-          city: response.body.landmark,
-          state: response.body.streetName,
-          postalCode: response.body.postalCode,
+          street: response?.body?.buildingNameNumber || '',
+          city: response?.body?.landmark || '',
+          state: response?.body?.streetName || '',
+          postalCode: response?.body?.postalCode || '',
         })
       );
-      formData.append('vatRegNo', response.body.vatNumber);
-      formData.append('crn', response.body.crnNumber);
-      formData.append('image', image);
-      console.log('gen invoice', formData);
+      formData.append('vatRegNo', response?.body?.vatNumber || 0);
+      formData.append('crn', response?.body?.crnNumber || 0);
+      formData.append('image', image || '');
+      console.log('gen invoice', formData || '');
       if (this.activeMenuItem != 'generatedInvoice') {
         this.invoiceService.generateInvoice(formData).subscribe((res) => {
           alert('Invoice generated successfully...');
@@ -308,45 +321,45 @@ export class PdfService {
       const currentDate = new Date();
       this.convertDataToUrl(response.body.logo);
       const formData = new FormData();
-      formData.append('invoiceNumber', data.invoiceNumber);
-      formData.append('createdFor', data.createdFor);
+      formData.append('invoiceNumber', data?.invoiceNumber);
+      formData.append('createdFor', data?.createdFor);
       formData.append(
         'serviceDescription',
-        JSON.stringify(data.serviceDescription)
+        JSON.stringify(data?.serviceDescription || [])
       );
-      formData.append('date', currentDate.toLocaleString());
-      formData.append('dueDate', data.date);
-      formData.append('customerName', data.customerName);
-      formData.append('netAmount', data.netAmount);
-      formData.append('vatRate', data.vatRate);
-      formData.append('vatAmount', data.vatAmount);
-      formData.append('totalGross', data.totalGross);
-      formData.append('bankAccount', data.bankAccount);
-      formData.append('note', data.note);
-      formData.append(`banks[0][bankName]`, bankData.bankName);
-      formData.append(`banks[0][accountName]`, bankData.accountName);
-      formData.append(`banks[0][accountNumber]`, bankData.accountNumber);
-      formData.append(`banks[0][sortCode]`, bankData.sortCode);
+      formData.append('date', currentDate?.toLocaleString());
+      formData.append('dueDate', data?.date);
+      formData.append('customerName', data?.customerName || '');
+      formData.append('netAmount', data?.netAmount || 0);
+      formData.append('vatRate', data?.vatRate || 0);
+      formData.append('vatAmount', data?.vatAmount || 0);
+      formData.append('totalGross', data?.totalGross || 0);
+      formData.append('bankAccount', data?.bankAccount || '');
+      formData.append('note', data?.note || '');
+      formData.append(`banks[0][bankName]`, bankData?.bankName || '');
+      formData.append(`banks[0][accountName]`, bankData?.accountName || '');
+      formData.append(`banks[0][accountNumber]`, bankData?.accountNumber || '');
+      formData.append(`banks[0][sortCode]`, bankData?.sortCode || '');
       formData.append(
         'customerAddress',
         JSON.stringify({
-          street: response.body.buildingNameNumber,
-          city: response.body.landmark,
-          state: response.body.streetName,
-          postalCode: response.body.postalCode,
+          street: bankData?.buildingNameNumber || '',
+          city: bankData?.landmark || '',
+          state: bankData?.streetName || '',
+          postalCode: bankData?.postalCode || '',
         })
       );
       formData.append(
         'accountantAddress',
         JSON.stringify({
-          street: response.body.buildingNameNumber,
-          city: response.body.landmark,
-          state: response.body.streetName,
-          postalCode: response.body.postalCode,
+          street: response?.body?.buildingNameNumber || '',
+          city: response?.body?.landmark || '',
+          state: response?.body?.streetName,
+          postalCode: response?.body?.postalCode,
         })
       );
-      formData.append('vatRegNo', response.body.vatNumber);
-      formData.append('crn', response.body.crnNumber);
+      formData.append('vatRegNo', response?.body?.vatNumber || 0);
+      formData.append('crn', response?.body?.crnNumber || 0);
       formData.append('image', this.employeeLogo);
       console.log('gen invoice down', formData);
       if (this.activeMenuItem != 'generatedInvoice') {
